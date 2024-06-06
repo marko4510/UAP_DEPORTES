@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body data-topbar="colored">
+    <div th:fragment="content1">
+        <form th:action="@{/filtroPorFechasYAnio}" method="get">
+            <div class="form-group row">
+                <div class="col-md-3">
+
+                    <select class="form-control" name="mes" id="mes">
+                        <option value="" selected>Seleccionar mes</option>
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+
+                    </select>
+                </div>
+                <div class="col-md-2">
+
+                    <input class="form-control" type="number" placeholder="año" id="anio" name="anio">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div th:fragment="content2">
+        <form th:action="@{/filtroPorUnidad}" method="get">
+            <div class="form-group row">
+                <div class="col-md-5">
+                    <select class="form-control" id="id_unidad" name="id_unidad">
+                        <option value="" selected>Seleccionar Unidad</option>
+                        <optgroup th:each="df:${direccionFuncionales}" th:label="${df.nom_direccion}">
+                            <option th:each="uniF:${df.unidadFuncionals}" th:value="${uniF.id_unidad_funcional}"
+                                th:text="${uniF.nom_unidad}">-</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div th:fragment="content3">
+        <form th:action="@{/filtroPorUnidadMesAnio}" method="get">
+            <div class="form-group row">
+
+                <div class="col-md-7">
+                    <select class="form-control" id="id_unidad" name="id_unidad">
+                        <option value="" selected>Seleccionar Unidad</option>
+                        <optgroup th:each="df:${direccionFuncionales}" th:label="${df.nom_direccion}">
+                            <option th:each="uniF:${df.unidadFuncionals}" th:value="${uniF.id_unidad_funcional}"
+                                th:text="${uniF.nom_unidad}">-</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select class="form-control" name="mes" id="mes">
+                        <option value="" selected>Seleccionar mes</option>
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <input class="form-control" type="number" placeholder="año" id="anio" name="anio">
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div th:fragment="content4">
+        <form th:action="@{/filtroPorDireccion}" method="get">
+            <div class="form-group row">
+                <div class="col-md-5">
+                    <select class="form-control" id="id_unidad" name="id_direccion">
+                        <option value="" selected>Seleccionar Direccion</option>
+
+                        <option th:each="dir:${direccionFuncionales}" th:value="${dir.id_direccion_funcional}"
+                            th:text="${dir.nom_direccion}">-</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div th:fragment="content5">
+        <form th:action="@{/filtroPorDireccionMesAnio}" method="get">
+            <div class="form-group row">
+
+                <div class="col-md-7">
+                    <select class="form-control" id="id_unidad" name="id_direccion">
+                        <option value="" selected>Seleccionar Direccion</option>
+
+                        <option th:each="dir:${direccionFuncionales}" th:value="${dir.id_direccion_funcional}"
+                            th:text="${dir.nom_direccion}">-</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select class="form-control" name="mes" id="mes">
+                        <option value="" selected>Seleccionar mes</option>
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <input class="form-control" type="number" placeholder="año" id="anio" name="anio">
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary">Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div th:fragment="contentFormulario">
+        <div class="modal fade" tabindex="-1" id="mostrar_modal1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="row">
+                        <!--<div class="col-5">
+                                                <div>
+                                                    <label class="col-form-label">Descripcion</label>
+                                                    <textarea class="form-control" type="text" id="id_e" placeholder="Descripcion"></textarea>
+                                                </div>
+                                            </div>-->
+                        <div class="col-md-12">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:fragment="unidadesSinActividad">
+        <table id="example1" class="table table-striped table-bordered dt-responsive"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+                <tr>
+
+                    <th WIDTH="1%">#</th>
+                    <th WIDTH="25%">RESPONSABLE</th>
+                    <th WIDTH="45%">UNIDAD</th>
+                    <th WIDTH="29%">DIRECCION</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="all, i:${unidadSinActividad}">
+                    <td th:text="${i.index+1}"></td>
+                    <td>
+                        <th:block th:each="pa:${all.personalAdministrativos}">
+                            <div th:text="${pa.persona.nombre+' '+pa.persona.apellido}"></div>
+                        </th:block>
+                    </td>
+                    <td th:text="${all.nom_unidad}"></td>
+                    <td th:text="${all.direccionFuncional.nom_direccion}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    
+    <script>
+        // Mostrar el modal al cargar la página
+        $(document).ready(function () {
+            $('#mostrar_modal1').modal('toggle')
+        });
+    </script>
+    <div th:replace="layout/pie :: pie"></div>
+    
+</body>
+
+</html>

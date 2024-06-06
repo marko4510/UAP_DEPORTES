@@ -1,0 +1,44 @@
+{
+    "particles": {
+        "number": {
+            "value": 100,
+            "density": {
+                "enable": true,
+                "value_area": 800
+            }
+        },
+        "color": {
+            "value": "#FF0000"
+        },
+        "shape": {
+            "type": "circle"
+        },
+        "size": {
+            "value": 5,
+            "random": true,
+            "anim": {
+                "speed": 4,
+                "size_min": 0.3
+            }
+        },
+        "line_linked": {
+            "enable": false
+        },
+        "move": {
+            "enable": true,
+            "speed": 1,
+            "direction": "bottom",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false
+        }
+    },
+    "interactivity": {
+        "events": {
+            "onhover": {
+                "enable": false
+            }
+        }
+    }
+}

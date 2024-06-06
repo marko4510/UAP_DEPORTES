@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+
+</head>
+
+<body data-topbar="colored">
+    <div id="layout-wrapper">
+        <header id="page-topbar" th:replace="layout/topbar :: topbar">
+        </header>
+        <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-title-box" style="background-color: #0c289a;color: white;">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                                                    role="alert" th:if="${mensaje != null}">
+                                                    <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <h3 class="header-title"
+                                                    th:text="${'ACTIVIDAD: ' + actividad.nombre_actividad}">titulo</h3>
+                                                <a th:href="@{/actividadR}"
+                                                    class="btn btn-primary waves-effect waves-light" type="submit">Ver
+                                                    Actividades</a>
+                                                <input type="hidden" th:value="${actividad.id_actividad}"
+                                                    id="id_activida">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light"
+                                                    data-toggle="modal" data-target=".bd-example-modal-lg">Modificar
+                                                    Actividad</button>
+                                                <a href="#"
+                                                    th:onclick="agregarFechaDetalle([[${actividad.id_actividad}]])"
+                                                    class="btn btn-primary waves-effect waves-light"
+                                                    type="submit">Agregar fecha</a>
+
+                                            </div>
+                                            <br>
+                                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <form th:action="@{/actvidadPostp}"
+                                                                                method="POST">
+                                                                                <input type="hidden" name="id_actividad"
+                                                                                    th:field="${actividad.id_actividad}">
+                                                                                <input type="hidden" name="fechaActual"
+                                                                                    th:value="${actividad.fecha_registro}">
+                                                                                <input type="hidden"
+                                                                                    th:field="${actividad.estado}">
+                                                                                <input type="hidden"
+                                                                                    th:field="${actividad.programdo}">
+                                                                                <input type="hidden"
+                                                                                    th:field="${actividad.estadoActividad.id_estado_actividad}">
+                                                                                <input type="hidden"
+                                                                                    th:field="${actividad.unidadFuncional.id_unidad_funcional}">
+                                                                                <h4 class="header-title">MODIFICAR
+                                                                                    ACTIVIDAD</h4>
+                                                                                <div class="form-group row">
+                                                                                    <div class="col-md-5">
+                                                                                        <div>
+                                                                                            <label
+                                                                                                class="col-form-label">Actividad
+                                                                                                a realizar (Palabra
+                                                                                                Clave)</label>
+                                                                                            <input class="form-control"
+                                                                                                type="text"
+                                                                                                th:field="${actividad.nombre_actividad}"
+                                                                                                placeholder="Palabra Clave"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-7">
+                                                                                        <div>
+                                                                                            <label
+                                                                                                class="col-form-label">Descripcion</label>
+
+                                                                                            <textarea
+                                                                                                class="form-control"
+                                                                                                th:field="${actividad.descripcion_actividad}"
+                                                                                                placeholder="Descripcion"
+                                                                                                required></textarea>
+
+
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <!--<select class="selectize" th:field="${actividad.unidadFuncional}"
+                                                                                                  name="unidadFuncional">                           
+                                                                                                          <option 
+                                                                                                          th:value="${actividad.unidadFuncional.id_unidad_funcional}"
+                                                                                                          th:text="${actividad.unidadFuncional.nom_unidad}" selected></option>
+                                                                                                     
+                                                                                                      
+                                                                                                          <option th:each="u:${unidadFuncionales}" 
+                                                                                                          th:value="${u.id_unidad_funcional}"
+                                                                                                          th:text="${u.nom_unidad}"></option>
+                                                                                                     
+                                                                                                  </select>-->
+
+                                                                                    <div class="col-md-3">
+                                                                                        <div>
+                                                                                            <label
+                                                                                                class="col-form-label">Tipo
+                                                                                                de actividad</label>
+
+                                                                                            <select class="selectize"
+                                                                                                name="tipoActividad"
+                                                                                                required>
+                                                                                                <!--<option th:value="${actividad.tipoActividad.id_tipo_actividad}" th:text="${actividad.tipoActividad.nombre_tipo_actividad}" ></option>-->
+                                                                                                <option
+                                                                                                    th:each="ta:${tiposActividades}"
+                                                                                                    th:value="${ta.id_tipo_actividad}"
+                                                                                                    th:text="${ta.nombre_tipo_actividad}"
+                                                                                                    th:selected="${ta.id_tipo_actividad == actividad.tipoActividad.id_tipo_actividad}">
+                                                                                                    -</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <div>
+                                                                                            <label
+                                                                                                class="col-form-label">Afluencia</label>
+
+                                                                                            <select class="selectize"
+                                                                                                th:field="${actividad.afluencia}"
+                                                                                                name="afluencia"
+                                                                                                required>
+                                                                                                <!--<option th:value="${actividad.afluencia.id_afluencia}" th:text="${actividad.afluencia.nombre_afluencia}" selected></option>-->
+
+                                                                                                <option
+                                                                                                    th:each="a:${ListAfluencias}"
+                                                                                                    th:value="${a.id_afluencia}"
+                                                                                                    th:text="${a.nombre_afluencia}"
+                                                                                                    th:selected="${a.id_afluencia == actividad.afluencia.id_afluencia}">
+                                                                                                    -</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="form-group mt-4 text-center">
+                                                                                    <button
+                                                                                        class="btn btn-primary waves-effect waves-light"
+                                                                                        type="submit">Modificar</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <th:block th:each="da,ind:${actividad.detalleActividads}" th:if="${da.estado != 'X'}">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form th:action="@{/detalleActividadPost}" method="post">
+                                                <input type="hidden" name="id_da" th:value="${da.id_detalle_actividad}">
+
+                                                <div class="form-group row">
+                                                    <div class="col-md-9">
+                                                        <h3 class="header-title"
+                                                            th:text="${da.fecha_detalle_actividad}"></h3>
+                                                    </div>
+
+                                                    <div class="col-md-3 float-right">
+                                                        <div class="btn-group mt-1 mr-1">
+                                                            <button class="btn btn-secondary btn-sm dropdown-toggle"
+                                                                type="button" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                Opciones <i class="mdi mdi-chevron-down"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a href="#"
+                                                                    th:onclick="editarDetalle([[${da.id_detalle_actividad}]],[[${da.fecha_detalle_actividad}]])"
+                                                                    class="waves-effect waves-light col-md-12">Modificar
+                                                                    fecha</a>
+                                                                <a href="#"
+                                                                    th:onclick="eliminarFechaDetalle([[${da.id_detalle_actividad}]],[[${actividad.id_actividad}]])"
+                                                                    class="waves-effect waves-light col-md-12">Eliminar
+                                                                    fecha</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label class="col-form-label">Horas inicio</label>
+                                                            <input class="form-control" type="time" name="inicio"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div>
+                                                            <label class="col-form-label">Horas fin</label>
+                                                            <input class="form-control" type="time" name="fin" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group mb-0">
+                                                            <br>
+
+                                                            
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-11">
+                                                                        <h4 class="header-title">Lugar(es)</h4>
+                                                                    </div>
+
+                                                                    <div class="col-md-1 float-right">
+                                                                        <a href="#"
+                                                                            th:onclick="cargarLugar([[${da.id_detalle_actividad}]],[[${actividad.id_actividad}]])"
+                                                                            class="btn btn-success btn-sm">+</a>
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                            
+                                                            <div class="row mt-2">
+                                                                <div id="lab"></div>
+                                                                
+                                                                <div class="">
+                                                    
+                                                                    <button type="button" class="btn btn-sm btn-info waves-effect waves-light" data-container="body" data-toggle="popover" data-placement="top" 
+                                                                    title="INDICACIONES DEL CHECKBOX" data-trigger="focus" style="font-size: 10px; padding: 4px 8px;"
+                                                                    data-content="Al presionar el checkbox, estan filtrando los lugares denominados como salones de la U.A.P. para su posterior enviar como solicitud al responsble de los que administran dichos salones de la Universidad.">
+                                                                        ?
+                                                                    </button>
+                                                                    <div ><input th:id="'checkbox'+${da.id_detalle_actividad}" type="checkbox" class="checkbox mt-1" style="width: 22px; height: 22px;"></div>
+                                                                    
+                                                                </div>
+                                                                <div class="col-md-11 mt-4">
+                                                                    <select th:id="'select'+${da.id_detalle_actividad}" class="form-control select2" th:field="${subDetalle.lugares}" required>
+                                                                        <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}" th:style="${l.tipo_lugar == 'E'} ? 'color: #0f890d;' : 'color: #0630d6'"></option>
+                                                                    </select>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group text-center">
+                                                    <button class="btn btn-primary waves-effect waves-light"
+                                                        type="submit">Agregar</button>
+                                                </div>
+
+                                            </form>
+
+                                            <hr>
+                                            <h4 class="header-title">REGISTROS</h4>
+                                            <div class="">
+                                                <table class="table table-sm m-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Hora inicio</th>
+                                                            <th>Hora fin</th>
+                                                            <th>Lugar(es)</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr th:each="sda, ind:${da.subDetalleActividads}"
+                                                            th:if="${sda.estado != 'X'}">
+                                                            <th scope="row" th:text="${ind.index+1}">1</th>
+                                                            <td th:text="${sda.hora_inicio}">Mark</td>
+                                                            <td th:text="${sda.hora_final}">Otto</td>
+                                                            <td>
+                                                                <th:block th:each="l:${sda.lugares}">
+                                                                    <div>
+                                                                        <span class="badge badge-pill badge-light"
+                                                                            th:text="${l.nombre_lugar}"></span>
+                                                                    </div>
+                                                                </th:block>
+                                                            </td>
+                                                            <td>
+                                                                <a th:href="${'/eliminar-sub-detalle/' + sda.id_sub_detalle_actividad + '/' + actividad.id_actividad}"
+                                                                    type="button"
+                                                                    class="btn btn-danger btn-sm btn-rounded waves-effect waves-light"><i
+                                                                        class="dripicons-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--modal nuevo lugar-->
+            <div class="modal fade" id="ModalLugar" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+                tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form th:action="@{/nuevoLugar}" method="post">
+                            <input type="hidden" id="id_ac" name="id_ac">
+                            <input type="hidden" id="id_dtac" name="id_dtac">
+                            <div class="modal-header">
+                                <h5 class="modal-title"> Nuevo Lugar</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label class="col-form-label">Lugar</label>
+                                        <input type="text" class="form-control" id="nombre_lugar" name="nombre_lugar"
+                                            required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-primary me-1"
+                                            data-bs-dismiss="modal">Guardar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--modal Editar detalle fecha-->
+            <div class="modal fade" id="ModalEditarDetalle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+                tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form th:action="@{/modificarDetalleActividad}" method="post">
+                            <input type="hidden" id="id_dtact" name="id_dtact">
+                            <div class="modal-header">
+                                <h5 class="modal-title"> Modificar Fecha</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label class="col-form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="fec" name="fec" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-primary me-1"
+                                            data-bs-dismiss="modal">Actualizar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--modal crear detalle fecha-->
+            <div class="modal fade" id="ModalAgregarDetalle" aria-hidden="true"
+                aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form th:action="@{/agregarFechaActividad}" method="post">
+                            <input type="hidden" id="id_acti" name="id_acti">
+                            <div class="modal-header">
+                                <h5 class="modal-title"> Nueva Fecha</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label class="col-form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="fech" name="fech" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-primary me-1"
+                                            data-bs-dismiss="modal">Guardar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            2023 © SIASE.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="rightbar-overlay"></div>
+    <div th:replace="layout/pie :: pie"></div>
+    
+   
+    <script type="text/javascript">
+        function cargarLugar(id_detalle_ac, id_act) {
+            var id_ac = id_act;
+            var id_dtac = id_detalle_ac;
+            $("#id_ac").val(id_ac);
+            $("#id_dtac").val(id_dtac);
+            $("#ModalLugar").modal("show");
+        }
+        
+        function agregarFechaDetalle(id_actividad) {
+            var id_acti = id_actividad;
+            alert(id_acti);
+            $("#id_acti").val(id_acti);
+            $("#ModalAgregarDetalle").modal("show");
+        }
+        /*function agregarFechaDetalle(id_actividad) {
+            var id_acti = id_actividad;
+            $("#id_acti").val(id_acti);
+            $("#ModalAgregarDetalle").modal("show");
+        }*/
+        function editarDetalle(id_detalle_ac, fecha_detalle) {
+            var fec = fecha_detalle;
+            var id_dtac = id_detalle_ac;
+            $("#fec").val(fec);
+            $("#id_dtact").val(id_dtac);
+            $("#ModalEditarDetalle").modal("show");
+        }
+
+        function eliminarFechaDetalle(id_detalle, id_actividad) {
+            var id_d = id_detalle;
+            var id_a = id_actividad;
+            if (confirm('Esta seguro de eliminar esta fecha?')) {
+                window.location.href = '/eliminar-detalle/' + id_d + '/' + id_a;
+            }
+        }
+    </script>
+    
+    <script>
+       $(document).ready(function() {
+        $('.my-select').each(function(index) {
+            $(this).attr('id', 'select' + index); // Asigna un ID único a cada select
+            $('#select' + index).select2();
+        });
+    });
+    </script>
+    <script >
+        $(document).ready(function () {
+            function filtrarLugares(idDetalleActividad) {
+                $('#checkbox' + idDetalleActividad).on('change', function () {
+                    var tipoLugar = $(this).is(':checked') ? 'E' : 'N'; // Determina el tipo de lugar según el estado del checkbox
+    
+                    // Realiza la solicitud AJAX para obtener los lugares
+                    $.ajax({
+                        url: '/lugares', // Reemplaza con tu URL correcta
+                        method: 'GET',
+                        data: { tipo_lugar: tipoLugar }, // Parámetro de la solicitud
+                        success: function (response) {
+                            // Limpia el select correspondiente
+                            $('#select' + idDetalleActividad).empty();
+    
+                            // Agregar las opciones al select con estilo de color
+                            for (var i = 0; i < response.length; i++) {
+                                var lugar = response[i];
+                                var option = $('<option></option>').attr('value', lugar.id_lugar).text(lugar.nombre_lugar);
+    
+                                // Aplicar estilo de color si tipo_lugar es 'E' o 'N'
+                                if (lugar.tipo_lugar === 'E') {
+                                    option.attr('style', 'color: #0f890d;');
+                                } else if (lugar.tipo_lugar === 'N') {
+                                    option.attr('style', 'color: #0630d6;');
+                                }
+    
+                                $('#select' + idDetalleActividad).append(option);
+                            }
+                        },
+                        error: function () {
+                            console.error('Error al obtener los lugares');
+                        }
+                    });
+                });
+            }
+    
+            // Llama a filtrarLugares para cada detalleActividad
+            $('[id^=checkbox]').each(function () {
+                var idDetalleActividad = this.id.replace('checkbox', '');
+                filtrarLugares(idDetalleActividad);
+            });
+        });
+    </script>
+</body>
+
+</html>

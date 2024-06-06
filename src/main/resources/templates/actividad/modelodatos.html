@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout/head :: head"></head>
+<body data-topbar="colored">
+        <div id="layout-wrapper">
+            <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
+            <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
+
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="page-title-box" style="background-color: #0c289a;color: white;">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- end page title end breadcrumb -->
+
+                    <div class="page-content-wrapper">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <iframe title="actividad_abril" width="100%" height="541.25" 
+                                src="https://app.powerbi.com/view?r=eyJrIjoiMTFjNjk4NmEtYTJhMi00ZDY5LThkZGMtMTRjODBmOWE0NzgxIiwidCI6IjEwZmY2MmE5LWFkYjgtNGUzOC05MGI5LTE5ODczZDA1OTMxMCJ9&pageName=ReportSection" 
+                                frameborder="0" allowFullScreen="true"></iframe>
+
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+
+                
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                2023 © SIASE.
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-right d-none d-sm-block">
+                                    Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        
+        <!-- /Right-bar -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- JAVASCRIPT -->
+        <div th:replace="layout/pie :: pie"></div>
+        
+          
+    </body>
+</html>

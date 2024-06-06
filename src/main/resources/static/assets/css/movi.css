@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #000; /* Color de fondo principal (negro) */
+}
+
+.blood-rain {
+    position: absolute;
+    width: 2px; /* Ancho de las gotas */
+    height: 15px; /* Altura de las gotas */
+    background-color: #FF0000; /* Color de las gotas (rojo) */
+    animation: bloodRain 2s linear infinite; /* Animación de las gotas */
+}
+
+@keyframes bloodRain {
+    0% {
+        transform: translateY(-10px) translateX(0); /* Posición inicial de las gotas */
+        opacity: 0; /* Inicialmente invisibles */
+    }
+    25% {
+        opacity: 1; /* Haciéndose visibles */
+    }
+    75% {
+        opacity: 1; /* Manteniendo la visibilidad */
+    }
+    100% {
+        transform: translateY(100vh) translateX(calc(100vw * var(--random))); /* Caida y movimiento aleatorio */
+        opacity: 0; /* Desapareciendo al llegar al fondo */
+    }
+}

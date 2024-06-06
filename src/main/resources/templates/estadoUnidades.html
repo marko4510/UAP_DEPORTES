@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout/head :: head"></head>
+
+<body data-topbar="colored">
+    <div id="layout-wrapper">
+        <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
+        <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
+
+        <div class="main-content">
+
+            <div class="page-content">
+
+                <div class="page-title-box" style="background-color: #0c289a;color: white;">
+                    <div class="container-fluid">
+                    </div>
+                </div>
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="header-title" style="color: #1e7a52;text-align: center;">UNIDADES CON
+                                            ACTIVIDADES</h4>
+                                        <div style="color: #3ddc97;
+                                        font-size: 100px;
+                                        font-weight: bold;
+                                        text-align: center;">
+                                            <span th:text="${unidadConActividad.size()}"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="header-title" style="color: #ef927b;text-align: center;">UNIDADES SIN
+                                            ACTIVIDADES</h4>
+                                        <div style="color: #ef927b;
+                                        font-size: 100px;
+                                        font-weight: bold;
+                                        text-align: center;"><!--onclick="mostrarunidadesSinActividad()"-->
+                                            <span th:text="${unidadSinActividad.size()}"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h4 class="header-title" style="color: #24a2d8;text-align: center;">TODAS LAS
+                                            UNIDADES</h4>
+                                        <!--<p class="card-title-desc" style="color: #350b7d;text-align: center;">Todas las
+                                            unidades existentes.</p>-->
+
+                                        <div style="color: #24a2d8;
+                                        font-size: 100px;
+                                        font-weight: bold;
+                                        text-align: center;">
+                                            <span th:text="${unidadAll.size()}"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a style="background-color: #41d696;" class="nav-link active" data-toggle="tab" href="#unidadesConActividad" role="tab">
+                                                    <span style="color: #000000;"
+                                                        class="d-none d-md-inline-block">Unidades Con Actividad</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" >
+                                                <a style="background-color: #ef927b;" class="nav-link" data-toggle="tab" href="#unidadesSinActividad" role="tab">
+                                                    <span style="color: #000000;"
+                                                        class="d-none d-md-inline-block">Unidades Sin Actividad</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" >
+                                                <a style="background-color: #24a2d8;" class="nav-link" data-toggle="tab" href="#unidadesAll" role="tab">
+                                                    <span style="color: #000000;"
+                                                        class="d-none d-md-inline-block">Todas las Unidades</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content p-3">
+                                            <div class="tab-pane active" id="unidadesConActividad" role="tabpanel">
+                                                <table id="example1"
+                                                    class="table table-striped table-bordered dt-responsive"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th WIDTH="2%">#</th>
+                                                            <th WIDTH="40%">RESPONSABLE</th>
+                                                            <th WIDTH="58%">UNIDAD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr th:each="all, i:${unidadConActividad}">
+                                                            <td th:text="${i.index+1}"></td>
+                                                            <td>
+                                                                <th:block th:each="pa:${all.personalAdministrativos}" th:if="${pa.estado=='A'}">
+                                                                    <div
+                                                                        th:text="${pa.persona.nombre+' '+pa.persona.apellido}">
+                                                                    </div>
+                                                                </th:block>
+                                                            </td>
+                                                            <td th:text="${all.nom_unidad}"></td>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tab-pane" id="unidadesSinActividad" role="tabpanel">
+                                                <table id="example2"
+                                                    class="table table-striped table-bordered dt-responsive"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th WIDTH="2%">#</th>
+                                                            <th WIDTH="40%">RESPONSABLE</th>
+                                                            <th WIDTH="58%">UNIDAD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr th:each="all, i:${unidadSinActividad}">
+                                                            <td th:text="${i.index+1}"></td>
+                                                            <td>
+                                                                <th:block th:each="pa:${all.personalAdministrativos}" th:if="${pa.estado=='A'}">
+                                                                    <div
+                                                                        th:text="${pa.persona.nombre+' '+pa.persona.apellido}">
+                                                                    </div>
+                                                                </th:block>
+                                                            </td>
+                                                            <td th:text="${all.nom_unidad}"></td>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tab-pane" id="unidadesAll" role="tabpanel">
+                                                <table id="example3"
+                                                    class="table table-striped table-bordered dt-responsive"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th WIDTH="2%">#</th>
+                                                            <th WIDTH="40%">RESPONSABLE</th>
+                                                            <th WIDTH="58%">UNIDAD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr th:each="all, i:${unidadAll}">
+                                                            <td th:text="${i.index+1}"></td>
+                                                            <td>
+                                                                <th:block th:each="pa:${all.personalAdministrativos}" th:if="${pa.estado=='A'}">
+                                                                    <div
+                                                                        th:text="${pa.persona.nombre+' '+pa.persona.apellido}">
+                                                                    </div>
+                                                                </th:block>
+                                                            </td>
+                                                            <td th:text="${all.nom_unidad}"></td>
+                                                            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <div id="replace_unidad">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        2023 © SIASE.
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-right d-none d-sm-block">
+                            Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <div class="rightbar-overlay"></div>
+    <div th:replace="layout/pie :: pie"></div>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                //, "colvis"
+            }).buttons().container().appendTo(
+                '#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo(
+                '#example2_wrapper .col-md-6:eq(0)');
+            $('#example3').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo(
+                '#example3_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+</body>
+
+</html>

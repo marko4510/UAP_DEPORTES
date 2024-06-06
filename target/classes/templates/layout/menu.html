@@ -1,0 +1,96 @@
+<div class="vertical-menu" th:fragment="menu">
+    <div data-simplebar class="h-100">
+        <div id="sidebar-menu">
+            <hr>
+            <div class="text-center"><img src="../../../../assets/images/uap.png" style="width: 70%; height: 20%; background-repeat: no-repeat;" alt="" height="22">
+            </div>
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title">Menu</li>
+                <!--<a href="javascript: void(0);" class="waves-effect">
+                    <div class="d-inline-block icons-sm mr-1"><i class="uim uim-document-layout-left"></i></div>
+                    <span class="badge badge-pill badge-danger float-right">07</span>
+                    <span>Forms</span>
+                </a>-->
+                
+                <li>
+                    <a th:href="@{/actividadR}" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-document-layout-left"></i></div>
+                        <span >Formulario Actividad</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/listaActividades}" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div>
+                        <span >Todas las actividades</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/eventos}" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-schedule"></i></div>
+                        <span >Eventos U.A.P.</span>
+                    </a>
+                </li>
+                <li th:if="${nivel.id_nivel_funcional==1 or unidad.id_unidad_funcional==58 or unidad.id_unidad_funcional==1}">
+                    <a th:href="@{/estadoUnidades}"  class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-chart-pie"></i></div>
+                        <span >Reporte de unidades</span>
+                    </a>
+                </li>
+                <li th:if="${nivel.id_nivel_funcional==1 or unidad.id_unidad_funcional==58 or unidad.id_unidad_funcional==56 or unidad.id_unidad_funcional==69}">
+                    <a th:href="@{/modeloDatos}" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-analysis"></i></div>
+                        <span >Modelo de datos</span>
+                    </a>
+                </li>
+                
+                <li th:if="${nivel.id_nivel_funcional==1}">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-sign-in-alt"></i></div>
+            
+                        <span>Mis programaciones</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a th:href="@{/programarActividadImpacto}">Actividades de impacto</a></li>
+                        <li><a th:href="@{/programadosL}">Programados</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-airplay"></i></div>
+            
+                        <span>Transmisiones</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a th:href="@{/actividades_uap}">Actividades UAP</a></li>
+                        <li><a th:href="@{/transmision}">Transmisiones semanales</a></li>
+                    </ul>
+                </li>
+                <li th:if="${nivel.id_nivel_funcional==1}">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-link-h"></i></div>
+            
+                        <span>Administrar</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a th:href="@{/Persona}">Formulario Persona</a></li>
+                        <li><a th:href="@{/Credencial}">Formulario Usuario</a></li>
+                        <li><a th:href="@{/DireccionR}">Formulario Direccion</a></li>
+                        <li><a th:href="@{/UnidadR}">Formulario  Unidad</a></li>
+                    </ul>
+                </li>
+                
+                <li style="width: 100%;
+                height: 50px;
+                background-image: url(firefox.png), url(bubbles.png), linear-gradient(to right, rgba(45, 9, 224), rgba(235, 26, 26, 0.9));
+                background-repeat: no-repeat, no-repeat, no-repeat;
+                background-position: bottom right, left, right;
+                background: -moz-linear-gradient(to right, rgba(45, 9, 224), rgba(235, 26, 26, 0.9)), -webkit-gradient(to right, rgba(45, 9, 224), rgba(235, 26, 26, 0.9)), -ms-linear-gradient(to right, rgba(45, 9, 224), rgba(235, 26, 26, 0.9)), linear-gradient(to right, rgb(45, 9, 224), rgba(235, 26, 26, 0.9));">
+                    <a th:href="@{/contactos}" class="waves-effect" style="color: azure;">
+                        <div class="d-inline-block icons-sm mr-1"><i class="mdi mdi-timeline-help-outline"></i></div>
+                        <span >Soporte</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

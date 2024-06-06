@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+    <style>
+        .table-row {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid black;
+            padding: 8px;
+        }
+        .table-header {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body data-topbar="colored">
+    <div id="layout-wrapper">
+        <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
+        <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-title-box" style="background-color: #0c289a;color: white;">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                                                    role="alert" th:if="${mensaje != null}">
+                                                    <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                                                    <li class="nav-item text-center">
+                                                        <a style="background-color: #ef927b;" class="nav-link" data-toggle="tab"
+                                                            href="#lSemanaPasada" role="tab">
+                                                            <span style="color: #ffffff;"
+                                                                class="d-none d-md-inline-block">ACTIVIDADES SEMANA PASADA</span>
+                                                            <p
+                                                                style="font-size: 10px; width: 100%; height: 1px; color: #f5f5f5;">
+                                                                ([[${fechalunespasado}]] - [[${fechadomingopasado}]])
+                                                            </p>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item text-center">
+                                                        <a style="background-color: #41d696;" class="nav-link"
+                                                            data-toggle="tab" href="#lSemanaActual" role="tab">
+                                                            <span style="color: #ffffff;"
+                                                                class="d-none d-md-inline-block">ACTIVIDADES SEMANA ACTUAL</span>
+                                                            <p
+                                                                style="font-size: 10px; width: 100%; height: 1px; color: #f5f5f5;">
+                                                                ([[${fechalunesactual}]] - [[${fechadomingoactual}]])
+                                                            </p>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item text-center">
+                                                        <a style="background-color: #24a2d8;" class="nav-link" data-toggle="tab"
+                                                            href="#lSemanaSiguiente" role="tab">
+                                                            <span style="color: #ffffff;"
+                                                                class="d-none d-md-inline-block">ACTIVIDADES SEMANA
+                                                                SIGUIENTE</span>
+                                                            <p
+                                                                style="font-size: 10px; width: 100%; height: 1px; color: #f5f5f5;">
+                                                                ([[${fechalunesfuturo}]] - [[${fechadomingofuturo}]])
+                                                            </p>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content p-3">
+                                                    <div th:class="${moda}?'tab-pane active':'tab-pane'" id="lSemanaPasada" role="tabpanel">
+                                                        <hr>
+                                                        <h4 class="header-title" style="color: #ef927b;"> ACTIVIDADES DE IMPACTO SEMANA PASADA</h4>
+                                                        <hr>
+                                                        <!--class de table class="table table-striped table-bordered dt-responsive nowrap"-->
+                                                        <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                                                            <li class="nav-item text-center" th:each="ff:${fechasSemanaPasada}">
+                                                                <a class="nav-link" th:style="${'background-color: #ef927b;'}"
+                                                                th:href="@{'/programarActividadImpacto/' + ${#dates.format(ff, 'yyyy-MM-dd')}+'/'+${'a'}}" role="tab">
+                                                                    <span style="color: #2b0965;"
+                                                                        class="d-none d-md-inline-block" th:text="${#dates.format(ff,'EE d MMMM')}"></span>
+                                                                    
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div th:class="${modb}?'tab-pane active':'tab-pane'+${active}" id="lSemanaActual" role="tabpanel">
+                                                        <hr>
+                                                        <h4 class="header-title" style="color: #41d696;"> ACTIVIDADES DE IMPACTO SEMANA ACTUAL</h4>
+                                                        <hr>
+                                                        <!--class de table class="table table-striped table-bordered dt-responsive nowrap"-->
+                                                        <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                                                            <li class="nav-item text-center" th:each="ff:${fechasSemanaActual}">
+                                                                <a class="nav-link" th:style="${'background-color: #41d696;'}"
+                                                                    th:href="@{'/programarActividadImpacto/' + ${#dates.format(ff, 'yyyy-MM-dd')}+'/'+${'b'}}" role="tab">
+                                                                    <span style="color: #2b0965;"
+                                                                        class="d-none d-md-inline-block" th:text="${#dates.format(ff,'EE d MMMM')}"></span>
+                                                                    
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div th:class="${modc}?'tab-pane active':'tab-pane'" id="lSemanaSiguiente" role="tabpanel">
+                                                        <hr>
+                                                        <h4 class="header-title" style="color: #24a2d8;"> ACTIVIDADES DE IMPACTO SEMANA SIGUIENTE</h4>
+                                                        <hr>
+                                                        <!--class de table class="table table-striped table-bordered dt-responsive nowrap"-->
+                                                        <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                                                            <li class="nav-item text-center" th:each="ff:${fechasSemanaSiguiente}">
+                                                                <a class="nav-link" th:style="${'background-color: #24a2d8;'}"
+                                                                th:href="@{'/programarActividadImpacto/' + ${#dates.format(ff, 'yyyy-MM-dd')}+'/'+${'c'}}" role="tab">
+                                                                
+                                                                <span style="color: #2b0965;"
+                                                                        class="d-none d-md-inline-block" th:text="${#dates.format(ff,'EE d MMMM')}"></span>
+                                                                    
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <hr>
+                                                    <table 
+                                                    class="table table-striped table-bordered dt-responsive"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead style="font-size:12px;">
+                                                        <tr>
+                                                            
+                                                            <th>#</th>
+                                                            <th>MAS</th>
+                                                            <th>UNIDAD</th>
+                                                            <th>ACTIVIDAD</th>
+                                                            <th>TIPO ACTIVIDAD</th>
+                                                            <th>AFLUENCIA</th>
+                                                            <th>FECHAS</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+
+
+                                                    <tbody style="font-size:12px;">
+                                                        <tr th:each="ac, ind:${listaActividadesPorFecha}" 
+                                                            th:if="${ac.estado!='X'}" data-toggle="tooltip" data-placement="top" th:title="${ac.descripcion_actividad}"
+                                                            th:style="${ac.programdo == false} ? 'background-color: rgb(235, 217, 166);' : ''">
+                                                            
+                                                            <td th:text="${ac.id_actividad}"></td>
+                                                            <td>
+                                                                <th:block th:if="${ac.programacions.size()==0} and ${nivel.id_nivel_funcional==1}">
+                                                                    <a style="font-size: 20px;" th:onclick="programar([[${ac.id_actividad}]])" 
+                                                                        href="#" data-toggle="tooltip" data-placement="top" title="Programar"><i
+                                                                        class="mdi mdi-check-underline-circle-outline"></i></a><!-- programar-->
+                                                                </th:block>
+                                                                <th:block th:each="p:${ac.programacions}"
+                                                                    th:if="${nivel.id_nivel_funcional==1}">
+                                                                    <a style="font-size: 20px;" th:if="${p.actividad.id_actividad==ac.id_actividad}"
+                                                                        href="#" data-toggle="tooltip" data-placement="top" title="Programado"><i
+                                                                            class="mdi mdi-check-underline-circle"></i></a><!--mdi mdi-check-underline-circle programar-->
+                                                                </th:block>
+                                                                
+                                                            </td>
+                                                            <td th:text="${ac.unidadFuncional.nom_unidad}"></td>                                               
+                                                            <td th:text="${ac.nombre_actividad}"></td>
+                                                            
+                                                            <td th:text="${ac.tipoActividad.nombre_tipo_actividad}"></td>
+                                                            <td th:text="${ac.afluencia.nombre_afluencia}"></td>
+                                                            
+                                                            <td>
+                                                                
+                                                                    <div th:each="da,ind:${ac.detalleActividads}" th:if="${da.estado!='X'}" >
+                                                                        <div style="border: 1px dotted black;">
+                                                                            <span class="badge badge-pill badge-light"
+                                                                            style="background-color: #f2f3b9;"
+                                                                            th:text="${#dates.format(da.fecha_detalle_actividad,'EEEE d')}"> </span>
+                                                                            
+                                                                            <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado!='X'}">
+                                                                                
+                                                                                <span class="badge badge-pill badge-light"
+                                                                                    style="background-color: #c0efa3;"
+                                                                                    th:text="${sda.hora_inicio}+' - '+${sda.hora_final}"></span>
+                                                                                    
+                                                                                    <div th:each="l:${sda.lugares}">
+                                                                                
+                                                                                        <span class="badge badge-pill badge-light"
+                                                                                            style="background-color: #a3e1ef;"
+                                                                                            th:text="${l.nombre_lugar}"></span>
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                   
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--confirmar programacion-->
+                        <div class="modal fade" tabindex="-1" id="ModalPro" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <form th:action="@{/programarActividadI}" method="post">
+                                        <input type="hidden" id="id_activida" name="id_actividaI">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="nombre"></h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="text-center"><img src="../../../../assets/images/interrogacion.png" 
+                                                style="width: 30%; height: 20%; background-repeat: no-repeat;" alt="" height="22">
+                                                <h3>¿ESTA SEGURO DE PROGRAMAR?</h3>
+                                            </div>
+                                            
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button type="submit" class="btn btn-primary me-1"
+                                                        data-bs-dismiss="modal">Confirmar</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--modal programarse-->
+                        <div class="modal fade" tabindex="-1" id="ModalFechaProgramacion" role="dialog"
+                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content text-center">
+
+                                    <form th:action="@{/cargarFechaProgramacion}" method="post">
+                                        <input type="hidden" id="fechaProgramacion" name="fechaProgramacion">
+                                        <input type="hidden" id="id_pro" name="id_pro">
+                                        <div class="modal-header">
+                                            <h5 id="nombre_a">
+                                                </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+
+                                                <div class="col-md-12">
+                                                    <label class="col-form-label">Fecha</label>
+                                                    <input type="text" id="fechaProgramacion1" class="form-control"
+                                                        required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="col-form-label">Hora</label>
+                                                    <input type="time" id="horaProgramacion" name="horaProgramacion"
+                                                        class="form-control" required />
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="col-form-label">Lugares</label>
+                                                    <select class="form-control" name="id_l" id="idlugars" required>
+                                                        <option value="">Seleccionar</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="col-form-label">Tipo</label>
+                                                    <select class="form-control" name="tipoProgramacion" id="" required>
+                                                        <option value="">Seleccionar</option>
+                                                        <option value="PUBLICO">PUBLICO</option>
+                                                        <option value="PRIVADO">PRIVADO</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button type="submit" class="btn btn-primary me-1"
+                                                        data-bs-dismiss="modal">Confirmar</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--modal ver detalles-->
+
+                        <!-- modal  evaluacion-->
+
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            2023 © SIASE.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="rightbar-overlay"></div>
+    <div th:replace="layout/pie :: pie"></div>
+
+    <script type="text/javascript">
+        function programar(id_activida) {
+            var id_ac = id_activida;
+            
+            $('#id_activida').val(id_ac);
+            $("#nombre").text('Actividad # : '+id_ac);
+            $("#ModalPro").modal("show");
+        }
+        function cargarFechaProgramacion(id_programacion, fecha_detalle_actividad, nombre_actividad) {
+            var id_pro = id_programacion;
+            var fechaP = fecha_detalle_actividad;
+            var nombre_a = nombre_actividad;
+            //alert(id_pro);
+            $.getJSON("/sacarLugarPorProgramacion", {
+                idProgramacion: id_pro,
+                ajax: 'true'
+            }, function (data) {
+                var html = '<option value="">--Lugares--</option>';
+                var len = data.length;
+                for (var i = 0; i < len; i++) {
+                    html += '<option value="' + data[i].id_lugar + '">'
+                        + data[i].nombre_lugar + '</option>';
+                }
+                html += '</option>';
+                $('#idlugars').html(html);
+                $("#ModalFechaProgramacion").modal("show");
+            });
+
+
+            $('#id_pro').val(id_pro);
+            $('#fechaProgramacion').val(fechaP);
+            $('#fechaProgramacion1').val(fechaP);
+            $('#nombre_a').text(nombre_a);
+
+        }
+        function eliminarActividad(id_actividad) {
+            var id_a = id_actividad;
+            if (confirm('Esta seguro de eliminar est actividad?')) {
+                window.location.href = '/eliminar-actividad/' + id_a;
+            }
+        }
+    </script>
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            "responsive" : true,
+            "lengthChange" : false,
+            "autoWidth" : false,
+            "buttons" : [ "copy", "csv", "excel", "pdf", "print" ]
+        //, "colvis"
+        }).buttons().container().appendTo(
+                '#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "responsive" : true,
+            "lengthChange" : false,
+            "autoWidth" : false,
+            "buttons" : [ "copy", "csv", "excel", "pdf", "print" ]
+        }).buttons().container().appendTo(
+                '#example2_wrapper .col-md-6:eq(0)');
+        $('#example3').DataTable({
+            "responsive" : true,
+            "lengthChange" : false,
+            "autoWidth" : false,
+            "buttons" : [ "copy", "csv", "excel", "pdf", "print" ]
+        }).buttons().container().appendTo(
+                '#example3_wrapper .col-md-6:eq(0)');
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout/head :: head"></head>
+
+<body data-topbar="colored">
+    <div id="layout-wrapper">
+        <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
+        <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="page-title-box" style="background-color: #0c289a;color: white;">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                                            role="alert" th:if="${mensaje != null}">
+                                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form th:action="@{/CredencialF}" method="post">
+                                            <input type="hidden"
+                                                th:field="${personaAdministrativo.id_personal_administrativo}">
+                                            <h4 class="header-title">Registrar Usuario</h4>
+                                            <div class="form-group row">
+
+                                                <div class="col-md-2">
+                                                    <div>
+                                                        <label class="col-form-label">Codigo Funcionario</label>
+                                                        <input class="form-control" type="text"
+                                                            th:field="${personaAdministrativo.cod_funcionario}"
+                                                            onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                                            style="text-transform:uppercase;" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <label class="col-form-label">Persona</label>
+                                                        <select class="selectize" required
+                                                            th:field="${personaAdministrativo.persona}">
+                                                            <option value="" selected>Seleccionar...</option>
+                                                            <option th:each="perAdm:${personas}"
+                                                                th:value="${perAdm.id_persona}"
+                                                                th:text="${perAdm.nombre+' '+perAdm.apellido}">-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div>
+                                                        <label class="col-form-label">Unidad Funcional</label>
+                                                        <select class="selectize" required
+                                                            th:field="${personaAdministrativo.unidadFuncional}">
+                                                            <option value="" selected>Seleccionar...</option>
+                                                                <option th:each="uniF:${unidadFuncionales}"
+                                                                    th:value="${uniF.id_unidad_funcional}"
+                                                                    th:text="${uniF.nom_unidad}">-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <label class="col-form-label">Cargo</label>
+                                                        <input class="form-control" type="text"
+                                                            th:field="${personaAdministrativo.cargo_funcionario}"
+                                                            onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                                            style="text-transform:uppercase;" required>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button type="submit"
+                                                        class="btn btn-primary mb-2 ">Registrar</button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Lista de Personal Administrativo</h4>
+                                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap"
+                                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>CODIGO FUNCIONARIO</th>
+                                                    <th>NOMBRE FUNCIONARIO</th>
+                                                    <th>UNIDAD FUNCIONAL</th>
+                                                    <th>CARGO</th>
+                                                    <th>NIVEL</th>
+                                                    <th>ACCION</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr th:each="perAdm : ${personalAdministrativas}"
+                                                    th:if="${perAdm.estado != 'X' }">
+                                                    <td th:text="${perAdm.cod_funcionario}"></td>
+                                                    <td th:text="${perAdm.persona.nombre}+' '+${perAdm.persona.apellido}"></td>
+                                                    <td th:text="${perAdm.unidadFuncional.nom_unidad}"></td>
+                                                    <td th:text="${perAdm.cargo_funcionario}"></td>
+                                                    <td th:text="${perAdm.unidadFuncional.nivelFuncional.id_nivel_funcional}+' - '+${perAdm.unidadFuncional.nivelFuncional.nom_nivel}"></td>
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+
+                                                            <a type="button"
+                                                                th:href="@{'editar-credencial/'+${perAdm.id_personal_administrativo}}"
+                                                                class="btn btn-outline-secondary btn-sm"
+                                                                data-placement="top" title="Editar">
+                                                                <i class="mdi mdi-pencil"></i>
+                                                            </a>
+                                                            <a type="button"
+                                                                th:attr="onclick=${'MandarURL('+perAdm.id_personal_administrativo+')'}"
+                                                                class="btn btn-outline-secondary btn-sm"
+                                                                data-toggle="tooltip" data-placement="top"
+                                                                title="Eliminar">
+                                                                <i class="mdi mdi-trash-can"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            2023 © SIASE.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+    <script>
+        function MandarURL(a) {
+            swal({
+                title: 'Eliminar Registro?',
+                type: 'error',
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: "Cancelar",
+                html:
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-credencial/" + a + "'  >" +
+                    "Eliminar" +
+                    "</a>",
+            }).then().done();
+        }
+    </script>
+    <!-- JAVASCRIPT -->
+    <div th:replace="layout/pie :: pie"></div>
+
+</body>
+
+</html>
