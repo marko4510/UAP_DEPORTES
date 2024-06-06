@@ -50,6 +50,9 @@ public class Actividad implements Serializable{
     private String avance_actividad;
 
 
+    //ATRIBUTOS PARA GESTIONAR LAS RESERVAS
+
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad", fetch = FetchType.LAZY)
 	private List<Responsable> responsables;
 

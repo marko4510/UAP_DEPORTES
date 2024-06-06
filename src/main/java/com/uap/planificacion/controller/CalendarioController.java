@@ -59,50 +59,32 @@ public class CalendarioController {
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
             String lugar1="";
             String lugar2="";
-            String lugar3="";
-            String lugar4="";
-            String lugar5="";
-            String lugar6="";
-            String lugar7="";
+            // String lugar3="";
+            // String lugar4="";
+            // String lugar5="";
+            // String lugar6="";
+            // String lugar7="";
             List<Evento> events = new ArrayList<>();
             for (Evento evento : eventoService.listaEventosSolicitados()) {
-                if (u.getId_unidad_funcional()==53 //sec general 
+                if (u.getId_unidad_funcional()==1 //sec general 
                 
-                && (evento.getLugar().getNombre_lugar().equals("PARANINFO DE LA UAP") 
-                || evento.getLugar().getNombre_lugar().equals("RECTORADO SALON HCU"))) {
+                && (evento.getLugar().getNombre_lugar().equals("CANCHA") 
+                || evento.getLugar().getNombre_lugar().equals("COLISEO"))) {
                 events.add(evento);  
-                    lugar1="PARANINFO DE LA UAP";
-                    lugar2="RECTORADO SALON HCU";
+                    lugar1="CANCHA";
+                    lugar2="COLISEO";
                 }
-                if (u.getId_unidad_funcional()==67 //adm campus 
-                && evento.getLugar().getNombre_lugar().equals("AUDITORIO BLOQUE H")) {
-                events.add(evento); 
-                    lugar3="AUDITORIO BLOQUE H";
-                }
-                if (u.getId_unidad_funcional()==5 // deportes
-                && (evento.getLugar().getNombre_lugar().equals("COLISEO POLIFUNCIONAL") 
-                || evento.getLugar().getNombre_lugar().equals("COLISEO CERRADO UNIVERSITARIO")
-                || evento.getLugar().getNombre_lugar().equals("CANCHA LA GUARIDA DEL JAGUAR")
-                || evento.getLugar().getNombre_lugar().equals("CANCHA DE FRONTON DEL CAMPUS U"))) {
-                events.add(evento);    
-                    lugar4="COLISEO POLIFUNCIONAL";
-                    lugar5="COLISEO CERRADO UNIVERSITARIO";
-                    lugar6="CANCHA LA GUARIDA DEL JAGUAR";
-                    lugar7="CANCHA DE FRONTON DEL CAMPUS U";
-                }
-                if (u.getId_unidad_funcional()==80 //rectorado
-                ) {
-                    events.add(evento);
-                }
+            
+            
                 
             }
             model.addAttribute("lugar1", lugar1);
             model.addAttribute("lugar2", lugar2);
-            model.addAttribute("lugar3", lugar3);
-            model.addAttribute("lugar4", lugar4);
-            model.addAttribute("lugar5", lugar5);
-            model.addAttribute("lugar6", lugar6);
-            model.addAttribute("lugar7", lugar7);
+            // model.addAttribute("lugar3", lugar3);
+            // model.addAttribute("lugar4", lugar4);
+            // model.addAttribute("lugar5", lugar5);
+            // model.addAttribute("lugar6", lugar6);
+            // model.addAttribute("lugar7", lugar7);
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("nivel", u.getNivelFuncional());

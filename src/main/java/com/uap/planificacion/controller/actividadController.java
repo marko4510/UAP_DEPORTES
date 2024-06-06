@@ -328,55 +328,11 @@ public class actividadController {
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
             System.out.println(u.getNom_unidad() + "++++++++++++++++++++");
-            if (u.getNivelFuncional().getId_nivel_funcional() == 1) {
+           
+            model.addAttribute("listaActividadesMiUnidadPasado", actividadService.findAll());
+         
 
-                model.addAttribute("listaActividadesMiUnidadActual", actividadService
-                        .listaActividadPorSemanaAllUnidades(fechaLunesSemanaActual, fechaDomingoSemanaActual));
-                model.addAttribute("listaActividadesMiUnidadPasado", actividadService
-                        .listaActividadPorSemanaAllUnidades(fechaLunesSemanaPasado, fechaDomingoSemanaPasado));
-                model.addAttribute("listaActividadesMiUnidadFuturo",
-                        actividadService.listaActividadPorSemanaAllUnidades(fechaLunes, fechaDomingo));
-                model.addAttribute("listaActividadesMiUnidad",
-                        actividadService.findAllActividadesThen(fechaPasada10, fechaHoy));
-                model.addAttribute("nivel", u.getNivelFuncional());
-            }
-            if (u.getNivelFuncional().getId_nivel_funcional() == 2) {
-
-                model.addAttribute("listaActividadesMiUnidadActual",
-                        actividadService.listaActividadPorSemanaDireccion(
-                                u.getDireccionFuncional().getId_direccion_funcional(), fechaLunesSemanaActual,
-                                fechaDomingoSemanaActual));
-                model.addAttribute("listaActividadesMiUnidadPasado",
-                        actividadService.listaActividadPorSemanaDireccion(
-                                u.getDireccionFuncional().getId_direccion_funcional(), fechaLunesSemanaPasado,
-                                fechaDomingoSemanaPasado));
-                model.addAttribute("listaActividadesMiUnidadFuturo", actividadService.listaActividadPorSemanaDireccion(
-                        u.getDireccionFuncional().getId_direccion_funcional(), fechaLunes, fechaDomingo));
-                // model.addAttribute("listaActividadesMiUnidad",
-                // actividadService.listaActividadesPorDireccionYRango(u.getDireccionFuncional().getId_direccion_funcional(),
-                // fechaPasada10, fechaHoy));
-                model.addAttribute("nivel", u.getNivelFuncional());
-            }
-
-            if (u.getNivelFuncional().getId_nivel_funcional() >= 3) {
-                model.addAttribute("listaActividadesMiUnidadActual",
-                        actividadService.listaActividadPorSemanaUnidad(
-                                personalAdministrativo.getUnidadFuncional().getId_unidad_funcional(),
-                                fechaLunesSemanaActual, fechaDomingoSemanaActual));
-                model.addAttribute("listaActividadesMiUnidadPasado",
-                        actividadService.listaActividadPorSemanaUnidad(
-                                personalAdministrativo.getUnidadFuncional().getId_unidad_funcional(),
-                                fechaLunesSemanaPasado, fechaDomingoSemanaPasado));
-                model.addAttribute("listaActividadesMiUnidadFuturo",
-                        actividadService.listaActividadPorSemanaUnidad(
-                                personalAdministrativo.getUnidadFuncional().getId_unidad_funcional(), fechaLunes,
-                                fechaDomingo));
-                // model.addAttribute("listaActividadesMiUnidad",
-                // actividadService.listaActividadPorSemana(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional(),
-                // fechaLunes, fechaDomingo));
-
-                model.addAttribute("nivel", u.getNivelFuncional());
-            }
+        
             return "actividad/formulario";
 
         } else {

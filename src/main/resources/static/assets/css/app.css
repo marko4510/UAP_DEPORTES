@@ -225,7 +225,7 @@ body[data-layout="horizontal"] .navbar-brand-box {
   padding: 24px 12px 65px 12px;
   background-color: #3051D3;
   margin: 0px -12px;
-  background-image: url("../images/bg-pattern.png");
+  background-image: url("../images/bg-deportes.png");
   background-size: cover; }
   .page-title-box .page-title {
     color: #fff;
@@ -2369,7 +2369,7 @@ body[data-layout="horizontal"][data-layout-size="boxed"] {
 
 /* 14. Authentication */
 .bg-pattern {
-  background-image: url("../images/bg-pattern.png");
+  background-image: url("../images/bg-deportes.png");
   background-size: cover;
   background-position: center; }
 

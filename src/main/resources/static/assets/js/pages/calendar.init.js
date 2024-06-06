@@ -83,6 +83,7 @@
                             let id_sub_detalle_actividad = subdetalle.id_sub_detalle_actividad;
                             
                             let avance_actividad = subdetalle.detalleActividad.actividad.avance_actividad;
+                            
                             console.log("avance actividad "+avance_actividad);
 
 
@@ -98,22 +99,21 @@
                             let hora_final = hora2 + ':' + minutos2;
                             
                             let color;
-
-                            // Asigna un color en función de alguna propiedad, por ejemplo, id_actividad
-                            switch (avance_actividad) {
-                                case 'solicitado':
-                                    color = 'orange';
-                                    break
-                                case 'aceptado':
-                                    color = 'blue';
-                                    break
-                                case 'concluido':
-                                    color = 'green';
-                                   break
-                                case 'cancelado':
-                                    color = 'red';
-                                   break
+                            for(let lugarr of lugares){
+                                
+                                switch (lugarr.nombre_lugar) {
+                                    case 'CANCHA':
+                                        color = 'orange';
+                                        break
+                                    case 'COLISEO':
+                                        color = 'blue';
+                                        break
+                               
+                                }
+                                
                             }
+                            // Asigna un color en función de alguna propiedad, por ejemplo, id_actividad
+                          
                             let evento = {
                                 title: nombre_lugar,//hora_inicio + ' - ' + hora_final,
                                 start: fecha_detalle_actividad, // Utilizar la fecha directamente
