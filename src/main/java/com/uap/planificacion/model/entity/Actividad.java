@@ -77,9 +77,7 @@ public class Actividad implements Serializable{
     @JoinColumn(name = "id_tipo_actividad")
     private TipoActividad tipoActividad;
     
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad", fetch = FetchType.LAZY)
-	private List<Evaluacion> evaluacions;
+   
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad", fetch = FetchType.LAZY)
@@ -94,7 +92,5 @@ public class Actividad implements Serializable{
     @JoinColumn(name = "id_estado_actividad")
     private EstadoActividad estadoActividad;
     
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "actividad", fetch = FetchType.LAZY)
-	private Transmision transmision;
+
 }

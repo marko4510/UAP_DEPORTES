@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.uap.planificacion.model.dao.IEventoDao;
 import com.uap.planificacion.model.entity.Actividad;
-import com.uap.planificacion.model.entity.ArchivoAdjunto;
+
 import com.uap.planificacion.model.entity.DetalleActividad;
 import com.uap.planificacion.model.entity.EstadoActividad;
-import com.uap.planificacion.model.entity.Evaluacion;
+
 import com.uap.planificacion.model.entity.Evento;
 import com.uap.planificacion.model.entity.Lugar;
 import com.uap.planificacion.model.entity.Persona;
@@ -45,11 +45,11 @@ import com.uap.planificacion.model.entity.SubDetalleActividad;
 import com.uap.planificacion.model.entity.UnidadFuncional;
 import com.uap.planificacion.model.service.IActividadService;
 import com.uap.planificacion.model.service.IAfluenciaService;
-import com.uap.planificacion.model.service.IArchivoAdjuntoService;
+
 import com.uap.planificacion.model.service.IDetalleActividadService;
 import com.uap.planificacion.model.service.IDireccionFuncionalService;
 import com.uap.planificacion.model.service.IEstadoActividadService;
-import com.uap.planificacion.model.service.IEvaluacionService;
+
 import com.uap.planificacion.model.service.IEventoService;
 import com.uap.planificacion.model.service.ILugarService;
 import com.uap.planificacion.model.service.IPersonaService;
@@ -58,9 +58,9 @@ import com.uap.planificacion.model.service.IProgramacionService;
 import com.uap.planificacion.model.service.IResponsableService;
 import com.uap.planificacion.model.service.ISubDetalleActividadService;
 import com.uap.planificacion.model.service.ITipoActividadService;
-import com.uap.planificacion.model.service.ITipoEvaluacionService;
+
 import com.uap.planificacion.model.service.IUnidadFuncionalService;
-import com.uap.planificacion.utils.AdjuntarArchivo;
+
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,12 +88,7 @@ public class actividadController {
     private IUnidadFuncionalService unidadService;
     @Autowired
     private IEstadoActividadService estadoActividadService;
-    @Autowired
-    private IArchivoAdjuntoService archivoAdjuntoService;
-    @Autowired
-    private IEvaluacionService evaluacionService;
-    @Autowired
-    private ITipoEvaluacionService tipoEvaluacionService;
+  
     @Autowired
     private IDireccionFuncionalService direccionFuncionalService;
     @Autowired
@@ -118,13 +113,13 @@ public class actividadController {
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+     
             model.addAttribute("programacion", new Programacion());
             model.addAttribute("listaProgramaciones", programacionService.findAllOrderFechaDesc());
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
             if (u.getNivelFuncional().getId_nivel_funcional() == 1) {
@@ -185,13 +180,13 @@ public class actividadController {
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+
             model.addAttribute("programacion", new Programacion());
             model.addAttribute("listaProgramaciones", programacionService.findAllOrderFechaDesc());
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+
             model.addAttribute("lugares", lugarService.findAll());
             // model.addAttribute("responsablesUnidad", unidadFuncional)
 
@@ -200,10 +195,7 @@ public class actividadController {
             long sic = 0;
             // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
 
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+           
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // establece el día de la semana en lunes
             cal.add(Calendar.WEEK_OF_YEAR, 1); // suma una semana
@@ -859,20 +851,17 @@ public class actividadController {
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("actividad", actividadService.findOne(id_actividad));
             model.addAttribute("personalADM", personalAdministrativo);
-            model.addAttribute("evaluacion", new Evaluacion());
+            //model.addAttribute("evaluacion", new Evaluacion());
             model.addAttribute("programacion", new Programacion());
             model.addAttribute("listaProgramaciones", programacionService.findAllOrderFechaDesc());
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+            //model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
 
             long sic = 0;
             // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+           
             model.addAttribute("cice", sic);
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
@@ -1383,98 +1372,9 @@ public class actividadController {
         return "redirect:/detalleActividad/" + id_actividad;
     }
 
-    /*-------------------hacer evaluacion------------------------------------------------------------------------------ */
-    @PostMapping(value = "/actvidadEvaluacion")
-    public String guardarActividadEvaluacion(@Validated Evaluacion evaluacion,
-            @RequestParam(value = "id_a") Long id_actividad,
-            Model model, RedirectAttributes redirectAttrs) throws FileNotFoundException, IOException {
-        // Adjuntar Archivo en Evaluacion
-        MultipartFile multipartFile = evaluacion.getFile();
-        String arch = multipartFile.getOriginalFilename();
-        String[] ta = arch.split("\\.");
-        System.out.println(ta[ta.length - 1] + " *************************************************");
+ 
 
-        if (!ta[ta.length - 1].equals("pdf")) {
-            redirectAttrs
-                    .addFlashAttribute("mensaje", "Lo sentimos! solo se hacepta documentos pdf, vuleva a evaluar.")
-                    .addFlashAttribute("clase", "danger alert-dismissible fade show");
-            return "redirect:/actividadR";
-        }
-        AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
-        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SPL/planificacion");
-
-        model.addAttribute("di", rutaArchivo);
-        List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
-        evaluacion.setNombreArchivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
-        Integer ad = adjuntarArchivo.adjuntarArchivoEvaluacion(evaluacion, rutaArchivo);
-        Actividad actividad = actividadService.findOne(id_actividad);
-        if (actividad.getEvaluacions().size() == 0) {
-            // cambiar estado de actividad a concluido
-            EstadoActividad estadoActividad = estadoActividadService.findOne((long) 2);
-            Double porcentaje = Double.parseDouble("" + evaluacion.getPorcentaje());
-            // double sol=
-            actividad.setEvaluacion_actividad_total(porcentaje * 0.3333);
-            actividad.setEstadoActividad(estadoActividad);
-            actividadService.save(actividad);//
-
-            ArchivoAdjunto archivoAdjunto = new ArchivoAdjunto();
-            archivoAdjunto.setNombre_archivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
-
-            archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-            // archivoAdjunto
-            archivoAdjunto.setRuta_archivo("SPL/planificacion/");
-            archivoAdjunto.setEstado("A");
-            ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
-
-            evaluacion.setArchivoAdjunto(archivoAdjunto2);
-            evaluacion.setActividad(actividad);
-            evaluacion.setEstado("A");
-            evaluacionService.save(evaluacion);
-        } else if (actividad.getEvaluacions().size() == 1) {
-            Evaluacion e1 = actividad.getEvaluacions().get(0);
-            // Evaluacion e2=evaluacion.get(2);
-            double a = Double.parseDouble("" + e1.getPorcentaje());
-            Double porcentaje = Double.parseDouble("" + evaluacion.getPorcentaje());
-            actividad.setEvaluacion_actividad_total((porcentaje + a) * 0.3333);
-            actividadService.save(actividad);
-
-            evaluacion.setActividad(actividad);
-            evaluacion.setEstado("A");
-            evaluacionService.save(evaluacion);
-
-        } else if (actividad.getEvaluacions().size() == 2) {
-
-            evaluacion.setActividad(actividad);
-            evaluacion.setEstado("A");
-            evaluacionService.save(evaluacion);
-
-            Evaluacion e1 = actividad.getEvaluacions().get(0);
-            Evaluacion e2 = actividad.getEvaluacions().get(1);
-            double a = Double.parseDouble("" + e1.getPorcentaje());
-            double b = Double.parseDouble("" + e2.getPorcentaje());
-            Double c = Double.parseDouble("" + evaluacion.getPorcentaje());
-            Double promedio = (a + b + c) * 0.3333;
-            actividad.setEvaluacion_actividad_total(promedio);
-            actividadService.save(actividad);
-        }
-        // FIN Adjuntar Archivo en Evaluacion
-
-        return "redirect:/actividadR/";
-
-    }
-
-    @RequestMapping(value = "/openFile/{id}", method = RequestMethod.GET, produces = "application/pdf")
-    public @ResponseBody FileSystemResource abrirArchivoMedianteResourse(HttpServletResponse response,
-            @PathVariable("id") long id_actividad) throws FileNotFoundException {
-        System.out.println(id_actividad + "-----------------------------");
-        ArchivoAdjunto ArchivoAdjuntos = archivoAdjuntoService.buscarArchivoAdjuntoPorEvaluacion(id_actividad);
-        System.out.println(ArchivoAdjuntos.getNombre_archivo() + " " + ArchivoAdjuntos.getRuta_archivo());
-        File file = new File("C:/" + ArchivoAdjuntos.getRuta_archivo() + ArchivoAdjuntos.getNombre_archivo());
-        response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
-        response.setHeader("Content-Length", String.valueOf(file.length()));
-        return new FileSystemResource(file);
-    }
+   
 
     @GetMapping("/formularioMesAnio")
     public String formularioMesAnio() {
@@ -1519,17 +1419,14 @@ public class actividadController {
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+ 
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+
 
             long sic = 0;
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+           
             model.addAttribute("cice", sic);
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
@@ -1557,18 +1454,14 @@ public class actividadController {
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+    
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+      
 
             long sic = 0;
-            // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+           
             model.addAttribute("cice", sic);
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
@@ -1597,18 +1490,15 @@ public class actividadController {
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+
 
             long sic = 0;
             // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+         
             model.addAttribute("cice", sic);
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
@@ -1635,18 +1525,15 @@ public class actividadController {
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+
 
             long sic = 0;
             // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+       
             model.addAttribute("cice", sic);
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
@@ -1675,18 +1562,15 @@ public class actividadController {
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+  
             model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("afluencias", afluenciaService.findAll());
             model.addAttribute("unidadFuncionales", unidadService.findAll());
-            model.addAttribute("tipoEvaluacion", tipoEvaluacionService.findAll());
+
 
             long sic = 0;
             // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+         
             model.addAttribute("cice", sic);
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());

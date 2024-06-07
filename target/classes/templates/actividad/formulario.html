@@ -135,7 +135,7 @@
                                                 </div>
                                                
                                                 <div class="col-md-3 mt-1">
-                                                    <label class="col-form-label" style="color: black;">Lugares</label>
+                                                    <label class="col-form-label" style="color: black;">Instalación Deportiva</label>
                                                     <select class="selectize" name="lugaresA">
                                                         <option value="" selected>Seleccionar...</option>
                                                         <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
@@ -177,7 +177,7 @@
                                                     <th>HORA INICIO</th>
                                                     <th>HORA FIN</th>
                                                     <th>INSTALACIÓN</th>
-                                                    <th>MAS</th>
+                                                    <th>ACCIÓN</th>
                                                   
 
                                                 </tr>
@@ -263,13 +263,13 @@
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Editar"><i
                                                             class="far fa-edit"></i></a><!--editar-->
-                                                    <a href="#"
+                                                    <!-- <a href="#"
                                                         
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Eliminar"
                                                         th:onclick="eliminarActividad([[${ac.id_actividad}]])"><i
-                                                            class="far fa-trash-alt"></i></a><!--eliminar-->
-                                                  </td>
+                                                            class="far fa-trash-alt"></i></a>
+                                                  </td> -->
 
                                             
                                                 </tr>

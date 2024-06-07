@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.uap.planificacion.model.entity.Actividad;
-import com.uap.planificacion.model.entity.Evaluacion;
 import com.uap.planificacion.model.entity.Persona;
 import com.uap.planificacion.model.entity.PersonalAdministrativo;
 import com.uap.planificacion.model.entity.Programacion;
@@ -81,7 +80,7 @@ public class homeController {
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("actividad", new Actividad());
-            model.addAttribute("evaluacion", new Evaluacion());
+
             model.addAttribute("programacion", new Programacion());
 
 
@@ -90,10 +89,7 @@ public class homeController {
             long sic = 0;
             // List<TipoEvaluacion> tevaluacion = new ArrayList<>();
 
-            for (Actividad ac : unidadFuncional.getActividads()) {
-                sic = (long) ac.getEvaluacions().size();
-
-            }
+          
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // establece el día de la semana en lunes
             cal.add(Calendar.WEEK_OF_YEAR, 1); // suma una semana
