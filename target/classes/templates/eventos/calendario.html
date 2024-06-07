@@ -133,6 +133,8 @@
                                             <input type="hidden" id="idLugar" name="idLugar">
                                             <input type="hidden" id="idSubDetAct" name="idSubDetAct">
                                             <div class="row mb-4">
+                                              
+
                                                 <div class="col-lg-4 mb-2 col-md-4">
                                                     <label for="fechaActividad" class="col-form-label">Nombre lugar:
                                                     </label>
@@ -146,7 +148,7 @@
                                                     </div>
                                                     
                                                 </div>
-                                                <div class="col-lg-2 mb-2 col-md-2">
+                                                <div class="col-lg-4 mb-2 col-md-2">
                                                     <label for="fechaActividad" class="col-form-label">Fecha de actividad:
                                                     </label>
                                                     <div th:if="${unidad.id_unidad_funcional==1 }">
@@ -177,20 +179,7 @@
                                                     </div>
                                                     
                                                 </div>
-                                                <div class="col-lg-2 mb-2 col-md-2">
-                                                    <label for="horaFin" class="col-form-label">Estado: </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
-                                                        <select class="form-control select2" id="avanceActividad" name="avanceActividad">
-                                                            <option value="solicitado" >Solicitado</option>
-                                                            <option value="aceptado" >Aceptado</option>
-                                                            <option value="concluido" >Concluido</option>
-                                                            <option value="cancelado" >Cancelado</option>
-                                                        </select>
-                                                    </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
-                                                        <input type="text" class="form-control" id="avanceActividad" disabled>
-                                                    </div>
-                                                </div>
+                                              
                                             </div>
                                             <div class="text-center" th:if="${unidad.id_unidad_funcional==1 }">
                                                 <input class="btn btn-primary" type="submit" value="Actualizar">
@@ -200,39 +189,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--
-                        <div id="modalEvento" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
-                            aria-labelledby="modalEvento" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <h5 class="text-white modal-title mt-0" id="myExtraLargeModalLabel"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row mb-4">
-                                            <div class="col-lg-4 mb-2">
-                                                <label for="fechaActividad" class="col-form-label">Fecha de actividad:
-                                                </label>
-                                                <input type="datetime" class="form-control" id="fechaActividad"
-                                                    readonly>
-                                            </div>
-                                            <div class="col-lg-4 mb-2">
-                                                <label for="horaInicio" class="col-form-label">Hora inicio: </label>
-                                                <input type="time" class="form-control" id="horaInicio" readonly>
-                                            </div>
-                                            <div class="col-lg-4 mb-2">
-                                                <label for="horaFin" class="col-form-label">Hora fin: </label>
-                                                <input type="time" class="form-control" id="horaFin" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        -->
+                      
                         <div id="modalSolicitud" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
                             aria-labelledby="modalSolicitud" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-xl">

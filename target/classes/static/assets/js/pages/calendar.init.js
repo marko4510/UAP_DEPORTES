@@ -103,7 +103,7 @@
                                 
                                 switch (lugarr.nombre_lugar) {
                                     case 'CANCHA LA GUARIDA DEL JAGUAR':
-                                        color = '#E31919';
+                                        color = '#FF9933';
                                         break
                                     case 'COLISEO CERRADO':
                                         color = '#3923E1';
@@ -112,7 +112,7 @@
                                             color = '#0E8D41';
                                             break
                                     case 'CANCHA DEL FRONTON CAMPUS':
-                                            color = '#FF9933';
+                                            color = '#E31919';
                                             break
                                 }
                                 

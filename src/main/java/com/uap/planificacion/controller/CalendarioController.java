@@ -117,7 +117,7 @@ public class CalendarioController {
     @RequestParam(value = "idSubDetAct")Long id_sub_detalle_actividad,
     @RequestParam(value = "horaInicio") @DateTimeFormat(pattern = "HH:mm") Date hora_inicio,
     @RequestParam(value = "horaFin") @DateTimeFormat(pattern = "HH:mm") Date hora_fin, 
-    @RequestParam(value = "avanceActividad")String avanceActividad, RedirectAttributes redirectAttrs){
+     RedirectAttributes redirectAttrs){
         DetalleActividad detalleActividad = detalleActividadService.findOne(id_detalle_actividad);
         System.out.println("hora inicio "+hora_inicio);
         System.out.println("hora fin "+hora_fin);
@@ -144,7 +144,7 @@ public class CalendarioController {
         detalleActividadService.save(detalleActividad);
     
         Actividad actividad = actividadService.findOne(detalleActividad.getActividad().getId_actividad());
-        actividad.setAvance_actividad(avanceActividad);
+        
         actividadService.save(actividad);
 
         redirectAttrs
