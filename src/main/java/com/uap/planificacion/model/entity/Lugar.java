@@ -36,6 +36,9 @@ public class Lugar implements Serializable {
     @Column
     private String estado_lugar;
 
+    @Column
+    private String color_lugar;
+
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "lugares", fetch = FetchType.LAZY)
 	private List<SubDetalleActividad> subDetalleActividads;

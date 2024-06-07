@@ -59,29 +59,28 @@ public class CalendarioController {
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
             String lugar1="";
             String lugar2="";
-            // String lugar3="";
-            // String lugar4="";
+            String lugar3="";
+            String lugar4="";
             // String lugar5="";
             // String lugar6="";
             // String lugar7="";
             List<Evento> events = new ArrayList<>();
             for (Evento evento : eventoService.listaEventosSolicitados()) {
-                if (u.getId_unidad_funcional()==1 //sec general 
-                
-                && (evento.getLugar().getNombre_lugar().equals("CANCHA") 
-                || evento.getLugar().getNombre_lugar().equals("COLISEO"))) {
+              
                 events.add(evento);  
-                    lugar1="CANCHA";
-                    lugar2="COLISEO";
-                }
+                    lugar1="CANCHA LA GUARIDA DEL JAGUAR";
+                    lugar2="COLISEO CERRADO";
+                    lugar3="COLISEO POLIFUNCIONAL";
+                    lugar4="CANCHA DEL FRONTON CAMPUS";
+                
             
             
                 
             }
             model.addAttribute("lugar1", lugar1);
             model.addAttribute("lugar2", lugar2);
-            // model.addAttribute("lugar3", lugar3);
-            // model.addAttribute("lugar4", lugar4);
+            model.addAttribute("lugar3", lugar3);
+            model.addAttribute("lugar4", lugar4);
             // model.addAttribute("lugar5", lugar5);
             // model.addAttribute("lugar6", lugar6);
             // model.addAttribute("lugar7", lugar7);

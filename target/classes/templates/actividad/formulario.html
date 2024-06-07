@@ -10,9 +10,9 @@
         <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
         <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
 
-        <div class="main-content" style="background-color: #FEA500;;color: white;">
+        <div class="main-content" style="background-color: #FEA500; color: white;">
             <div class="page-content">
-                <div class="page-title-box" style="background-color: #FEA500;;color: white;">
+                <div class="page-title-box" style="background-color: #FEA500; color: white;">
                     <div class="container-fluid" >
                         <div class="row align-items-center">
                             <!--<div class="col-md-8">
@@ -71,7 +71,7 @@
                                                         <label class="col-form-label" style="color: black;">Actividad a realizar (Palabra
                                                             Clave)</label>
                                                         <input class="form-control" type="text"
-                                                            th:field="${actividad.nombre_actividad}"
+                                                            th:field="${actividad.descripcion_actividad}"
                                                             placeholder="Palabra Clave" required>
                                                     </div>
                                                 </div>
@@ -192,7 +192,7 @@
                                                     <td th:text="${ac.id_actividad}"></td>
                                                     <td th:text="${ac.unidadFuncional.nom_unidad}"></td>
                                                 
-                                                    <td th:text="${ac.nombre_actividad}"></td>
+                                                    <td th:text="${ac.descripcion_actividad}"></td>
 
                                                     <td th:text="${ac.tipoActividad.nombre_tipo_actividad}">
                                                     </td>
@@ -239,29 +239,36 @@
 
                                                     </td>
                                                     <td>
-                                                        <th:block th:each="da:${ac.detalleActividads}"
-                                                        th:if="${da.estado!='X'}">
-                                                        <th:block th:each="sda:${da.subDetalleActividads}"
-                                                        th:if="${sda.estado!='X'}">
-                                                  
-                                                        <th:block th:each="l:${sda.lugares}">
-                                                            <div>
-
-                                                                <span
-                                                                    class="badge badge-pill badge-light"
-                                                                    style="background-color: #a3e1ef;"
-                                                                    th:text="${l.nombre_lugar}"></span>
-                                                            </div>
+                                                        <th:block th:each="da : ${ac.detalleActividads}" th:if="${da.estado != 'X'}">
+                                                            <th:block th:each="sda : ${da.subDetalleActividads}" th:if="${sda.estado != 'X'}">
+                                                                <th:block th:each="l : ${sda.lugares}">
+                                                                    <div>
+                                                                        <span
+                                                                            class="badge badge-pill badge-light"
+                                                                            th:style="|background-color: #${l.color_lugar}; color: white;|"
+                                                                            th:text="${l.nombre_lugar}"></span>
+                                                                    </div>
+                                                                </th:block>
+                                                            </th:block>
                                                         </th:block>
-                                                    </th:block>
-                                                </th:block>
-
                                                     </td>
+                                                    
+                                                                                                     
 
                                                   
                                                   <td>
 
-                                                    rgrg
+                                                    <a 
+                                                        th:href="@{'/detalleActividad/'+${ac.id_actividad}}"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        title="Editar"><i
+                                                            class="far fa-edit"></i></a><!--editar-->
+                                                    <a href="#"
+                                                        
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        title="Eliminar"
+                                                        th:onclick="eliminarActividad([[${ac.id_actividad}]])"><i
+                                                            class="far fa-trash-alt"></i></a><!--eliminar-->
                                                   </td>
 
                                             
@@ -272,121 +279,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!--modal programarse-->
-                        <div class="modal fade" tabindex="-1" id="ModalPro" role="dialog"
-                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <form th:action="@{/programarActividad}" method="get">
-                                        <input type="hidden" id="id_activida" name="id_activida">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="nombre"></h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="text-center"><img
-                                                    src="../../../../assets/images/interrogacion.png"
-                                                    style="width: 30%; height: 20%; background-repeat: no-repeat;"
-                                                    alt="" height="22">
-                                                <h3>¿ESTA SEGURO DE PROGRAMAR?</h3>
-                                            </div>
-
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-                                                    <button type="submit" class="btn btn-primary me-1"
-                                                        data-bs-dismiss="modal">Confirmar</button>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!--modal ver detalles-->
-                        <div class="modal fade" tabindex="-1" id="ModalVerDetalles" role="dialog"
-                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="row">
-                                        <!--<div class="col-5">
-                                                <div>
-                                                    <label class="col-form-label">Descripcion</label>
-                                                    <textarea class="form-control" type="text" id="id_e" placeholder="Descripcion"></textarea>
-                                                </div>
-                                            </div>-->
-                                        <div class="col-md-12">
-                                            <iframe width="800" height="600" id="iframe-pdfevaluacion" frameborder="0"
-                                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- modal  evaluacion-->
-                        <div class="modal fade" tabindex="-1" id="ModalEvaluacion" role="dialog"
-                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-
-                                    <form th:action="@{/actvidadEvaluacion}" method="post"
-                                        enctype="multipart/form-data">
-                                        <input type="hidden" class="form-control" id="id_a" name="id_a"
-                                            placeholder="Untitled folder" />
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Evaluación de Actividad</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            <div class="form-group row">
-                                                <div class="col-md-12">
-                                                    <div>
-                                                        <label class="col-form-label">Tipo de Evaluación</label>
-
-                                                        <select class="selectize"
-                                                            th:field="${evaluacion.tipoEvaluacion}" required>
-                                                            <option th:each="tpe:${tipoEvaluacion}"
-                                                                th:if="${tpe.id_tipo_evaluacion==1}"
-                                                                th:value="${tpe.id_tipo_evaluacion}"
-                                                                th:text="${tpe.nombre_evaluacion}" selected>-</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-12">
-
-
-                                                    <label class="col-form-label">Porcentaje</label>
-                                                    <input class="form-control" type="number" min="0" max="100"
-                                                        th:field="${evaluacion.porcentaje}" required>
-                                                </div>
-
-                                                <div class="col-md-12">
-
-
-                                                    <label class="col-form-label">Archivo</label>
-                                                    <input class="form-control" type="file" accept="application/pdf"
-                                                        th:field="${evaluacion.file}" required>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-
-                                                    <button type="submit" class="btn btn-primary me-1"
-                                                        data-bs-dismiss="modal">Confirmar</button>
-                                                    <button type="button" class="btn btn-outline-secondary"
-                                                        data-bs-dismiss="modal">Cancelar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                     
+                     
+                    
                         <br>
                         <br>
                         <br>

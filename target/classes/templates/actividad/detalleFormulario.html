@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head th:replace="layout/head :: head">
-
+   
 </head>
 
 <body data-topbar="colored">
@@ -11,9 +11,9 @@
         </header>
         <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
 
-        <div class="main-content">
+        <div class="main-content" style="background-color: #FEA500; ">
             <div class="page-content">
-                <div class="page-title-box" style="background-color: #0c289a;color: white;">
+                <div class="page-title-box" style="background-color: #FEA500; ">
                     <div class="container-fluid">
                         <div class="row align-items-center">
 
@@ -25,11 +25,11 @@
                 <div class="page-content-wrapper">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
                                                     role="alert" th:if="${mensaje != null}">
                                                     <h4 class="alert-body" th:text="${mensaje}"></h4>
@@ -266,17 +266,13 @@
                                                                 
                                                                 <div class="">
                                                     
-                                                                    <button type="button" class="btn btn-sm btn-info waves-effect waves-light" data-container="body" data-toggle="popover" data-placement="top" 
-                                                                    title="INDICACIONES DEL CHECKBOX" data-trigger="focus" style="font-size: 10px; padding: 4px 8px;"
-                                                                    data-content="Al presionar el checkbox, estan filtrando los lugares denominados como salones de la U.A.P. para su posterior enviar como solicitud al responsble de los que administran dichos salones de la Universidad.">
-                                                                        ?
-                                                                    </button>
-                                                                    <div ><input th:id="'checkbox'+${da.id_detalle_actividad}" type="checkbox" class="checkbox mt-1" style="width: 22px; height: 22px;"></div>
+                                                                   
                                                                     
                                                                 </div>
                                                                 <div class="col-md-11 mt-4">
                                                                     <select th:id="'select'+${da.id_detalle_actividad}" class="form-control select2" th:field="${subDetalle.lugares}" required>
-                                                                        <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}" th:style="${l.tipo_lugar == 'E'} ? 'color: #0f890d;' : 'color: #0630d6'"></option>
+                                                                        <option value="">Seleccionar...</option>
+                                                                        <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
                                                                     </select>
                                                                 </div>
                                                                 
@@ -336,10 +332,20 @@
                                     </div>
                                 </div>
                             </th:block>
-                            
+                           
                         </div>
                     </div>
                 </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             </div>
             <!--modal nuevo lugar-->
             <div class="modal fade" id="ModalLugar" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
@@ -429,20 +435,24 @@
                                     </div>
                                 </div>
                             </div>
+                           
                         </form>
+                      
                     </div>
+                  
                 </div>
+              
             </div>
 
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            2023 © SIASE.
+                            2024 © USIC.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-right d-none d-sm-block">
-                                Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                                UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
                             </div>
                         </div>
                     </div>

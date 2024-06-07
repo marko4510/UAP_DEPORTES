@@ -71,7 +71,7 @@
                             for(let lugar of lugares){
                                 
                                 id_lugar = lugar.id_lugar;
-                                lugaresConcatenados+=" "+lugar.nombre_lugar;
+                                lugaresConcatenados=" "+lugar.nombre_lugar;
                                 console.log(lugar);
                             }
                             let id_actividad = subdetalle.detalleActividad.actividad.id_actividad;
@@ -102,13 +102,18 @@
                             for(let lugarr of lugares){
                                 
                                 switch (lugarr.nombre_lugar) {
-                                    case 'CANCHA':
-                                        color = 'orange';
+                                    case 'CANCHA LA GUARIDA DEL JAGUAR':
+                                        color = '#E31919';
                                         break
-                                    case 'COLISEO':
-                                        color = 'blue';
+                                    case 'COLISEO CERRADO':
+                                        color = '#3923E1';
                                         break
-                               
+                                    case 'COLISEO POLIFUNCIONAL':
+                                            color = '#0E8D41';
+                                            break
+                                    case 'CANCHA DEL FRONTON CAMPUS':
+                                            color = '#FF9933';
+                                            break
                                 }
                                 
                             }

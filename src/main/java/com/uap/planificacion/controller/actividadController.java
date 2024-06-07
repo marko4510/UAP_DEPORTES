@@ -716,83 +716,7 @@ public class actividadController {
 
         String usuarioRegistro = request.getParameter("usuarioRegistro");
 
-        List<LocalDate> f = new ArrayList<>();
-        int[] dia = new int[fechas.length];
-        int[] mes = new int[fechas.length];
-        int[] anio = new int[fechas.length];
-        for (int i = 0; i < fechas.length; i++) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(fechas[i]);
-            dia[i] = calendar.get(Calendar.DAY_OF_MONTH);
-            mes[i] = calendar.get(Calendar.MONTH) + 1; // Los meses en Calendar comienzan desde 0, por lo que sumamos 1
-            anio[i] = calendar.get(Calendar.YEAR);
-            // c.add(calendar);
-        }
-        for (int i = 0; i < fechas.length; i++) {
-            f.add(LocalDate.of(anio[i], mes[i], dia[i]));
-        }
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // establece el día de la semana en lunes
-        cal.add(Calendar.WEEK_OF_YEAR, 1); // suma una semana
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // establece el día de la semana en lunes
-        cal2.add(Calendar.WEEK_OF_YEAR, 1); // suma una semana
-        Calendar cal3 = Calendar.getInstance();
-        cal3.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // establece el día de la semana en lunes
-        cal3.add(Calendar.WEEK_OF_YEAR, 1); // suma una semana
-        Calendar cale = cal2;
-        Calendar cale10 = cal3;
-        cale.add(Calendar.DATE, +6);
-        cale10.add(Calendar.DATE, -10);
-
-        // para impactos
-        Calendar cal4 = Calendar.getInstance();
-        cal4.add(Calendar.DATE, +90); // suma 60 dias de la fecha actual
-        Date fecha60diasenadelante = cal4.getTime();
-        LocalDate f60diasenadelante = fecha60diasenadelante.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        Date fechaLunes = cal.getTime();
-        Date fechaDomingo = cale.getTime();
-
-        System.out.println(cale10.getTime() + " 10 dias antes de fecha del lunes cercano"); // muestra la fecha del
-                                                                                            // lunes cercano de la
-                                                                                            // semana siguiente pero
-                                                                                            // desde 10 dias antes
-        System.out.println(cal.getTime() + " fecha del lunes cercano"); // muestra la fecha del lunes cercano de la
-                                                                        // semana siguiente
-        System.out.println(cale.getTime() + " fecha del domingo de la sig semana"); // muestra la fecha del lunes
-                                                                                    // cercano de la semana siguiente
-        LocalDate fechaMinima = f.get(0); // Suponemos que el primer elemento es el mínimo
-        LocalDate fechaMaxima = f.get(0); // Suponemos que el primer elemento es el maximo
-        for (LocalDate fecha : f) {
-            if (fecha.compareTo(fechaMinima) < 0) {
-                fechaMinima = fecha; // Si encontramos una fecha menor, actualizamos la fecha mínima
-            }
-            if (fecha.compareTo(fechaMaxima) > 0) {
-                fechaMaxima = fecha;
-            }
-        }
-        System.out.println("La fecha mínima es: " + fechaMinima);
-        System.out.println("La fecha maxima es: " + fechaMaxima);
-
-        LocalDate d = LocalDate.now();
-        System.out.println(d + " " + fechaMinima);
-        Date fechaa = new Date(); // Obtener la fecha actual
-        SimpleDateFormat formato = new SimpleDateFormat("EEEE"); // Crear el formato deseado
-        String fechaEnLetras = formato.format(fechaa); // Convertir la fecha en letras
-        System.out.println("el dia hoy es " + fechaEnLetras);
-        LocalDate fechaL = fechaLunes.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaD = fechaDomingo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaHoyy = fechaa.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        //diseu por defecto, asesor juridico solo por hoy
-        if( actividad.getUnidadFuncional().getId_unidad_funcional()==69 || // jair diseu
-            actividad.getUnidadFuncional().getId_unidad_funcional()==118 //|| secretaria academica para siempre
-            //actividad.getUnidadFuncional().getId_unidad_funcional()== 5
-            )  {
-
-            
             EstadoActividad ea = estadoActividadService.findOne((long) 1);
             actividad.setEstado("A");
             actividad.setAvance_actividad("solicitado");
@@ -829,87 +753,16 @@ public class actividadController {
                         lugaresParaEvento.add(lugar);
                     }
                 }
+                // Set<Long> id_lugaress = new HashSet<>();
+                // for (Lugar lugar2 : lugaresParaEvento) {
+                //     long id_lugar = lugar2.getId_lugar();
+                //     if (!id_lugaress.contains(id_lugar)) {
+                //         id_lugaress.add(id_lugar);
+                //     }
+                // }
                 Set<Long> id_lugaress = new HashSet<>();
                 for (Lugar lugar2 : lugaresParaEvento) {
-                    long id_lugar = lugar2.getId_lugar();
-                    if (!id_lugaress.contains(id_lugar)) {
-                        id_lugaress.add(id_lugar);
-                    }
-                }
-                for (Long id_lugar : id_lugaress) {
-                    System.out.println("ID del lugar único: " + id_lugar);
-                    Lugar ll=lugarService.findOne(id_lugar);
-                    Evento evento = new Evento();
-                    evento.setLugar(ll);
-                    evento.setActividad(actividad);
-                    evento.setEstado_evento("P");
-                    eventoServive.save(evento);
-                }
-            redirectAttrs
-                    .addFlashAttribute("mensaje", "Se creo la actividad satisfactoriamente!")
-                    .addFlashAttribute("clase", "success alert-dismissible fade show");
-            return "redirect:/actividadR";// "redirect:/detalleActividad/" + actividad.getId_actividad();  
-         }//else if(fechaEnLetras.equals("jueves") || fechaEnLetras.equals("viernes") || fechaEnLetras.equals("sábado") || fechaEnLetras.equals("domingo")){
-        //     redirectAttrs
-        //     .addFlashAttribute("mensaje", "Lo sentimos! hoy no es el dia para cargar actividades.")
-        //     .addFlashAttribute("clase", "danger alert-dismissible fade show");
-        //     return "redirect:/actividadR";
-        
-        // } else if(fechaMaxima.isAfter(f60diasenadelante)){
-        //     redirectAttrs
-        //         .addFlashAttribute("mensaje", "la fecha tiene que ser antes de 120 dias")
-        //         .addFlashAttribute("clase", "danger alert-dismissible fade show");
-        //     return "redirect:/actividadR";
-        // }else if(fechaMinima.isBefore(fechaL)){
-        //     redirectAttrs
-        //         .addFlashAttribute("mensaje", "la fecha tiene que ser a partir del lunes siguiente en adelante")
-        //         .addFlashAttribute("clase", "danger alert-dismissible fade show");
-        //     return "redirect:/actividadR";
-        // }
-        else{
-            System.out.println("La fecha minima es posterior o igual a la fecha actual");
-            EstadoActividad ea = estadoActividadService.findOne((long) 1);
-            actividad.setEstado("A");
-            actividad.setAvance_actividad("solicitado");
-            actividad.setProgramdo(true);
-            actividad.setEstadoActividad(ea);
-            actividad.setFecha_registro(new Date());
-            actividad.setUsuarioRegistro(usuarioRegistro);
-            actividadService.save(actividad);
-            List<Lugar> lugares = new ArrayList<>();
-            for (Long long1 : id_lugares) {
-                Lugar lugar = lugarService.findOne(long1);
-                lugares.add(lugar);
-            }
-            List<Lugar> lugaresParaEvento = new ArrayList<>();
-            for (int i = 0; i < lugares.size(); i++) {
-                DetalleActividad detalleActividad = new DetalleActividad();
-                detalleActividad.setFecha_detalle_actividad(fechas[i]);
-                detalleActividad.setActividad(actividad);
-                detalleActividad.setFecha_registro(new Date());
-                detalleActividad.setEstado("A");
-                detalleActividadService.save(detalleActividad);
-
-                Lugar lugar = lugarService.findOne(lugares.get(i).getId_lugar());
-                Set<Lugar> lugarSet = new HashSet<>();
-                lugarSet.add(lugar);
-                SubDetalleActividad subDetalleActividad = new SubDetalleActividad();
-                subDetalleActividad.setHora_inicio(hora_inicio.get(i));
-                subDetalleActividad.setHora_final(hora_fin.get(i));
-                subDetalleActividad.setDetalleActividad(detalleActividad);
-                subDetalleActividad.setLugares(lugarSet);
-                subDetalleActividad.setEstado("A");
-                subDetalleActividadService.save(subDetalleActividad);
-                if (lugar.getTipo_lugar().equals("E")) {
-                        lugaresParaEvento.add(lugar);
-                    }
-                }
-                Set<Long> id_lugaress = new HashSet<>();
-                for (Lugar lugar2 : lugaresParaEvento) {
-                    long id_lugar = lugar2.getId_lugar();
-                    if (!id_lugaress.contains(id_lugar)) {
-                        id_lugaress.add(id_lugar);
-                    }
+                    id_lugaress.add(lugar2.getId_lugar());
                 }
                 for (Long id_lugar : id_lugaress) {
                     System.out.println("ID del lugar único: " + id_lugar);
@@ -925,7 +778,7 @@ public class actividadController {
                             "Se creo la actividad satisfactoriamente!")
                     .addFlashAttribute("clase", "success alert-dismissible fade show");
             return "redirect:/actividadR";// "redirect:/detalleActividad/" + actividad.getId_actividad();
-        }
+        
         
     }
     @PostMapping(value = "/actvidadPostADM")
