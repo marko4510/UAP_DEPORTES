@@ -262,13 +262,13 @@
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Editar"><i
                                                             class="far fa-edit"></i></a><!--editar-->
-                                                    <!-- <a href="#"
+                                                    <!-- <a 
                                                         
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Eliminar"
                                                         th:onclick="eliminarActividad([[${ac.id_actividad}]])"><i
-                                                            class="far fa-trash-alt"></i></a>
-                                                  </td> -->
+                                                            class="far fa-trash-alt"></i></a> -->
+                                                  </td>
 
                                             
                                                 </tr>
@@ -334,10 +334,7 @@
             <div class="col-md-2">
                 <input id="miInputHora2_${contadorInputs}" class="form-control" type="time" name="horasF" required>
             </div>
-            <div class="mt-2">
-                
-                <input id="checkbox_${contadorInputs}" type="checkbox" style="width: 20px; height: 20px;">
-            </div>
+         
             <div class="col-md-3 mt-1">
                 <select id="miSelect_${contadorInputs}" class="form-control select2" name="lugaresA" required>
                     <option></option>
@@ -359,8 +356,8 @@
     var nuevoCheckbox = document.getElementById(`checkbox_${contadorInputs}`);
 
     // Agregar un evento de cambio al nuevo checkbox
-    nuevoCheckbox.addEventListener('change', function () {
-        var tipoLugar = this.checked ? 'E' : 'N'; // Determina el tipo de lugar según el estado del checkbox
+
+        var tipoLugar = 'E'; // Determina el tipo de lugar según el estado del checkbox
 
         // Realiza la solicitud AJAX para obtener los lugares
         $.ajax({
@@ -390,7 +387,7 @@
                 console.error('Error al obtener los lugares');
             }
         });
-    });
+
     // Llenar el select por defecto según el estado inicial del checkbox
     var tipoLugarInicial = nuevoCheckbox.checked ? 'E' : 'N';
     llenarSelectDesdeTipoLugar(nuevoSelect, tipoLugarInicial);

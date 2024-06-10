@@ -39,15 +39,15 @@
                                                     </button>
                                                 </div>
                                                 <h3 class="header-title"
-                                                    th:text="${'ACTIVIDAD: ' + actividad.nombre_actividad}">titulo</h3>
+                                                    th:text="${'RESERVA: ' + actividad.descripcion_actividad}">titulo</h3>
                                                 <a th:href="@{/actividadR}"
                                                     class="btn btn-primary waves-effect waves-light" type="submit">Ver
-                                                    Actividades</a>
+                                                    Reservas</a>
                                                 <input type="hidden" th:value="${actividad.id_actividad}"
                                                     id="id_activida">
                                                 <button type="button" class="btn btn-primary waves-effect waves-light"
                                                     data-toggle="modal" data-target=".bd-example-modal-lg">Modificar
-                                                    Actividad</button>
+                                                    Reserva</button>
                                                 <a href="#"
                                                     th:onclick="agregarFechaDetalle([[${actividad.id_actividad}]])"
                                                     class="btn btn-primary waves-effect waves-light"
@@ -82,7 +82,7 @@
                                                                                 <h4 class="header-title">MODIFICAR
                                                                                     ACTIVIDAD</h4>
                                                                                 <div class="form-group row">
-                                                                                    <div class="col-md-5">
+                                                                                    <div class="col-md-4">
                                                                                         <div>
                                                                                             <label
                                                                                                 class="col-form-label">Actividad
@@ -90,12 +90,29 @@
                                                                                                 Clave)</label>
                                                                                             <input class="form-control"
                                                                                                 type="text"
-                                                                                                th:field="${actividad.nombre_actividad}"
+                                                                                                th:field="${actividad.descripcion_actividad}"
                                                                                                 placeholder="Palabra Clave"
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-md-7">
+                                                                                    <div class="col-md-4">
+                                                                                        <div>
+                                                                                            <label
+                                                                                                class="col-form-label">Institución</label>
+                                                                                                <select class="selectize" th:field="${actividad.unidadFuncional}"
+                                                                                                name="unidadFuncional">                           
+                                                                                                        
+                                                                                                   
+                                                                                                    
+                                                                                                        <option th:each="u:${unidadFuncionales}" 
+                                                                                                        th:value="${u.id_unidad_funcional}"
+                                                                                                        th:text="${u.nom_unidad}"></option>
+                                                                                                   
+                                                                                                </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                   
+                                                                                    <!-- <div class="col-md-7">
                                                                                         <div>
                                                                                             <label
                                                                                                 class="col-form-label">Descripcion</label>
@@ -108,26 +125,15 @@
 
 
                                                                                         </div>
-                                                                                    </div>
+                                                                                    </div> -->
 
-                                                                                    <!--<select class="selectize" th:field="${actividad.unidadFuncional}"
-                                                                                                  name="unidadFuncional">                           
-                                                                                                          <option 
-                                                                                                          th:value="${actividad.unidadFuncional.id_unidad_funcional}"
-                                                                                                          th:text="${actividad.unidadFuncional.nom_unidad}" selected></option>
-                                                                                                     
-                                                                                                      
-                                                                                                          <option th:each="u:${unidadFuncionales}" 
-                                                                                                          th:value="${u.id_unidad_funcional}"
-                                                                                                          th:text="${u.nom_unidad}"></option>
-                                                                                                     
-                                                                                                  </select>-->
+                                                                                    
 
                                                                                     <div class="col-md-3">
                                                                                         <div>
                                                                                             <label
                                                                                                 class="col-form-label">Tipo
-                                                                                                de actividad</label>
+                                                                                                de Reserva</label>
 
                                                                                             <select class="selectize"
                                                                                                 name="tipoActividad"
@@ -142,7 +148,7 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-md-4">
+                                                                                    <!-- <div class="col-md-4">
                                                                                         <div>
                                                                                             <label
                                                                                                 class="col-form-label">Afluencia</label>
@@ -151,7 +157,7 @@
                                                                                                 th:field="${actividad.afluencia}"
                                                                                                 name="afluencia"
                                                                                                 required>
-                                                                                                <!--<option th:value="${actividad.afluencia.id_afluencia}" th:text="${actividad.afluencia.nombre_afluencia}" selected></option>-->
+                                                                                                <option th:value="${actividad.afluencia.id_afluencia}" th:text="${actividad.afluencia.nombre_afluencia}" selected></option>
 
                                                                                                 <option
                                                                                                     th:each="a:${ListAfluencias}"
@@ -161,7 +167,7 @@
                                                                                                     -</option>
                                                                                             </select>
                                                                                         </div>
-                                                                                    </div>
+                                                                                    </div> -->
 
                                                                                 </div>
 

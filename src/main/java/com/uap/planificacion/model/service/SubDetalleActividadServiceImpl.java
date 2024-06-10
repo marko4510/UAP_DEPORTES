@@ -3,6 +3,8 @@ package com.uap.planificacion.model.service;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,4 +107,10 @@ public class SubDetalleActividadServiceImpl implements ISubDetalleActividadServi
 
         return listaSubDetalle;
     }
+
+    @Override
+    public Object validarHoraReservas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar) {
+        return subDetalleActividadDao.validarHoraReservas(fecha_reserva, hora_inicio, hora_final, nombre_lugar);   
+    }
+    
 }

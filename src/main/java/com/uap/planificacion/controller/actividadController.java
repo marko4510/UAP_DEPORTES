@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -169,7 +170,8 @@ public class actividadController {
     }
 
     @GetMapping(value = "/actividadR")
-    public String actividad(Model model, HttpServletRequest request) {
+    public String actividad(Model model, HttpServletRequest request
+   ) {
 
         if (request.getSession().getAttribute("personalAdministrativo") != null) {
             PersonalAdministrativo personalAdministrativo = (PersonalAdministrativo) request.getSession()
@@ -237,69 +239,33 @@ public class actividadController {
             calendarDomingoNoRealizado.setTime(fechaLunesSemanaActual);
             calendarDomingoNoRealizado.add(Calendar.DAY_OF_MONTH, +5);
             Date fechaDomingoSemanasNoRealizado = calendarDomingoNoRealizado.getTime();
-            // System.out.println(fechaDomingoSemanasNoRealizado);
+            
 
-            // codigo para sacar unidades q no evaluaron antes de la semana pasada
-            /*
-             * List<Actividad> actividadesSinRealizar = new ArrayList<>();
-             * List<Actividad> actividades = actividadService.findAll();
-             * for (Actividad actividad : actividades) {
-             * List<DetalleActividad> das = actividad.getDetalleActividads();
-             * 
-             * for (DetalleActividad da : das) {
-             * Date f = da.getFecha_detalle_actividad();
-             * if (f.before(fechaDomingoSemanasNoRealizado)
-             * && actividad.getEstadoActividad().getId_estado_actividad() == 1) {
-             * System.out.println(actividad.getUnidadFuncional().getNom_unidad() + "-> "
-             * +actividad.getId_actividad()+" => "+
-             * actividad.getEstadoActividad().getNombre_estado_actividad() + " ==== "
-             * + da.getFecha_detalle_actividad() + " === " +
-             * actividad.getNombre_actividad());
-             * actividadesSinRealizar.add(actividad);
-             * }
-             * }
-             * }
-             * for (Actividad actividad : actividadesSinRealizar) {
-             * EstadoActividad estadoActividad = estadoActividadService.findOne(3l);
-             * actividad.setEstadoActividad(estadoActividad);
-             * actividadService.save(actividad);
-             * }
-             */
-            // codigo para sacar unidades q no evaluaron antes de la semana pasada
+            // System.out.println(cale10.getTime() + " 10 dias antes de fecha del lunes cercano"); 
+                                                                                               
+            // System.out.println(cal.getTime() + " fecha del lunes cercano"); 
+            // System.out.println(cale.getTime() + " fecha del domingo de la sig semana"); 
+                                                                                        
 
-            System.out.println(cale10.getTime() + " 10 dias antes de fecha del lunes cercano"); // muestra la fecha del
-                                                                                                // lunes cercano de la
-                                                                                                // semana siguiente pero
-                                                                                                // desde 10 dias antes
-            System.out.println(cal.getTime() + " fecha del lunes cercano"); // muestra la fecha del lunes cercano de la
-                                                                            // semana siguiente
-            System.out.println(cale.getTime() + " fecha del domingo de la sig semana"); // muestra la fecha del lunes
-                                                                                        // cercano de la semana
-                                                                                        // siguiente
+            // System.out.println(fechaDomingoSemanaActual + " fecha del domingo semana actual"); 
+            // System.out.println(fechaLunesSemanaActual + " fecha del lunes semana actual"); 
 
-            System.out.println(fechaDomingoSemanaActual + " fecha del domingo semana actual"); // muestra la fecha del
-                                                                                               // domingo semana actual
-            System.out.println(fechaLunesSemanaActual + " fecha del lunes semana actual"); // muestra la fecha del lunes
-                                                                                           // semana actual
-
-            System.out.println(fechaDomingoSemanaPasado + " fecha del domingo semana pasada"); // fecha del domingo
-                                                                                               // semana pasada
-            System.out.println(fechaLunesSemanaPasado + " fecha del lunes semana pasada"); // fecha del lunes semana
-                                                                                           // pasada
+            // System.out.println(fechaDomingoSemanaPasado + " fecha del domingo semana pasada"); 
+            // System.out.println(fechaLunesSemanaPasado + " fecha del lunes semana pasada"); 
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-            model.addAttribute("fechalunespasado", sdf.format(fechaLunesSemanaPasado));
-            model.addAttribute("fechadomingopasado", sdf.format(fechaDomingoSemanaPasado));
-            model.addAttribute("fechalunesactual", sdf.format(fechaLunesSemanaActual));
-            model.addAttribute("fechadomingoactual", sdf.format(fechaDomingoSemanaActual));
-            model.addAttribute("fechalunesfuturo", sdf.format(fechaLunes));
-            model.addAttribute("fechadomingofuturo", sdf.format(fechaDomingo));
+            // model.addAttribute("fechalunespasado", sdf.format(fechaLunesSemanaPasado));
+            // model.addAttribute("fechadomingopasado", sdf.format(fechaDomingoSemanaPasado));
+            // model.addAttribute("fechalunesactual", sdf.format(fechaLunesSemanaActual));
+            // model.addAttribute("fechadomingoactual", sdf.format(fechaDomingoSemanaActual));
+            // model.addAttribute("fechalunesfuturo", sdf.format(fechaLunes));
+            // model.addAttribute("fechadomingofuturo", sdf.format(fechaDomingo));
 
             List<UnidadFuncional> sinactividad = unidadService.listaUnidadesSinActividad(fechaLunes, fechaDomingo);
-            System.out.println(sinactividad.size() + " unidades sin actividad");
+     
             List<UnidadFuncional> conactividad = unidadService.listaUnidadesConActividad(fechaLunes, fechaDomingo);
-            System.out.println(conactividad.size() + " unidades con actividad");
+        
 
             Date hoy = new Date();
             if (hoy.after(fechaLunes)) {
@@ -313,14 +279,10 @@ public class actividadController {
             FechaActual.add(Calendar.DATE, -20);// fecha para ver 10 dias actras de la fecha actual
             Date fechaPasada10 = FechaActual.getTime();
 
-            System.out.println("FECHA DE HOY: " + fechaHoy + "  FECHA HACE 10 DÍAS:  " + fechaPasada10);
-            System.out.println();
-
-            model.addAttribute("cice", sic);
+         
             UnidadFuncional u = unidadService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
-            System.out.println(u.getNom_unidad() + "++++++++++++++++++++");
-           
+          
             model.addAttribute("listaActividadesMiUnidadPasado", actividadService.findAll());
          
 
@@ -341,7 +303,13 @@ public class actividadController {
         return ResponseEntity.ok(response);
     }
 
-    
+    private LocalDate convertToLocalDate(Date date) {
+        return new java.sql.Date(date.getTime()).toLocalDate();
+    }
+
+    private LocalTime convertToLocalTime(Date date) {
+        return new java.sql.Time(date.getTime()).toLocalTime();
+    }
     
     @PostMapping(value="/actvidadPost")
     public String guardarActividada(@Validated Actividad actividad,
@@ -352,7 +320,30 @@ public class actividadController {
             /* @RequestParam(value = "fechas") Date[] fechas, */
             RedirectAttributes redirectAttrs,
             HttpServletRequest request) throws ParseException {
+     
+                for (int i = 0; i < fechas.length; i++) {
+                    LocalDate fechaReserva = convertToLocalDate(fechas[i]);
+                    LocalTime horaInicio = convertToLocalTime(hora_inicio.get(i));
+                    LocalTime horaFin = convertToLocalTime(hora_fin.get(i));
+                    Long idLugar = id_lugares.get(i);
+                    Lugar lugar = lugarService.findOne(idLugar);
+        
+                    Object resultado = subDetalleActividadService.validarHoraReservas(fechaReserva, horaInicio, horaFin, lugar.getNombre_lugar());
+                    // System.out.println("FechaReserva: "+ fechaReserva);
+                    // System.out.println("horaInicio: "+ horaInicio);
+                    // System.out.println("horaFin: "+ horaFin);
+                    // System.out.println("lugar: "+ lugar.getNombre_lugar());
+                    if (resultado != null) {
+                        redirectAttrs
+                        .addFlashAttribute("mensaje",
+                                "La fecha y hora que intenta registrar ya se encuentra reservada en "+ lugar.getNombre_lugar())
+                        .addFlashAttribute("clase", "danger alert-dismissible fade show");
+                        return "redirect:/actividadR";
+                    }
 
+                }
+
+            
         String usuarioRegistro = request.getParameter("usuarioRegistro");
 
 
@@ -363,7 +354,7 @@ public class actividadController {
             actividad.setEstadoActividad(ea);
             actividad.setFecha_registro(new Date());
             actividad.setUsuarioRegistro(usuarioRegistro);
-            actividadService.save(actividad);
+           actividadService.save(actividad);
             List<Lugar> lugares = new ArrayList<>();
             for (Long long1 : id_lugares) {
                 Lugar lugar = lugarService.findOne(long1);
@@ -376,7 +367,7 @@ public class actividadController {
                 detalleActividad.setActividad(actividad);
                 detalleActividad.setFecha_registro(new Date());
                 detalleActividad.setEstado("A");
-                detalleActividadService.save(detalleActividad);
+               detalleActividadService.save(detalleActividad);
 
                 Lugar lugar = lugarService.findOne(lugares.get(i).getId_lugar());
                 Set<Lugar> lugarSet = new HashSet<>();
