@@ -29,6 +29,12 @@ public class TipoActividad implements Serializable{
     @Column
     private String nombre_tipo_actividad;
 
+    @Column
+    private String estado_tipo_actividad;
+
+    @Column
+    private String descuento_tipo_actividad;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoActividad", fetch = FetchType.LAZY)
 	private List<Actividad> actividads;

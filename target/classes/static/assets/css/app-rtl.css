@@ -409,7 +409,7 @@ body[data-layout="horizontal"] .footer {
     #sidebar-menu ul li a svg {
       min-width: 1.75rem; }
     #sidebar-menu ul li a .uim-svg {
-      fill: #3051d3 !important; }
+      fill: #f7b500 !important; }
     #sidebar-menu ul li a:hover {
       color: #383c40; }
       #sidebar-menu ul li a:hover i {
@@ -508,7 +508,7 @@ body[data-layout="horizontal"] .footer {
       .vertical-collpsed .vertical-menu #sidebar-menu > ul > li:hover > a {
         position: relative;
         width: calc(190px + 70px);
-        color: #3051D3;
+        color: #fdd03d;
         background-color: #f5f5f5;
         -webkit-transition: none;
         transition: none; }

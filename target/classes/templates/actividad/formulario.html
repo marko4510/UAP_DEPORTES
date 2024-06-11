@@ -123,13 +123,13 @@
                                                 <div class="col-md-2">
                                                     <div>
                                                         <label class="col-form-label" style="color: black;">Hora inicio</label>
-                                                        <input type="time" class="form-control" name="horasI" required/>
+                                                        <input id="horaInicio" type="time" class="form-control" name="horasI" required/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div>
                                                         <label class="col-form-label" style="color: black;">Hora fin</label>
-                                                        <input type="time" class="form-control" name="horasF" required/>
+                                                        <input id="horaFin" type="time" class="form-control" name="horasF" required onchange="calcularDiferencia()"/>
                                                     </div>
                                                 </div>
                                                
@@ -311,7 +311,39 @@
         </div>
     </div>
     <div class="rightbar-overlay"></div>
+    <script>
+        function calcularDiferencia() {
+            // Obtener los valores de las horas de inicio y fin
+            let horaInicio = document.getElementById("horaInicio").value;
+            let horaFin = document.getElementById("horaFin").value;
     
+            // Parsear las horas a objetos Date
+            let fechaInicio = new Date("2000-01-01T" + horaInicio);
+            let fechaFin = new Date("2000-01-01T" + horaFin);
+    
+            // Calcular la diferencia de tiempo en milisegundos
+            let diferenciaMilisegundos = fechaFin - fechaInicio;
+    
+            // Convertir la diferencia de tiempo de milisegundos a horas y minutos decimales
+            let horasMinutosDecimal = milisegundosToHorasMinutos(diferenciaMilisegundos);
+    
+            // Mostrar el resultado en un alert
+            alert("La diferencia es de " + horasMinutosDecimal.toFixed(2) + " horas.");
+        }
+    
+        function milisegundosToHorasMinutos(milisegundos) {
+            // Convertir los milisegundos a minutos
+            let minutos = milisegundos / 60000;
+    
+            // Calcular las horas y los minutos decimales
+            let horas = Math.floor(minutos / 60);
+            let minutosRestantes = minutos % 60;
+    
+            // Retornar el resultado en formato de horas y minutos decimales
+            let resultado = horas + minutosRestantes / 60;
+            return resultado;
+        }
+    </script>
     <script type="text/javascript" th:inline="javascript">
         var contadorInputs = 0;
         function agregarInput() {

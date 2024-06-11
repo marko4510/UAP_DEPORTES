@@ -101,7 +101,7 @@
                             let color = lugares.length > 0 ? lugares[0].color_lugar : '#000000'; // Default color if none is provided
             
                             let evento = {
-                                title: nombre_lugar, //hora_inicio + ' - ' + hora_final,
+                                title: hora_inicio + ' - ' + hora_final,  //nombre_lugar,
                                 start: fecha_detalle_actividad, // Utilizar la fecha directamente
                                 color: color,
                                 extendedProps: {

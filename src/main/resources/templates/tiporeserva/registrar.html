@@ -36,9 +36,9 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form th:action="${edit} ?@{/LugarmodF} :@{/LugarF}" method="post">
-                                            <input type="hidden" th:field="${lugar.id_lugar}">
-                                            <center><h2 >CREAR NUEVA INSTALACIÓN</h2></center>
+                                        <form th:action="${edit} ?@{/TipoReservamodF} :@{/TipoReservaF}" method="post">
+                                            <input type="hidden" th:field="${tipoR.id_tipo_actividad}">
+                                            <center><h2 >CREAR NUEVO TIPO DE RESERVA</h2></center>
                                             <div class="form-group row">
 
 
@@ -46,9 +46,9 @@
                                                 <div class="col-md-3">
 
 
-                                                    <label class="col-form-label">Nombre de la Instalación</label>
+                                                    <label class="col-form-label">Nombre del Tipo de Reserva</label>
                                                     <input class="form-control" type="text"
-                                                        th:field="${lugar.nombre_lugar}"
+                                                        th:field="${tipoR.nombre_tipo_actividad}"
                                                         onkeyup="javascript:this.value=this.value.toUpperCase();"
                                                         style="text-transform:uppercase;" required>
                                                 </div>
@@ -56,22 +56,11 @@
                                                 <div class="col-md-3">
 
 
-                                                    <label class="col-form-label">Costo de la Instalación</label>
-                                                    <input class="form-control" type="text"
-                                                    th:field="${lugar.costo_lugar}" 
-                                                    required 
-                                                    pattern="^\d+(\.\d{1,})?$" 
-                                                    title="Por favor, ingrese un número entero o decimal con punto (.) como separador">
+                                                    <label class="col-form-label">Nombre del Tipo de Reserva</label>
+                                                    <input th:field="${tipoR.descuento_tipo_actividad}" data-toggle="touchspin" type="text" value="0" required>
                                                 </div>
 
-                                                <div class="col-md-3">
-                                                    <label class="col-form-label">Color de la Instalación</label>
-                                                    <div class="form-group">
-                                                        <input type="text" th:field="${lugar.color_lugar}" id="show-input" value="#3ddc97">
-                                                    </div>
-                                                 
-                                                 
-                                                </div>
+                                               
 
                                                 <div class="col-md-7">
                                                     <input class="form-control" type="hidden">
@@ -123,7 +112,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Lista de Instalaciones</h4>
+                                    <h4 class="card-title">Lista de Tipo de Reservas</h4>
                                 </div>
                                 <div class="card-body">
 
@@ -134,8 +123,7 @@
                                         <thead>
                                             <tr>
                                                 <th>NOMBRE</th>
-                                                <th>COSTO</th>
-                                                <th>COLOR</th>
+                                                <th>DESCUENTO</th>
                                                 <th>ACCIONES</th>
                                             </tr>
                                         </thead>
@@ -143,10 +131,9 @@
 
                                         <tbody>
 
-                                            <tr th:each="luga : ${lugares}" th:if="${luga.estado_lugar != 'X' }">
-                                                <td th:text="${luga.nombre_lugar}"></td>
-                                                <td th:text="${luga.costo_lugar}"></td>
-                                                <td th:style="'background-color:' + ${luga.color_lugar} + ';'">
+                                            <tr th:each="tip : ${tiposR}" th:if="${tip.estado_tipo_actividad != 'X' }">
+                                                <td th:text="${tip.nombre_tipo_actividad}"></td>
+                                                <td th:text="${tip.descuento_tipo_actividad} + ' %'"></td>
                                                 </td>
                                                 <td >
                                                     
@@ -154,12 +141,12 @@
                                                     <div class="btn-group" role="group">
 
                                                         <a type="button"
-                                                            th:href="@{'editar-lugarf/'+${luga.id_lugar}}"
+                                                            th:href="@{'editar-tiporeservaf/'+${tip.id_tipo_actividad}}"
                                                             class="btn btn-outline-secondary btn-sm">
                                                             <i class="mdi mdi-pencil"></i>
                                                         </a>
                                                         <a type="button"
-                                                            th:attr="onclick=${'MandarURL('+luga.id_lugar+')'}"
+                                                            th:attr="onclick=${'MandarURL('+tip.id_tipo_actividad+')'}"
                                                             class="btn btn-outline-secondary btn-sm"
                                                             data-toggle="tooltip" data-placement="top" title="Eliminar">
                                                             <i class="mdi mdi-trash-can"></i>
@@ -237,7 +224,7 @@
                 showConfirmButton: false,
                 cancelButtonText: "Cancelar",
                 html:
-                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-lugar/" + a + "'  >" +
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-tiporeserva/" + a + "'  >" +
                     "Eliminar" +
                     "</a>",
             }).then().done();

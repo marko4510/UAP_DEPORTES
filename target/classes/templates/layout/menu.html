@@ -13,22 +13,29 @@
                 
                 <li>
                     <a th:href="@{/actividadR}" class="waves-effect">
-                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-document-layout-left"></i></div>
-                        <span class="texto-blanco">Gestionar Reservas</span>
+                        <div class="d-inline-block icons-sm mr-1" 
+                        ><i class="uim uim-document-layout-left" ></i></div>
+                        <span class="texto-blanco">Reservas</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/UnidadR}" class="waves-effect">
-                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div>
-                        <span class="texto-blanco">Instituciones</span>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-layer-group"></i></div>
+                        <span class="texto-blanco"> Parámetros</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a th:href="@{/UnidadR}"> <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div><span class="texto-blanco">Instituciones</span></a></li>
+                        <li><a th:href="@{/LugarR}"> <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div><span class="texto-blanco">Instalaciones</span></a></li>
+                        <li><a th:href="@{/TipoReservaR}"> <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div><span class="texto-blanco">Tipo de Reservas</span></a></li>
+                    </ul>
                 </li>
-                <li>
+              
+                <!-- <li>
                     <a th:href="@{/LugarR}" class="waves-effect">
                         <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div>
                         <span class="texto-blanco">Instalaciones</span>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li>
                     <a th:href="@{/UnidadR}" class="waves-effect">
                         <div class="d-inline-block icons-sm mr-1"><i class="uim uim-table"></i></div>

@@ -1,7 +1,4 @@
 package com.uap.planificacion.controller;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,17 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.uap.planificacion.model.entity.DireccionFuncional;
 import com.uap.planificacion.model.entity.Lugar;
-import com.uap.planificacion.model.entity.Persona;
 import com.uap.planificacion.model.entity.PersonalAdministrativo;
+import com.uap.planificacion.model.entity.TipoActividad;
 import com.uap.planificacion.model.entity.UnidadFuncional;
 import com.uap.planificacion.model.service.IDireccionFuncionalService;
-import com.uap.planificacion.model.service.ILugarService;
 import com.uap.planificacion.model.service.INivelFuncionalService;
+import com.uap.planificacion.model.service.ITipoActividadService;
 import com.uap.planificacion.model.service.IUnidadFuncionalService;
 
+import javax.servlet.http.HttpServletRequest;
+
+
 @Controller
-public class LugarController {
+public class TipoReservaController {
     @Autowired
     private IDireccionFuncionalService direccionFuncionalService;
 
@@ -32,23 +33,23 @@ public class LugarController {
     @Autowired
     private INivelFuncionalService nivelFuncionalService;
 
-    @Autowired
-    private ILugarService lugarService;
+	@Autowired
+    private ITipoActividadService tipoActividadService;
 
-       //FUNCION PARA REGISTRAR UNIDADES FUNCIONALES
-	@RequestMapping(value = "/LugarR", method = RequestMethod.GET) // Pagina principal
-	public String LugarR(HttpServletRequest request, Model model) {
+	      //FUNCION PARA REGISTRAR UNIDADES FUNCIONALES
+	@RequestMapping(value = "/TipoReservaR", method = RequestMethod.GET) // Pagina principal
+	public String TipoReservaR(HttpServletRequest request, Model model) {
         if(request.getSession().getAttribute("personalAdministrativo")!=null){
             PersonalAdministrativo personalAdministrativo = (PersonalAdministrativo)request.getSession().getAttribute("personalAdministrativo");
             
                 
-            model.addAttribute("lugar", new Lugar());
+            model.addAttribute("tipoR", new TipoActividad());
 			UnidadFuncional u= unidadFuncionalService.findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
                 model.addAttribute("nivel", u.getNivelFuncional());
-			model.addAttribute("unidadFuncional", new UnidadFuncional());
-            model.addAttribute("lugares", lugarService.findAll());
+
+            model.addAttribute("tiposR", tipoActividadService.findAll());
  
-			return "lugar/registrar";
+			return "tiporeserva/registrar";
 		}
 		else{
             return "redirect:/login";
@@ -58,61 +59,61 @@ public class LugarController {
 
      //FUNCION PARA GUARDAR UNIDADES FUNCIONALES
 	
-	 @PostMapping(value = "/LugarF")
-	 public String LugarF(@Validated Lugar lugar, Model model,RedirectAttributes redirectAttrs) {
- 
-		 lugar.setEstado_lugar("A");
-         lugar.setTipo_lugar("E");
-		 lugarService.save(lugar);
+	 @PostMapping(value = "/TipoReservaF")
+	 public String LugarF(@Validated TipoActividad tipoActividad, Model model,RedirectAttributes redirectAttrs) {
+		tipoActividad.setEstado_tipo_actividad("A");
+	
+		 tipoActividadService.save(tipoActividad);
 		 redirectAttrs
-		 .addFlashAttribute("mensaje", "Registro Exitoso de la Instalación")
+		 .addFlashAttribute("mensaje", "Registro Exitoso del Tipo de Reserva")
 		 .addFlashAttribute("clase", "success alert-dismissible fade show");
-		 return "redirect:/LugarR";
+		 return "redirect:/TipoReservaR";
  
 	 }
 
-      @RequestMapping(value= "editar-lugarf/{id_lugar}")
-	public String editar_lugarf(@PathVariable("id_lugar") Long id_lugar, Model model, HttpServletRequest request) {
+      @RequestMapping(value= "editar-tiporeservaf/{id_tipo_actividad}")
+	public String editar_tiporeservaf(@PathVariable("id_tipo_actividad") Long id_tipo_actividad, Model model, HttpServletRequest request) {
 		if(request.getSession().getAttribute("personalAdministrativo")!=null){
             PersonalAdministrativo personalAdministrativo = (PersonalAdministrativo)request.getSession().getAttribute("personalAdministrativo");
-            Lugar lugar = lugarService.findOne(id_lugar);
-                  
-            model.addAttribute("lugar", lugar);
+  
+            TipoActividad tipoActividad = tipoActividadService.findOne(id_tipo_actividad);
+            model.addAttribute("tipoR", tipoActividad);
 			UnidadFuncional u= unidadFuncionalService.findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
                 model.addAttribute("nivel", u.getNivelFuncional());
 	
 
-        model.addAttribute("lugar", lugar);
-        model.addAttribute("lugares", lugarService.findAll());
-
+      
+				model.addAttribute("tiposR", tipoActividadService.findAll());
 		model.addAttribute("edit", "true");
-		return "lugar/registrar";
+		return "tiporeserva/registrar";
 		}
 		else{
             return "redirect:/login";
         }
 	}
 
-    @PostMapping(value = "/LugarmodF")
-	 public String LugarmodF(@Validated Lugar lugar, Model model) {
+    @PostMapping(value = "/TipoReservamodF")
+	 public String TipoReservamodF(@Validated TipoActividad tipoActividad, Model model) {
  
-		 lugar.setEstado_lugar("A");
-         lugar.setTipo_lugar("E");
-        lugarService.save(lugar);
+		tipoActividad.setEstado_tipo_actividad("A");
+    
+		tipoActividadService.save(tipoActividad);
  
-		 return "redirect:/LugarR";
+		 return "redirect:/TipoReservaR";
  
 	 }
 
-     @RequestMapping(value = "/eliminar-lugar/{id_lugar}")
-	 public String Eliminar_lugar(@PathVariable("id_lugar") Long id_lugar, Model model) {
+     @RequestMapping(value = "/eliminar-tiporeserva/{id_tipo_actividad}")
+	 public String Eliminar_tiporeserva(@PathVariable("id_tipo_actividad") Long id_tipo_actividad, Model model) {
  
-        Lugar lugar = lugarService.findOne(id_lugar);
-		model.addAttribute("lugar", lugar);
-		lugar.setEstado_lugar("X");
+		TipoActividad tipoActividad = tipoActividadService.findOne(id_tipo_actividad);
+		model.addAttribute("tipoActividad", tipoActividad);
+		tipoActividad.setEstado_tipo_actividad("X");
  
-		lugarService.save(lugar);
-		 return "redirect:/LugarR";
+		tipoActividadService.save(tipoActividad);
+		 return "redirect:/TipoReservaR";
  
 	 }
+ 
+
 }

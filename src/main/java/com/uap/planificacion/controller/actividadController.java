@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -325,10 +326,11 @@ public class actividadController {
                     LocalDate fechaReserva = convertToLocalDate(fechas[i]);
                     LocalTime horaInicio = convertToLocalTime(hora_inicio.get(i));
                     LocalTime horaFin = convertToLocalTime(hora_fin.get(i));
+                    LocalTime horaFinMenosUnSegundo = horaFin.minusSeconds(1);
                     Long idLugar = id_lugares.get(i);
                     Lugar lugar = lugarService.findOne(idLugar);
         
-                    Object resultado = subDetalleActividadService.validarHoraReservas(fechaReserva, horaInicio, horaFin, lugar.getNombre_lugar());
+                    Object resultado = subDetalleActividadService.validarHoraReservas(fechaReserva, horaInicio, horaFinMenosUnSegundo, lugar.getNombre_lugar());
                     // System.out.println("FechaReserva: "+ fechaReserva);
                     // System.out.println("horaInicio: "+ horaInicio);
                     // System.out.println("horaFin: "+ horaFin);
@@ -374,7 +376,12 @@ public class actividadController {
                 lugarSet.add(lugar);
                 SubDetalleActividad subDetalleActividad = new SubDetalleActividad();
                 subDetalleActividad.setHora_inicio(hora_inicio.get(i));
-                subDetalleActividad.setHora_final(hora_fin.get(i));
+                LocalTime horaFin = convertToLocalTime(hora_fin.get(i));
+                LocalTime horaFinMenosUnSegundo = horaFin.minusSeconds(1);//9:08
+                LocalDate fechaActual = LocalDate.now();//5/5/5 11:02
+                LocalDateTime localDateTime = LocalDateTime.of(fechaActual, horaFinMenosUnSegundo);
+                Date date = java.sql.Timestamp.valueOf(localDateTime);
+                subDetalleActividad.setHora_final(date);
                 subDetalleActividad.setDetalleActividad(detalleActividad);
                 subDetalleActividad.setLugares(lugarSet);
                 subDetalleActividad.setEstado("A");
