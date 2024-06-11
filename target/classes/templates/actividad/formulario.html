@@ -165,7 +165,7 @@
                                         <table id="example2"
                                             class="table table-striped table-bordered dt-responsive"
                                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                            <thead style="font-size:12px;">
+                                            <thead style="font-size:14px;">
                                                 <tr>
 
                                                     <th>#</th>
@@ -183,7 +183,7 @@
                                             </thead>
 
 
-                                            <tbody style="font-size:12px;">
+                                            <tbody style="font-size:14px;">
                                                 <tr th:each="ac, ind:${listaActividadesMiUnidadPasado}"
                                                     th:if="${ac.estado!='X'}" 
                                                     >
@@ -202,7 +202,7 @@
                                                             th:if="${da.estado!='X'}">
                                                             <div>
                                                                 <span class="badge badge-pill badge-light"
-                                                                    style="background-color: #B9F3E4;"
+                                                                    style="background-color: #f5daa8;"
                                                                     th:text="${da.fecha_detalle_actividad}">
                                                                 </span>
                                                             </div>
@@ -216,7 +216,7 @@
                                                         th:if="${sda.estado!='X'}">
                                                         <span
                                                         class="badge badge-pill badge-light"
-                                                        style="background-color: #a3e1ef;"
+                                                        style="background-color: #8ae28a;"
                                                         th:text="${sda.hora_inicio}"></span><br>
                                                       
                                                     </th:block>
@@ -262,12 +262,12 @@
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Editar"><i
                                                             class="far fa-edit"></i></a><!--editar-->
-                                                    <!-- <a 
+                                                    <a 
                                                         
                                                         data-toggle="tooltip" data-placement="top"
                                                         title="Eliminar"
                                                         th:onclick="eliminarActividad([[${ac.id_actividad}]])"><i
-                                                            class="far fa-trash-alt"></i></a> -->
+                                                            class="far fa-trash-alt"></i></a>
                                                   </td>
 
                                             
@@ -529,12 +529,27 @@ function llenarSelectDesdeTipoLugar(selectElement, tipoLugar) {
                 $('#id_detalleA').html(html);
             });
         }
-        function eliminarActividad(id_actividad) {
-            var id_a = id_actividad;
-            if (confirm('Esta seguro de eliminar est actividad?')) {
-                window.location.href = '/eliminar-actividad/' + id_a;
-            }
+        // function eliminarActividad(id_actividad) {
+        //     var id_a = id_actividad;
+        //     if (confirm('Esta seguro de eliminar est actividad?')) {
+        //         window.location.href = '/eliminar-actividad/' + id_a;
+        //     }
+        // }
+      
+        function eliminarActividad(a) {
+            swal({
+                title: 'Eliminar Registro?',
+                type: 'error',
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: "Cancelar",
+                html:
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-actividad/" + a + "'  >" +
+                    "Eliminar" +
+                    "</a>",
+            }).then().done();
         }
+ 
     </script>
     <script>
         $(function () {

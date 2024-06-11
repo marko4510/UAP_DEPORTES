@@ -825,14 +825,14 @@ public class actividadController {
                 }                                 
             }            
         }
-        if (existeE>0) {
-            //Evento e = actividad.getEventos().get(0);
-            for (Evento ee : actividad.getEventos()) {
-                System.out.println(ee.getEstado_evento()+"-----------------"+existeE);
-                eventoDao.eliminarEvento(ee.getId_evento(), id_actividad);
-            }
+        // if (existeE>0) {
+        //     //Evento e = actividad.getEventos().get(0);
+        //     for (Evento ee : actividad.getEventos()) {
+        //         System.out.println(ee.getEstado_evento()+"-----------------"+existeE);
+        //         eventoDao.eliminarEvento(ee.getId_evento(), id_actividad);
+        //     }
             
-        }
+        // }
         for (DetalleActividad da : actividad.getDetalleActividads()) {
             for (SubDetalleActividad sda : da.getSubDetalleActividads()) {
                 sda.setEstado("X");

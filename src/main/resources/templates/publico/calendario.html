@@ -36,14 +36,14 @@
 <body data-topbar="colored">
     <div id="layout-wrapper">
 
-        <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
-        <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
-        <div class="main-content" style="background-color: #FEA500;">
+       
+        <div  style="background-color: #FEA500;">
+            <h1 style="text-align: center;">CALENDARIO DE RESERVAS</h1>
             <div class="page-content">
                 <div class="page-title-box" style="background-color: #FEA500; ">
                     <div class="container-fluid">
                         <div class="row align-items-center">
-
+                           
                         </div>
                     </div>
                 </div>
@@ -60,27 +60,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                        <div class="" th:if="${unidad.id_unidad_funcional==1 }">
-                                            <div>
-
-                                            </div>
-                                            <div class="button-items">
-                                                
-                                                    <!-- <button style="width:auto;
-                                                    height:30px; text-align: left;" type="button" 
-                                                    class="btn btn-primary btn-sm waves-effect waves-light"
-                                                        data-toggle="modal" data-target="#modalSolicitud">ACTIVIDADES SOLICITADAS...
-                                                        <span class="badge-pill badge-warning float-right" th:text="' '+${eventosSolicitados.size()}"> </span>
-                                                    </button> -->
-                                                
-                                                    <!--<button style="width:auto;
-                                                    height:30px; text-align: left;" type="button" 
-                                                    class="btn btn-primary btn-sm waves-effect waves-light"
-                                                        data-toggle="modal" data-target="#modalReporte">REPORTES                                                        
-                                                    </button>-->
-                                            </div>
-                                            <hr>
-                                        </div>
+                                      
                                         <div class="color-indicators">
                                             <th:block th:each="luga : ${lugaresE}" th:if="${luga.estado_lugar != 'X' }">
                                                 <div class="lugar-item">
@@ -119,45 +99,45 @@
                                                 <div class="col-lg-4 mb-2 col-md-4">
                                                     <label for="fechaActividad" class="col-form-label">Nombre lugar:
                                                     </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                    <div >
                                                         <select class="form-control select2" name="ilugaresA" id="ilugaresA" disabled>
                                                             <option th:each=" l : ${lugaresE}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
                                                         </select>
                                                     </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                    <!-- <div >
                                                         <input type="datetime" class="form-control" id="lugarActividad" disabled>
-                                                    </div>
+                                                    </div> -->
                                                     
                                                 </div>
                                                 <div class="col-lg-4 mb-2 col-md-2">
                                                     <label for="fechaActividad" class="col-form-label">Fecha de actividad:
                                                     </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                    <div >
                                                         <input type="datetime" class="form-control" id="fechaActividad" name="fechaActividad" disabled>
                                                     </div>
                                                     
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                    <!-- <div >
                                                         <input type="datetime" class="form-control" id="fechaActividad" disabled>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="col-lg-2 mb-2 col-md-2">
                                                     <label for="horaInicio" class="col-form-label">Hora inicio: </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                    <div >
                                                         <input type="time" class="form-control" id="horaInicio" name="horaInicio" disabled>
                                                     </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                    <!-- <div >
                                                         <input type="time" class="form-control" id="horaInicio" disabled>
-                                                    </div>
+                                                    </div> -->
                                                     
                                                 </div>
                                                 <div class="col-lg-2 mb-2 col-md-2">
                                                     <label for="horaFin" class="col-form-label">Hora fin: </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                    <div >
                                                         <input type="time" class="form-control" id="horaFin" name="horaFin" disabled>
                                                     </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                    <!-- <div th:if="${unidad.id_unidad_funcional!=1 }">
                                                         <input type="time" class="form-control" id="horaFin" disabled>
-                                                    </div>
+                                                    </div> -->
                                                     
                                                 </div>
                                               
@@ -281,23 +261,24 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            2024 © USIC.
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-sm-right d-none d-sm-block">
-                                UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
-                            </div>
-                        </div>
+            
+        <div class="container-fluid" style="background-color: white; padding: 10px; margin: 10px 0;">
+            <div class="row">
+                <div class="col-sm-6">
+                    2024 © USIC.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
+    
+        </div>
+      
     </div>
-
+  
 
     <div class="rightbar-overlay"></div>
     <!-- JAVASCRIPT -->
