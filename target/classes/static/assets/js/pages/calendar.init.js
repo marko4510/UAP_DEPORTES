@@ -67,26 +67,25 @@
                             let idsub = subdetalle.id_sub_detalle_actividad;
                             console.log(idsub);
                             let lugares = subdetalle.lugares;
-                            
-                            for(let lugar of lugares){
-                                
+            
+                            for (let lugar of lugares) {
                                 id_lugar = lugar.id_lugar;
-                                lugaresConcatenados=" "+lugar.nombre_lugar;
+                                lugaresConcatenados += " " + lugar.nombre_lugar; // Concatenate lugar names
                                 console.log(lugar);
                             }
+            
                             let id_actividad = subdetalle.detalleActividad.actividad.id_actividad;
-                            console.log("id actividad "+id_actividad);
+                            console.log("id actividad " + id_actividad);
                             let nombre_lugar = lugaresConcatenados;
                             let descripcion = subdetalle.detalleActividad.actividad.descripcion_actividad;
                             let fecha_detalle_actividad = subdetalle.detalleActividad.fecha_detalle_actividad; // Obtener la fecha sin modificar
                             let id_detalle_actividad = subdetalle.detalleActividad.id_detalle_actividad;
                             let id_sub_detalle_actividad = subdetalle.id_sub_detalle_actividad;
-                            
+            
                             let avance_actividad = subdetalle.detalleActividad.actividad.avance_actividad;
-                            
-                            console.log("avance actividad "+avance_actividad);
-
-
+            
+                            console.log("avance actividad " + avance_actividad);
+            
                             console.log(id_detalle_actividad);
                             let fechaInicio = new Date(subdetalle.hora_inicio);
                             let hora1 = fechaInicio.getHours().toString().padStart(2, '0');
@@ -97,30 +96,12 @@
                             let hora2 = fechaFinal.getHours().toString().padStart(2, '0');
                             let minutos2 = fechaFinal.getMinutes().toString().padStart(2, '0');
                             let hora_final = hora2 + ':' + minutos2;
-                            
-                            let color;
-                            for(let lugarr of lugares){
-                                
-                                switch (lugarr.nombre_lugar) {
-                                    case 'CANCHA LA GUARIDA DEL JAGUAR':
-                                        color = '#FF9933';
-                                        break
-                                    case 'COLISEO CERRADO':
-                                        color = '#3923E1';
-                                        break
-                                    case 'COLISEO POLIFUNCIONAL':
-                                            color = '#0E8D41';
-                                            break
-                                    case 'CANCHA DEL FRONTON CAMPUS':
-                                            color = '#E31919';
-                                            break
-                                }
-                                
-                            }
-                            // Asigna un color en función de alguna propiedad, por ejemplo, id_actividad
-                          
+            
+                            // Obtener el color del primer lugar (si hay múltiples lugares, podrías necesitar ajustar esto)
+                            let color = lugares.length > 0 ? lugares[0].color_lugar : '#000000'; // Default color if none is provided
+            
                             let evento = {
-                                title: nombre_lugar,//hora_inicio + ' - ' + hora_final,
+                                title: nombre_lugar, //hora_inicio + ' - ' + hora_final,
                                 start: fecha_detalle_actividad, // Utilizar la fecha directamente
                                 color: color,
                                 extendedProps: {
@@ -139,11 +120,12 @@
             
                             eventos.push(evento);
                         }
-                        
+            
                         callback(eventos);
                     }
                 });
             }
+            
             
             function updateEvents() {
                 calendar.fullCalendar('refetchEvents');

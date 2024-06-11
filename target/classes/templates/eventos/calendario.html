@@ -7,46 +7,31 @@
 <link th:href="@{assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
 <link th:href="@{assets/css/app.min.css}" rel="stylesheet" type="text/css" />
 <style>
-.color-indicators {
-  display: flex;
-  align-items: center; /* Centra verticalmente */
-  justify-content: center; /* Centra horizontalmente */
-  gap: 10px; /* Espacio entre los indicadores de colores y el texto */
-}
-
-.color-indicator {
-  width: 20px; /* Ancho de los indicadores de colores */
-  height: 20px; /* Altura de los indicadores de colores */
-  border-radius: 50%; /* Forma redonda */
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Sombra ligera */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón */
-  transition: transform 0.2s; /* Efecto de escala suave al pasar el ratón */
-}
-
-.text {
-  font-size: 14px; /* Tamaño de fuente del texto */
-  color: #333; /* Color del texto */
-}
-
-.color-indicator.red {
-  background-color: #ff9933; /* Color rojo */
-}
-
-.color-indicator.blue {
-  background-color: #3923e1; /* Color azul */
-}
-
-.color-indicator.green {
-  background-color: #0e8d41; /* Color verde */
-}
-
-.color-indicator.yellow {
-  background-color: #e31919; /* Color amarillo */
-}
-
-.color-indicator:hover {
-  transform: scale(1.1); /* Efecto de escala al pasar el ratón */
-}
+    .color-indicators {
+        display: flex;
+        flex-wrap: wrap; /* Permite que los elementos se envuelvan si el contenedor es demasiado estrecho */
+        gap: 10px; /* Espacio entre los indicadores de colores y el texto */
+    }
+    .lugar-item {
+        display: flex;
+        align-items: center; /* Centra verticalmente */
+        gap: 10px; /* Espacio entre el indicador de color y el texto */
+    }
+    .color-indicator {
+        width: 20px; /* Ancho de los indicadores de colores */
+        height: 20px; /* Altura de los indicadores de colores */
+        border-radius: 50%; /* Forma redonda */
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+        cursor: pointer; /* Cambia el cursor al pasar el ratón */
+        transition: transform 0.2s; /* Efecto de escala suave al pasar el ratón */
+    }
+    .text {
+        font-size: 14px; /* Tamaño de fuente del texto */
+        color: #333; /* Color del texto */
+    }
+    .color-indicator:hover {
+        transform: scale(1.1); /* Efecto de escala al pasar el ratón */
+    }
 </style>
 <body data-topbar="colored">
     <div id="layout-wrapper">
@@ -97,17 +82,13 @@
                                             <hr>
                                         </div>
                                         <div class="color-indicators">
-                                            <div class="color-indicator red"></div>
-                                            <div class="text">CANCHA LA GUARIDA DEL JAGUAR</div>
-                                            <div class="color-indicator blue"></div>
-                                            <div class="text">COLISEO CERRADO</div>
-                                            <div class="color-indicator green"></div>
-                                            <div class="text">COLISEO POLIFUNCIONAL</div>
-                                            <div class="color-indicator yellow"></div>
-                                            <div class="text">CANCHA DEL FRONTON CAMPUS</div>
-                                    
-                             
-                                          </div>
+                                            <th:block th:each="luga : ${lugaresE}" th:if="${luga.estado_lugar != 'X' }">
+                                                <div class="lugar-item">
+                                                    <div th:style="'background-color:' + ${luga.color_lugar}" class="color-indicator"></div>
+                                                    <div class="text" th:text="${luga.nombre_lugar}"></div>
+                                                </div>
+                                            </th:block>
+                                        </div>
                                           <hr>
                                         <div class="row">
                                             <!--col-xl-2 col-lg-3 col-md-4    col-xl-10 col-lg-9 col-md-8-->
@@ -304,11 +285,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            2023 © SIASE.
+                            2024 © USIC.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-right d-none d-sm-block">
-                                Creado por <i class="mdi mdi-heart text-danger"></i> Juan Carlos
+                                UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
                             </div>
                         </div>
                     </div>

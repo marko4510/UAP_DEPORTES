@@ -2,14 +2,7 @@
 <html lang="en">
 
 <head th:replace="layout/head :: head">
-    <style>
-        .circle {
-          width: 100px;
-          height: 100px;
-          border-radius: 50%; /* Esto hace que el borde sea redondo */
-          background-color: #ff0000; /* Cambia este valor por el color que desees */
-        }
-      </style>
+   
   
 </head>
 
@@ -50,7 +43,7 @@
 
 
 
-                                                <div class="col-md-5">
+                                                <div class="col-md-3">
 
 
                                                     <label class="col-form-label">Nombre de la Instalación</label>
@@ -61,13 +54,12 @@
                                                 </div>
 
                                                 <div class="col-md-5">
-
-
                                                     <label class="col-form-label">Color de la Instalación</label>
-                                                    <input class="form-control" type="text"
-                                                        th:field="${lugar.color_lugar}"
-                                                        onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                                        style="text-transform:uppercase;" required>
+                                                    <div class="form-group">
+                                                        <input type="text" th:field="${lugar.color_lugar}" id="show-input" value="#3ddc97">
+                                                    </div>
+                                                 
+                                                 
                                                 </div>
 
                                                 <div class="col-md-7">
@@ -132,8 +124,6 @@
                                             <tr>
                                                 <th>NOMBRE</th>
                                                 <th>COLOR</th>
-                                                <!-- <th>DIRECCION</th>
-                                                <th>NIVEL</th> -->
                                                 <th>ACCIONES</th>
                                             </tr>
                                         </thead>
@@ -143,11 +133,11 @@
 
                                             <tr th:each="luga : ${lugares}" th:if="${luga.estado_lugar != 'X' }">
                                                 <td th:text="${luga.nombre_lugar}"></td>
-                                                <td >
-                                                    <div class="circle"></div>
+                                                <td th:style="'background-color:' + ${luga.color_lugar} + ';'">
                                                 </td>
-                                             
-                                                <td>
+                                                <td >
+                                                    
+                                                   
                                                     <div class="btn-group" role="group">
 
                                                         <a type="button"
@@ -165,10 +155,6 @@
 
 
                                                 </td>
-
-
-
-
 
                                             </tr>
 
