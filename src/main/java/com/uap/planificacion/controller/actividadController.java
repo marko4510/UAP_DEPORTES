@@ -591,74 +591,110 @@ public class actividadController {
     }
 
     @PostMapping(value = "/detalleActividadPost")
-    public String detalleActividadPost(@Validated SubDetalleActividad subDetalleActividad,
-            @RequestParam("inicio") String inicio, @RequestParam("fin") String fin,
-            @RequestParam("id_da") Long id_detalle_actividad)
-            throws ParseException {
-        Date date1 = new SimpleDateFormat("HH:mm").parse(inicio);
-        Date date2 = new SimpleDateFormat("HH:mm").parse(fin);
-        DetalleActividad dac = detalleActividadService.findOne(id_detalle_actividad);
-        List<Lugar> l = new ArrayList<>(subDetalleActividad.getLugares());
-        
-        List<Lugar> listaLugares = new ArrayList<>();
-        Actividad actividad = actividadService.findOne(dac.getActividad().getId_actividad());
-        for (DetalleActividad da : actividad.getDetalleActividads()) {
-            for (SubDetalleActividad ssda : da.getSubDetalleActividads()) {
-                for (Lugar lu : ssda.getLugares()) {
-                    if (lu.getTipo_lugar().equals("E") && da.getEstado().equals("A") && ssda.getEstado().equals("A")) {
-                        listaLugares.add(lu);                             
-                    }                                                                 
-                }                    
-            }                
-        }
-        int cant = 0;
-        boolean noEsEspecial = false;
-        List<Evento> leventos = new ArrayList<>();
-        if (l.get(0).getTipo_lugar().equals("E")) {
-                Evento event = eventoDao.sacarEventoPorLugarYActividad(l.get(0).getId_lugar(), actividad.getId_actividad());
-                leventos.add(event);
-                for (Lugar lugar : listaLugares) {
-                    Lugar lua = lugarService.findOne(l.get(0).getId_lugar());
-                    if (lua.equals(lugar)) {
-                        cant++;
-                    }
-                }
-            }else{//System.out.println("eliminando lugar N");
-            noEsEspecial=true;}
-        if (noEsEspecial) {
-            subDetalleActividad.setDetalleActividad(dac);
-            subDetalleActividad.setHora_inicio(date1);
-            subDetalleActividad.setHora_final(date2);
-            subDetalleActividad.setEstado("A");
-            subDetalleActividadService.save(subDetalleActividad);
-        }else{
-            if (cant==0) {
-                subDetalleActividad.setDetalleActividad(dac);
-                subDetalleActividad.setHora_inicio(date1);
-                subDetalleActividad.setHora_final(date2);
-                subDetalleActividad.setEstado("A");
-                subDetalleActividadService.save(subDetalleActividad);
+public String detalleActividadPost(
+        @Validated SubDetalleActividad subDetalleActividad,
+        @RequestParam("inicio") String inicio,
+        @RequestParam("fin") String fin,
+        @RequestParam("id_da") Long id_detalle_actividad,
+        @RequestParam("lugar") Long id_lugar,
+        RedirectAttributes redirectAttrs) throws ParseException {
 
-                Evento evento = new Evento();
-                evento.setLugar(l.get(0));
-                evento.setActividad(actividad);
-                evento.setEstado_evento("P");
-                eventoServive.save(evento);
-            }else {
-                subDetalleActividad.setDetalleActividad(dac);
-                subDetalleActividad.setHora_inicio(date1);
-                subDetalleActividad.setHora_final(date2);
-                subDetalleActividad.setEstado("A");
-                subDetalleActividadService.save(subDetalleActividad);
+    // Convertir las horas de inicio y fin
+    Date date1 = new SimpleDateFormat("HH:mm").parse(inicio);
+    Date date2 = new SimpleDateFormat("HH:mm").parse(fin);
+
+    // Recuperar DetalleActividad y Lugar desde la base de datos
+    DetalleActividad dac = detalleActividadService.findOne(id_detalle_actividad);
+    Lugar lugarN = lugarService.findOne(id_lugar);
+
+    // Convertir Date a LocalTime
+    LocalTime horaInicio = convertToLocalTime(date1);
+    LocalTime horaFin = convertToLocalTime(date2);
+    LocalTime horaFinMenosUnSegundo = horaFin.minusSeconds(1);
+
+    // Obtener la fecha actual y convertirla a LocalDateTime
+    LocalDate fechaActual = LocalDate.now();
+    LocalDateTime localDateTime = LocalDateTime.of(fechaActual, horaFinMenosUnSegundo);
+    Date horaFinMenos = java.sql.Timestamp.valueOf(localDateTime);
+
+    // Obtener la fecha de la actividad y convertirla a LocalDate
+    Date fechaDetalleActividad = dac.getFecha_detalle_actividad();
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+    String fechaFormateada = formatoFecha.format(fechaDetalleActividad);
+    Date fechaFormateadaDate = formatoFecha.parse(fechaFormateada);
+    LocalDate fechaReserva = convertToLocalDate(fechaFormateadaDate);
+   
+    // Validar la hora de reservas
+    Object resultado = subDetalleActividadService.validarHoraReservas(fechaReserva, horaInicio, horaFinMenosUnSegundo, lugarN.getNombre_lugar());
+    if (resultado != null) {
+        redirectAttrs.addFlashAttribute("mensaje", "La fecha y hora que intenta registrar ya se encuentra reservada")
+                      .addFlashAttribute("clase", "danger alert-dismissible fade show");
+        return "redirect:/detalleActividad/" + dac.getActividad().getId_actividad();
+    }
+
+    // Inicializar el conjunto de lugares si es null
+    if (subDetalleActividad.getLugares() == null) {
+        subDetalleActividad.setLugares(new HashSet<>());
+    }
+
+    // Añadir el lugar al conjunto de lugares
+    subDetalleActividad.getLugares().add(lugarN);
+
+    // Procesar lógica adicional relacionada con lugares especiales
+    List<Lugar> l = new ArrayList<>(subDetalleActividad.getLugares());
+    List<Lugar> listaLugares = new ArrayList<>();
+    Actividad actividad = actividadService.findOne(dac.getActividad().getId_actividad());
+    for (DetalleActividad da : actividad.getDetalleActividads()) {
+        for (SubDetalleActividad ssda : da.getSubDetalleActividads()) {
+            for (Lugar lu : ssda.getLugares()) {
+                if (lu.getTipo_lugar().equals("E") && da.getEstado().equals("A") && ssda.getEstado().equals("A")) {
+                    listaLugares.add(lu);
+                }
             }
         }
-        
-        
-        System.out.println("id detalle actividad en post agregar hora y lugar "+dac.getFecha_detalle_actividad());
-        
-        return "redirect:/detalleActividad/"
-                + dac.getActividad().getId_actividad();
     }
+
+    int cant = 0;
+    boolean noEsEspecial = false;
+    List<Evento> leventos = new ArrayList<>();
+    if (l.get(0).getTipo_lugar().equals("E")) {
+        Evento event = eventoDao.sacarEventoPorLugarYActividad(l.get(0).getId_lugar(), actividad.getId_actividad());
+        leventos.add(event);
+        for (Lugar lugar : listaLugares) {
+            Lugar lua = lugarService.findOne(l.get(0).getId_lugar());
+            if (lua.equals(lugar)) {
+                cant++;
+            }
+        }
+    } else {
+        noEsEspecial = true;
+    }
+
+    // Guardar SubDetalleActividad con su correspondiente DetalleActividad y lugares
+    subDetalleActividad.setDetalleActividad(dac);
+    subDetalleActividad.setHora_inicio(date1);
+    subDetalleActividad.setHora_final(horaFinMenos);
+    subDetalleActividad.setEstado("A");
+
+    if (noEsEspecial) {
+        subDetalleActividadService.save(subDetalleActividad);
+    } else {
+        if (cant == 0) {
+            subDetalleActividadService.save(subDetalleActividad);
+            Evento evento = new Evento();
+            evento.setLugar(l.get(0));
+            evento.setActividad(actividad);
+            evento.setEstado_evento("P");
+            eventoServive.save(evento);
+        } else {
+            subDetalleActividadService.save(subDetalleActividad);
+        }
+    }
+
+    System.out.println("id detalle actividad en post agregar hora y lugar " + dac.getFecha_detalle_actividad());
+
+    return "redirect:/detalleActividad/" + dac.getActividad().getId_actividad();
+}
 
     @PostMapping(value = "/modificarDetalleActividad")
     public String modificarDetalleActividad(
