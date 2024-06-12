@@ -27,15 +27,15 @@ public class Costo implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_costo;
 
-    @Column(length = 10485760)
-    private String nombre_actividad;
+//     @Column(length = 10485760)
+//     private String nombre_actividad;
 
 
-    @Column(length = 10485760)
-    private String descripcion_actividad;
+//     @Column(length = 10485760)
+//     private String descripcion_actividad;
 
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha_registro;
+//     @Column
+//     @Temporal(TemporalType.TIMESTAMP)
+//     private Date fecha_registro;
    
-}
+ }

@@ -316,6 +316,7 @@
             // Obtener los valores de las horas de inicio y fin
             let horaInicio = document.getElementById("horaInicio").value;
             let horaFin = document.getElementById("horaFin").value;
+       
     
             // Parsear las horas a objetos Date
             let fechaInicio = new Date("2000-01-01T" + horaInicio);
@@ -328,7 +329,7 @@
             let horasMinutosDecimal = milisegundosToHorasMinutos(diferenciaMilisegundos);
     
             // Mostrar el resultado en un alert
-            alert("La diferencia es de " + horasMinutosDecimal.toFixed(2) + " horas.");
+            //alert("La diferencia es de " + horasMinutosDecimal.toFixed(2) + " horas.");
         }
     
         function milisegundosToHorasMinutos(milisegundos) {

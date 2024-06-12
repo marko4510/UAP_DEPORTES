@@ -320,8 +320,20 @@
     <script th:src="@{/assets/js/app.js}"></script>
 
     <script th:src="@{assets/libs/fullcalendar/fullcalendar.min.js}"></script>
+    <script th:src="@{assets/libs/fullcalendar/locale/es.js}"></script>
+
     <script th:src="@{assets/js/pages/calendar.init.js}"></script>
-    
+    <script>
+
+        $(function() {
+      
+          $('#calendar').fullCalendar({
+            locale: 'es'
+          });
+      
+        });
+      
+      </script>
     <script type="">
             function modificarFechaHora(id_actividad) {
                 var id_ac = id_actividad;
