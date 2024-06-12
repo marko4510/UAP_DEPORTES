@@ -30,14 +30,7 @@
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
-                                                    role="alert" th:if="${mensaje != null}">
-                                                    <h4 class="alert-body" th:text="${mensaje}"></h4>
-                                                    <button type="button" class="close" data-dismiss="alert"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
+                                              
                                                 <h3 class="header-title"
                                                     th:text="${'RESERVA: ' + actividad.descripcion_actividad}">titulo</h3>
                                                 <a th:href="@{/actividadR}"
@@ -209,6 +202,13 @@
                                                 <input type="hidden" name="id_da" th:value="${da.id_detalle_actividad}">
 
                                                 <div class="form-group row">
+                                                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                                                    role="alert" th:if="${mensaje != null}">
+                                                    <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
                                                     <div class="col-md-9">
                                                         <h3 class="header-title"
                                                             th:text="${da.fecha_detalle_actividad}"></h3>
@@ -276,7 +276,7 @@
                                                                     
                                                                 </div>
                                                                 <div class="col-md-11 mt-4">
-                                                                    <select th:id="'select'+${da.id_detalle_actividad}" class="form-control select2" th:field="${subDetalle.lugares}" required>
+                                                                    <select th:id="'select'+${da.id_detalle_actividad}" name="lugar" class="form-control select2"  required>
                                                                         <option value="">Seleccionar...</option>
                                                                         <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
                                                                     </select>
@@ -317,7 +317,7 @@
                                                             <td>
                                                                 <th:block th:each="l:${sda.lugares}">
                                                                     <div>
-                                                                        <span class="badge badge-pill badge-light"
+                                                                        <span class="badge badge-pill badge-light" th:style="|background-color: ${l.color_lugar}; color: white;|"
                                                                             th:text="${l.nombre_lugar}"></span>
                                                                     </div>
                                                                 </th:block>

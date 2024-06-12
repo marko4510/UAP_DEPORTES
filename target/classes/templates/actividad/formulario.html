@@ -96,7 +96,7 @@
                                                         <select class="selectize" th:field="${actividad.tipoActividad}"
                                                             required>
                                                             <option value="" selected>Seleccionar...</option>
-                                                            <option th:each="ta:${tipoActividades}"
+                                                            <option th:if="${ta.estado_tipo_actividad !='X'}"  th:each="ta:${tipoActividades}"
                                                                 th:value="${ta.id_tipo_actividad}"
                                                                 th:text="${ta.nombre_tipo_actividad}">-</option>
                                                         </select>
@@ -137,7 +137,7 @@
                                                     <label class="col-form-label" style="color: black;">Instalación Deportiva</label>
                                                     <select class="selectize" name="lugaresA">
                                                         <option value="" selected>Seleccionar...</option>
-                                                        <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
+                                                        <option th:if="${l.estado_lugar !='X'}" th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
                                                     </select>
                                                 </div>
                                             </div>
