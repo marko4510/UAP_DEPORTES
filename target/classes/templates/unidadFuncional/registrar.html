@@ -35,20 +35,30 @@
                                         </div>
                                         <form th:action="${edit} ?@{/UnidadmodF} :@{/UnidadF}" method="post">
                                             <input type="hidden" th:field="${unidadFuncional.id_unidad_funcional}">
-                                            <center><h2 >CREAR NUEVA INSTITUCIÓN</h2></center>
+                                            <center><h2 >CREAR NUEVO RESPONSABLE</h2></center>
                                             <div class="form-group row">
 
 
 
-                                                <div class="col-md-5">
+                                                <div class="col-md-3">
 
 
-                                                    <label class="col-form-label">Nombre de la Institución</label>
+                                                    <label class="col-form-label">Nombre de la Institución o Responsable</label>
                                                     <input class="form-control" type="text"
                                                         th:field="${unidadFuncional.nom_unidad}"
                                                         onkeyup="javascript:this.value=this.value.toUpperCase();"
                                                         style="text-transform:uppercase;" required>
                                                 </div>
+
+                                                <div class="col-md-3">
+
+
+                                                    <label class="col-form-label">Número de Contacto</label>
+                                                    <input class="form-control" type="text"
+                                                        th:field="${unidadFuncional.nom_telefono}"
+                                                         >
+                                                </div>
+
 
                                                 <div class="col-md-7">
                                                     <input class="form-control" type="hidden">
@@ -100,7 +110,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Lista de Instituciones</h4>
+                                    <h4 class="card-title">Lista de Responsables</h4>
                                 </div>
                                 <div class="card-body">
 
@@ -111,6 +121,7 @@
                                         <thead>
                                             <tr>
                                                 <th>NOMBRE</th>
+                                                <th>NUM CONTACTO</th>
                                                 <!-- <th>DIRECCION</th>
                                                 <th>NIVEL</th> -->
                                                 <th>ACCIONES</th>
@@ -122,6 +133,7 @@
 
                                             <tr th:each="ufl : ${unidadedesFuncionales}" th:if="${ufl.estado != 'X' }">
                                                 <td th:text="${ufl.nom_unidad}"></td>
+                                                <td th:text="${ufl.nom_telefono}"></td>
                                                 <!-- <td th:text="${ufl.direccionFuncional.nom_direccion}"></td>
                                                 <td th:text="${ufl.nivelFuncional.nom_nivel}"></td> -->
                                                 <td>

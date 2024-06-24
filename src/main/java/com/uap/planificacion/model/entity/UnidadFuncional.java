@@ -30,6 +30,8 @@ public class UnidadFuncional implements Serializable{
 
     private String nom_unidad;
 
+    private String nom_telefono;
+
     private String estado;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unidadFuncional", fetch = FetchType.LAZY)

@@ -162,6 +162,19 @@
                                                 </div>
                                               
                                             </div>
+                                            <div class="row mb-4">
+                                                <div class="col-lg-4 mb-3 col-md-4">
+                                                    <label for="observacion" class="col-form-label">Observacion: </label>
+                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                        <textarea  class="form-control" rows="3" id="observacion" name="observacion" disabled></textarea>
+                                                    </div>
+                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                        <textarea  class="form-control" rows="3" id="observacion" disabled></textarea>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                            </div>
                                             <!-- <div class="text-center" th:if="${unidad.id_unidad_funcional==1 }">
                                                 <input class="btn btn-primary" type="submit" value="Actualizar">
                                             </div> -->

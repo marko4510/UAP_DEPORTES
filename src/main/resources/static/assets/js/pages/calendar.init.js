@@ -43,6 +43,7 @@
                     $('#modalEvento #idDetalleActividad').val(evento.id_detalle_actividad);
                     $('#modalEvento #idLugar').val(evento.id_lugar);
                     $('#modalEvento #idSubDetAct').val(evento.id_sub_detalle_actividad);
+                    $('#modalEvento #observacion').val(evento.observacion);
                     
                     // Mostrar el modal
                     $('#modalEvento').modal('show');
@@ -62,6 +63,7 @@
                         let lugaresOptions = '';
                         for (let subdetalle of subdetalleActividades) {
                             console.log(subdetalle);
+                            let observacion = subdetalle.detalleActividad.actividad.observacion;
                             let lugaresConcatenados = "";
                             let id_lugar;
                             let idsub = subdetalle.id_sub_detalle_actividad;
@@ -111,6 +113,7 @@
                                     id_actividad: id_actividad,
                                     nombre_lugar: nombre_lugar,
                                     descripcion: descripcion,
+                                    observacion: observacion,
                                     fecha_detalle_actividad: fecha_detalle_actividad,
                                     hora_inicio: hora_inicio,
                                     hora_final: hora_final,

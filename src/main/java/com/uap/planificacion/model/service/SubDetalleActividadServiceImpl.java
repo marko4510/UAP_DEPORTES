@@ -25,8 +25,8 @@ import com.uap.planificacion.model.entity.SubDetalleActividad;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SubDetalleActividadServiceImpl implements ISubDetalleActividadService{
-    
+public class SubDetalleActividadServiceImpl implements ISubDetalleActividadService {
+
     @Autowired
     private ISubDetalleActividadDao subDetalleActividadDao;
     @Autowired
@@ -56,7 +56,7 @@ public class SubDetalleActividadServiceImpl implements ISubDetalleActividadServi
 
     @Override
     public void delete(Long id) {
-        
+
         subDetalleActividadDao.deleteById(id);
     }
 
@@ -66,29 +66,35 @@ public class SubDetalleActividadServiceImpl implements ISubDetalleActividadServi
     }
 
     @Override
-    public List<SubDetalleActividad> findAllEspecialesAndMesDeAnioActual(Integer mes){
+    public List<SubDetalleActividad> findAllEspecialesAndMesDeAnioActual(Integer mes) {
         List<SubDetalleActividad> listaSubDetalle = new ArrayList<>();
         List<Object[]> listaSql = subDetalleActividadDao.findAllEspecialesAndMesDeAnioActual(mes);
-        for(Object[] sql : listaSql){
+        for (Object[] sql : listaSql) {
             SubDetalleActividad sda = new SubDetalleActividad();
             DetalleActividad da = new DetalleActividad();
             Actividad a = new Actividad();
-            
-            sda.setId_sub_detalle_actividad(((BigInteger)sql[0]).longValue());
-            java.util.Set<Lugar> lugares = iLugarDao.sacarLugarPorSubdetalle(((BigInteger)sql[0]).longValue());
+
+            sda.setId_sub_detalle_actividad(((BigInteger) sql[0]).longValue());
+            java.util.Set<Lugar> lugares = iLugarDao.sacarLugarPorSubdetalle(((BigInteger) sql[0]).longValue());
             sda.setLugares(lugares);
-            //List<Lugar> lugaresL = new ArrayList<>(lugares);
-            //ev.setId_evento(lugaresL.get(0).getEventos().get(0).getId_evento());
-            DetalleActividad detalleActividad = detalleActividadDao.sacarDetalleActividadPorIdSubDet(((BigInteger)sql[0]).longValue());
-            da.setId_detalle_actividad(detalleActividad.getId_detalle_actividad());//para sacar id detalle actividad
-            a.setId_actividad(detalleActividad.getActividad().getId_actividad());//mara mostrar id actividad
+            // List<Lugar> lugaresL = new ArrayList<>(lugares);
+            // ev.setId_evento(lugaresL.get(0).getEventos().get(0).getId_evento());
+            DetalleActividad detalleActividad = detalleActividadDao
+                    .sacarDetalleActividadPorIdSubDet(((BigInteger) sql[0]).longValue());
+            da.setId_detalle_actividad(detalleActividad.getId_detalle_actividad());// para sacar id detalle actividad
+            a.setId_actividad(detalleActividad.getActividad().getId_actividad());// mara mostrar id actividad
             a.setDescripcion_actividad(sql[1].toString());
 
+            // Verifica si sql[5] es nulo antes de llamar a toString()
+            if (sql[5] != null) {
+                a.setObservacion(sql[5].toString());
+            }
+
             a.setAvance_actividad(detalleActividad.getActividad().getAvance_actividad());
-            //ev.setAvance_evento(sql[5].toString());
-            //System.out.println(sql[5].toString());
+            // ev.setAvance_evento(sql[5].toString());
+            // System.out.println(sql[5].toString());
             SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat formatoHora =  new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
             try {
                 da.setFecha_detalle_actividad(formatoFecha.parse(sql[2].toString()));
                 Date horaInicio = formatoHora.parse(sql[3].toString());
@@ -109,8 +115,9 @@ public class SubDetalleActividadServiceImpl implements ISubDetalleActividadServi
     }
 
     @Override
-    public Object validarHoraReservas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar) {
-        return subDetalleActividadDao.validarHoraReservas(fecha_reserva, hora_inicio, hora_final, nombre_lugar);   
+    public Object validarHoraReservas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final,
+            String nombre_lugar) {
+        return subDetalleActividadDao.validarHoraReservas(fecha_reserva, hora_inicio, hora_final, nombre_lugar);
     }
-    
+
 }

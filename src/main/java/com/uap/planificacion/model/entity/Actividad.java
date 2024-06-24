@@ -49,6 +49,12 @@ public class Actividad implements Serializable{
     @Column
     private String avance_actividad;
 
+    private String observacion;
+
+    private Integer costo;
+
+
+
 
     //ATRIBUTOS PARA GESTIONAR LAS RESERVAS
 
