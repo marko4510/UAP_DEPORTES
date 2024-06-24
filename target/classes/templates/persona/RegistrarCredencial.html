@@ -121,7 +121,7 @@
                                             <tbody>
 
                                                 <tr th:each="perAdm : ${personalAdministrativas}"
-                                                    th:if="${perAdm.estado != 'X' }">
+                                                    th:if="${perAdm.estado != 'X' && perAdm.cargo_funcionario != 'ADMIN' }">
                                                     <td th:text="${perAdm.cod_funcionario}"></td>
                                                     <td th:text="${perAdm.persona.nombre}+' '+${perAdm.persona.apellido}"></td>
                                                     <td th:text="${perAdm.unidadFuncional.nom_unidad}"></td>
