@@ -76,9 +76,10 @@ public class homeController {
                     .getAttribute("personalAdministrativo");
             UnidadFuncional unidadFuncional = unidadFuncionalService
                     .findOne(personalAdministrativo.getUnidadFuncional().getId_unidad_funcional());
-
+         
             model.addAttribute("unidad", unidadFuncional);
             model.addAttribute("personalADM", personalAdministrativo);
+        
             model.addAttribute("actividad", new Actividad());
 
             model.addAttribute("programacion", new Programacion());

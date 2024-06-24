@@ -42,6 +42,22 @@
                         <span class="texto-blanco">Instalaciones Deportiva</span>
                     </a>
                 </li> -->
+          
+                <li th:if="${session.personalAdministrativo.cod_funcionario==123} ">
+                    <a th:href="@{/Persona}" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-plus-square"></i></div>
+                        <span class="texto-blanco">Personas</span>
+                    </a>
+                </li>
+
+                <li th:if="${session.personalAdministrativo.cod_funcionario==123} " >
+                    <a th:href="@{/Credencial}" class="waves-effect">
+                        <div class="d-inline-block icons-sm mr-1"><i class="uim uim-plus-square"></i></div>
+                        <span class="texto-blanco">Usuarios</span>
+                    </a>
+                </li>
+
+
                 <li>
                     <a th:href="@{/eventos}" class="waves-effect">
                         <div class="d-inline-block icons-sm mr-1"><i class="uim uim-schedule"></i></div>
