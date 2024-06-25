@@ -65,8 +65,8 @@ public class reportesController {
                 int totalCosto = 0;
                 List<Object[]> listaDetalles = detalleActividadService.reporteGeneral(fecha_ini, fecha_fin);
                 for (Object[] objects : listaDetalles) {
-                    int costo = (int) objects[7]; 
-                    if (costo != 0) {
+                    if (objects[7] != null) {
+                        int costo = (int) objects[7];
                         totalCosto += costo;
                     }
 
