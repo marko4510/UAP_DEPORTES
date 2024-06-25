@@ -152,6 +152,7 @@ public class actividadController {
             @RequestParam(value = "fechasA") @DateTimeFormat(pattern = "yyyy-MM-dd") List<Date> fecha_detalle_actividad,
             @RequestParam(value = "horasI") @DateTimeFormat(pattern = "HH:mm") List<Date> hora_inicio,
             @RequestParam(value = "horasF") @DateTimeFormat(pattern = "HH:mm") List<Date> hora_fin,
+            @RequestParam(value = "costos") List<Integer> costos,
             @RequestParam(value = "lugaresA") List<Long> id_lugares) {
         int cont = 0;
         List<Lugar> lugares = new ArrayList<>();
@@ -318,7 +319,7 @@ public class actividadController {
             @RequestParam(value = "horasI") @DateTimeFormat(pattern = "HH:mm") List<Date> hora_inicio,
             @RequestParam(value = "horasF") @DateTimeFormat(pattern = "HH:mm") List<Date> hora_fin,
             @RequestParam(value = "lugaresA") List<Long> id_lugares,
-            /* @RequestParam(value = "fechas") Date[] fechas, */
+            @RequestParam(value = "costos") List<Integer> costos,
             RedirectAttributes redirectAttrs,
             HttpServletRequest request) throws ParseException {
      
@@ -364,9 +365,11 @@ public class actividadController {
             }
             List<Lugar> lugaresParaEvento = new ArrayList<>();
             for (int i = 0; i < lugares.size(); i++) {
+              
                 DetalleActividad detalleActividad = new DetalleActividad();
                 detalleActividad.setFecha_detalle_actividad(fechas[i]);
                 detalleActividad.setActividad(actividad);
+                detalleActividad.setCosto(costos.get(i));
                 detalleActividad.setFecha_registro(new Date());
                 detalleActividad.setEstado("A");
                detalleActividadService.save(detalleActividad);
@@ -597,6 +600,7 @@ public String detalleActividadPost(
         @RequestParam("fin") String fin,
         @RequestParam("id_da") Long id_detalle_actividad,
         @RequestParam("lugar") Long id_lugar,
+        @RequestParam("costo") Integer costo,
         RedirectAttributes redirectAttrs) throws ParseException {
 
     // Convertir las horas de inicio y fin
@@ -675,6 +679,9 @@ public String detalleActividadPost(
     subDetalleActividad.setHora_inicio(date1);
     subDetalleActividad.setHora_final(horaFinMenos);
     subDetalleActividad.setEstado("A");
+
+    dac.setCosto(costo);
+    detalleActividadService.save(dac);
 
     if (noEsEspecial) {
         subDetalleActividadService.save(subDetalleActividad);

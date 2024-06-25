@@ -41,4 +41,8 @@ public interface ISubDetalleActividadDao extends CrudRepository<SubDetalleActivi
                 "AND sda.hora_final > ?2\n" + //
                 "AND l.nombre_lugar = ?4", nativeQuery = true)
     public Object validarHoraReservas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar );
+
+
+
+   
 }

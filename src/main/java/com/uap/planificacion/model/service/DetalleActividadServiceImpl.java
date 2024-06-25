@@ -1,5 +1,7 @@
 package com.uap.planificacion.model.service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +43,20 @@ public class DetalleActividadServiceImpl implements IDetalleActividadService{
     @Override
     public List<DetalleActividad> detallePorIdActividad(Long id_actividad) {
         return (List<DetalleActividad>) detalleActividadDao.detallePorIdActividad(id_actividad);
+    }
+
+    @Override
+    public List<DetalleActividad> findActividadesBetweenDates(Date fechaInicio, Date fechaFin) {
+        return (List<DetalleActividad>) detalleActividadDao.findActividadesBetweenDates(fechaInicio, fechaFin);
+    }
+
+    @Override
+    public List<Object[]> reporteGeneral(Date fecha_inicio, Date fecha_final) {
+        return (List<Object[]>) detalleActividadDao.reporteGeneral(fecha_inicio, fecha_final);
+    }
+
+    @Override
+    public List<Object[]> reportePorInstalacion(Date fecha_inicio, Date fecha_final, Long id_lugar) {
+        return (List<Object[]>) detalleActividadDao.reportePorInstalacion(fecha_inicio, fecha_final, id_lugar);
     }
 }

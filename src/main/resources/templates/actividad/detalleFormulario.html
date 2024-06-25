@@ -142,21 +142,7 @@
                                                                                         </div>
                                                                                     </div>
 
-                                                                                    <div class="col-md-4">
-                                                                                        <div>
-                                                                                            <label class="col-form-label" style="color: black;">Costo Reserva </label>
-                                                                                            <!-- <input class="form-control" type="number"
-                                                                                                th:field="${actividad.costo}" 
-                                                                                                 required data-bts-postfix="BS"> -->
-                                                                                                 <label class="sr-only" for="inlineFormInputGroupUsername2"></label>
-                                                                                                 <div class="input-group mt-3 mt-sm-0 mr-sm-3">
-                                                                                                     <div class="input-group-prepend">
-                                                                                                         <div class="input-group-text">Bs.</div>
-                                                                                                     </div>
-                                                                                                     <input type="number" class="form-control" th:field="${actividad.costo}">
-                                                                                                 </div>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                  
 
                                                                                     <div class="col-md-7">
                                                                                         <div>
@@ -282,27 +268,39 @@
                                                                         <h4 class="header-title">Lugar(es)</h4>
                                                                     </div>
 
-                                                                    <div class="col-md-1 float-right">
+                                                                    <!-- <div class="col-md-1 float-right">
                                                                         <a href="#"
                                                                             th:onclick="cargarLugar([[${da.id_detalle_actividad}]],[[${actividad.id_actividad}]])"
                                                                             class="btn btn-success btn-sm">+</a>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             
                                                             
                                                             <div class="row mt-2">
                                                                 <div id="lab"></div>
                                                                 
-                                                                <div class="">
-                                                    
-                                                                   
-                                                                    
-                                                                </div>
-                                                                <div class="col-md-11 mt-4">
+                                                               
+                                                                <div class="col-md-6 ">
+                                                                    <label class="col-form-label" style="color: black;">Lugar </label>
                                                                     <select th:id="'select'+${da.id_detalle_actividad}" name="lugar" class="form-control select2"  required>
                                                                         <option value="">Seleccionar...</option>
                                                                         <option th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
                                                                     </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div>
+                                                                        <label class="col-form-label" style="color: black;">Costo Reserva </label>
+                                                                        <!-- <input class="form-control" type="number"
+                                                                            th:field="${actividad.costo}" 
+                                                                             required data-bts-postfix="BS"> -->
+                                                                             <label class="sr-only" for="inlineFormInputGroupUsername2"></label>
+                                                                             <div class="input-group mt-3 mt-sm-0 mr-sm-3">
+                                                                                 <div class="input-group-prepend">
+                                                                                     <div class="input-group-text">Bs.</div>
+                                                                                 </div>
+                                                                                 <input type="number" class="form-control" name="costo">
+                                                                             </div>
+                                                                    </div>
                                                                 </div>
                                                                 
                                                             </div>
@@ -310,7 +308,7 @@
                                                     </div>
 
                                                 </div>
-
+                                                <br>
                                                 <div class="form-group text-center">
                                                     <button class="btn btn-primary waves-effect waves-light"
                                                         type="submit">Agregar</button>
@@ -328,6 +326,7 @@
                                                             <th>Hora inicio</th>
                                                             <th>Hora fin</th>
                                                             <th>Lugar(es)</th>
+                                                            <th>Costo</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -345,6 +344,7 @@
                                                                     </div>
                                                                 </th:block>
                                                             </td>
+                                                            <td th:text="${sda.detalleActividad.costo} +' Bs.'">Otto</td>
                                                             <td>
                                                                 <a th:href="${'/eliminar-sub-detalle/' + sda.id_sub_detalle_actividad + '/' + actividad.id_actividad}"
                                                                     type="button"

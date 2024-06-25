@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+   
+  
+</head>
+
+<body data-topbar="colored">
+    <div id="layout-wrapper">
+        <header id="page-topbar" th:replace="layout/topbar :: topbar"></header>
+        <div class="vertical-menu" th:replace="layout/menu :: menu"></div>
+
+        <div class="main-content" style="background-color: #f8bd4f;">
+            <div class="page-content">
+                <div class="page-title-box" style="background-color: #f8bd4f; color: white;">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="page-content-wrapper">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                                            role="alert" th:if="${mensaje != null}">
+                                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <center><h2>REPORTES</h2></center>
+                                        <br>
+                                         <!-- Nav tabs -->
+                                         <ul class="nav nav-pills nav-justified" role="tablist">
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link active" data-toggle="tab" href="#home-justify" role="tab">
+                                                    <i class="fas fa-home mr-1"></i> <span class="d-none d-md-inline-block">Por Instalación</span> 
+                                                </a>
+                                            </li>
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-toggle="tab" href="#profile-justify" role="tab">
+                                                    <i class="fas fa-user mr-1"></i> <span class="d-none d-md-inline-block">General</span>
+                                                </a>
+                                            </li>
+                                            <!-- <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-toggle="tab" href="#messages-justify" role="tab">
+                                                    <i class="far fa-envelope mr-1"></i> <span class="d-none d-md-inline-block">Messages</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item waves-effect waves-light">
+                                                <a class="nav-link" data-toggle="tab" href="#settings-justify" role="tab">
+                                                    <i class="fas fa-cog mr-1"></i> <span class="d-none d-md-inline-block">Settings</span>
+                                                </a>
+                                            </li> -->
+                                        </ul>
+
+
+                                        <!-- Tab panes -->
+                                        <div class="tab-content p-3">
+                                            <div class="tab-pane active" id="home-justify" role="tabpanel">
+                                                <form th:action="${edit} ?@{/TipoReservamodF} :@{/reporteInstalacion}" method="post" target="_blank">
+                                                  
+                                                    <div class="form-group row">
+
+                                                        <div class="col-md-3 mt-1">
+                                                            <label class="col-form-label" style="color: black;">Instalación Deportiva</label>
+                                                            <select class="selectize" name="lugar">
+                                                                <option value="" selected>Seleccionar...</option>
+                                                                <option th:if="${l.estado_lugar !='X'}" th:each="l:${lugares}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <label class="col-form-label" style="color: black;">Fecha Inicio</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="fechas" name="fechaInicio" required />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <label class="col-form-label" style="color: black;">Fecha Fin</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="fechas" name="fechaFin" required />
+                                                            </div>
+                                                        </div>
+        
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-12 text-center">
+                                                            <button type="submit" class="btn btn-primary mb-2 "
+                                                                th:text="${edit} ?'Actualizar' :'Generar'">Registrar</button>
+                                                        </div>
+                                                    </div>
+        
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane" id="profile-justify" role="tabpanel">
+                                                <form th:action="${edit} ?@{/TipoReservamodF} :@{/reporteGeneral}" method="post" target="_blank">
+                                                  
+                                                    <div class="form-group row">
+
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <label class="col-form-label" style="color: black;">Fecha Inicio</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="fechas" name="fechaInicio" required />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <label class="col-form-label" style="color: black;">Fecha Fin</label>
+                                                                <input type="date" class="form-control"
+                                                                    id="fechas" name="fechaFin" required />
+                                                            </div>
+                                                        </div>
+        
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-12 text-center">
+                                                            <button type="submit" class="btn btn-primary mb-2 "
+                                                                th:text="${edit} ?'Actualizar' :'Generar'">Registrar</button>
+                                                        </div>
+                                                    </div>
+        
+                                                </form>
+                                            </div>
+                                            <!-- <div class="tab-pane" id="messages-justify" role="tabpanel">
+                                                <p class="mb-0">
+                                                    Food truck fixie locavore, accusamus mcsweeney's marfa nulla
+                                                    single-origin coffee squid. Exercitation +1 labore velit, blog
+                                                    sartorial PBR leggings next level wes anderson artisan four loko
+                                                    farm-to-table craft beer twee. Qui photo booth letterpress,
+                                                    commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
+                                                    vinyl cillum PBR. Homo nostrud organic, assumenda labore
+                                                    aesthetic magna delectus mollit.
+                                                </p>
+                                            </div>
+                                            <div class="tab-pane" id="settings-justify" role="tabpanel">
+                                                <p class="mb-0">
+                                                    Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
+                                                    art party before they sold out master cleanse gluten-free squid
+                                                    scenester freegan cosby sweater. Fanny pack portland seitan DIY,
+                                                    art party locavore wolf cliche high life echo park Austin. Cred
+                                                    vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
+                                                    farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral,
+                                                    mustache.
+                                                </p>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+       
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                
+
+
+
+                </div>
+            </div>
+
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            2024 © USIC.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-right d-none d-sm-block">
+                                UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+
+    <!-- /Right-bar -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- JAVASCRIPT -->
+    <div th:replace="layout/pie :: pie"></div>
+    
+
+    <script>
+        function MandarURL(a) {
+            swal({
+                title: 'Eliminar Registro?',
+                type: 'error',
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: "Cancelar",
+                html:
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-tiporeserva/" + a + "'  >" +
+                    "Eliminar" +
+                    "</a>",
+            }).then().done();
+        }
+    </script>
+</body>
+
+</html>

@@ -47,6 +47,8 @@ public class DetalleActividad implements Serializable {
 
     private String estado;
 
+    private Integer costo;
+
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_actividad")
