@@ -131,7 +131,7 @@
 
                                         <tbody>
 
-                                            <tr th:each="ufl : ${unidadedesFuncionales}" th:if="${ufl.estado != 'X' }">
+                                            <tr th:each="ufl : ${unidadedesFuncionales}" th:if="${ufl.estado == 'A' }">
                                                 <td th:text="${ufl.nom_unidad}"></td>
                                                 <td th:text="${ufl.nom_telefono}"></td>
                                                 <!-- <td th:text="${ufl.direccionFuncional.nom_direccion}"></td>

@@ -48,4 +48,9 @@ public class UnidadFuncionalServiceImpl implements IUnidadFuncionalService{
     public List<UnidadFuncional> listaTodasLasUnidades() {
         return (List<UnidadFuncional>) unidadFuncionalDao.listaTodasLasUnidades();
     }
+
+    @Override
+    public UnidadFuncional buscarResponsable(String nombre) {
+       return unidadFuncionalDao.buscarResponsable(nombre);
+    }
 }

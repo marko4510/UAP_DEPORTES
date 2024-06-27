@@ -58,4 +58,9 @@ public interface IUnidadFuncionalDao extends CrudRepository<UnidadFuncional, Lon
     "WHERE u.estado != 'X' and pa.estado = 'A' and pe.estado != 'X' and df.estado!='X' "+
     "and u.id_unidad_funcional not in (26,27,28,29,30,31,34,80,118)", nativeQuery = true)
     public List<UnidadFuncional> listaTodasLasUnidades();
+
+
+
+    @Query(value="select * from unidad_funcional uf where uf.nom_unidad = ?1", nativeQuery = true)
+    public UnidadFuncional buscarResponsable(String nombre);
 }

@@ -25,8 +25,8 @@ public interface ISubDetalleActividadDao extends CrudRepository<SubDetalleActivi
             "where l.tipo_lugar = 'E' and ev.id_actividad = a.id_actividad " +
             "  and DATE_PART('month', da.fecha_detalle_actividad) = ?1 " +
             "  and DATE_PART('year', da.fecha_detalle_actividad) = DATE_PART('year', CURRENT_DATE)" +
-            "  and da.estado != 'X' " +
-            "  and sb.estado != 'X' " +
+            "  and da.estado = 'A' " +
+            "  and sb.estado = 'A' " +
             "order by da.id_detalle_actividad", nativeQuery = true)
     List<Object[]> findAllEspecialesAndMesDeAnioActual(Integer mes);
 
@@ -36,11 +36,22 @@ public interface ISubDetalleActividadDao extends CrudRepository<SubDetalleActivi
                 "LEFT JOIN detalle_actividad da ON da.id_detalle_actividad = sda.id_detalle_actividad\n" + //
                 "LEFT JOIN lugar_subdetalleactividad ls ON ls.id_sub_detalle_actividad = sda.id_sub_detalle_actividad\n" + //
                 "LEFT JOIN lugar l ON l.id_lugar = ls.id_lugar\n" + //
-                "WHERE da.estado != 'X' AND da.fecha_detalle_actividad = ?1\n" + //
+                "WHERE da.estado = 'A' AND da.fecha_detalle_actividad = ?1\n" + //
                 "AND sda.hora_inicio <= ?3\n" + //
                 "AND sda.hora_final > ?2\n" + //
                 "AND l.nombre_lugar = ?4", nativeQuery = true)
     public Object validarHoraReservas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar );
+
+    @Query(value = "SELECT da.fecha_detalle_actividad, sda.hora_inicio, sda.hora_final, l.nombre_lugar\n" + //
+    "FROM sub_detalle_actividad sda\n" + //
+    "LEFT JOIN detalle_actividad da ON da.id_detalle_actividad = sda.id_detalle_actividad\n" + //
+    "LEFT JOIN lugar_subdetalleactividad ls ON ls.id_sub_detalle_actividad = sda.id_sub_detalle_actividad\n" + //
+    "LEFT JOIN lugar l ON l.id_lugar = ls.id_lugar\n" + //
+    "WHERE da.estado != 'X' AND da.fecha_detalle_actividad = ?1\n" + //
+    "AND sda.hora_inicio <= ?3\n" + //
+    "AND sda.hora_final > ?2\n" + //
+    "AND l.nombre_lugar = ?4", nativeQuery = true)
+public Object validarHoraReservasPublicas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar );
 
 
 

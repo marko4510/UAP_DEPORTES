@@ -66,18 +66,18 @@
                                             </div>
                                             <div class="button-items">
                                                 
-                                                    <!-- <button style="width:auto;
+                                                    <button style="width:auto;
                                                     height:30px; text-align: left;" type="button" 
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
-                                                        data-toggle="modal" data-target="#modalSolicitud">ACTIVIDADES SOLICITADAS...
+                                                        data-toggle="modal" data-target="#modalSolicitud">PRE RESERVAS
                                                         <span class="badge-pill badge-warning float-right" th:text="' '+${eventosSolicitados.size()}"> </span>
-                                                    </button> -->
+                                                    </button>
                                                 
                                                     <!--<button style="width:auto;
                                                     height:30px; text-align: left;" type="button" 
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
                                                         data-toggle="modal" data-target="#modalReporte">REPORTES                                                        
-                                                    </button>-->
+                                                    </button>
                                             </div>
                                             <hr>
                                         </div>
@@ -91,7 +91,7 @@
                                         </div>
                                           <hr>
                                         <div class="row">
-                                            <!--col-xl-2 col-lg-3 col-md-4    col-xl-10 col-lg-9 col-md-8-->
+                                            col-xl-2 col-lg-3 col-md-4    col-xl-10 col-lg-9 col-md-8-->
                                             <div id="calendar" class="mt-4 mt-md-0"></div>
                                         </div>
                                     </div>
@@ -199,36 +199,46 @@
                                            <table id="example1" class="table table-striped table-bordered dt-responsive"
                                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                 <thead style="font-size:12px;">
-                                                    <th>#</th>
-                                                    <th>Unidad Solicitante</th>
+                                                    
+                                                    <th>Responsable Solicitante</th>
+                                                    <th>Num Celular</th>
                                                     <th>Actividad</th>
-                                                    <th>Fecha</th>
-                                                    <th>Hora</th>
-                                                    <th>Lugar</th>
+                                                    <th>Fechas</th>
+                                                    <th>Horas</th>
+                                                    <th>Lugares</th>
                                                     <th>Opciones</th>
                                                 </thead>
                                                 <tbody style="font-size:12px;">
                                                     <tr th:each="e:${eventosSolicitados}">
-                                                        <td th:text="${e.actividad.id_actividad}"></td>
+                                                        
                                                         <td th:text="${e.actividad.unidadFuncional.nom_unidad}"></td>
+                                                        <td th:text="${e.actividad.unidadFuncional.nom_telefono}"></td>
                                                         <td th:text="${e.actividad.descripcion_actividad}"></td>
                                                         <td>
-                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado!='X'}" >
-                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado!='X'}">
+                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}" >
+                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
                                                                     <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" 
-                                                                    th:text="${#dates.format(da.fecha_detalle_actividad,'EEEE d MMMM')}"></div>
+                                                                    th:text="${#dates.format(da.fecha_detalle_actividad, 'EEEE d MMMM yyyy')}"></div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado!='X'}" >
-                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado!='X'}">
+                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}" >
+                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
                                                                     <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" 
                                                                     th:text="${sda.hora_inicio}+' - '+${sda.hora_final}"></div>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td th:text="${e.lugar.nombre_lugar}"></td>
+                                                        <td>
+                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}" >
+                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
+                                                                    <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" 
+                                                                    th:text="${e.lugar.nombre_lugar}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <!-- <td th:text="${e.lugar.nombre_lugar}"></td> -->
                                                         <td>
                                                             <!--<a style="font-size: 14px;" th:onclick="modificarFechaHora([[${e.actividad.id_actividad}]])" href="#" data-toggle="tooltip" data-placement="top" title="Modificar"><i
                                                                 class="far fa-edit"></i></a> editar fecha hora-->
@@ -262,10 +272,10 @@
                             </div>
                         </div>
                         <!--confirmar-->
-                        <div class="modal fade" tabindex="-1" id="ModalPro" role="dialog"
+                        <div class="modal fade bs-example-modal-xl" tabindex="-1" id="ModalPro" role="dialog"
                             aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content" style="background-color: rgb(233, 236, 181);">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" >
+                                <div class="modal-content" style="background-color: rgb(255, 255, 255);">
 
                                     <form th:action="@{/confirmarEvento}" method="post">
                                         <input type="hidden" id="id_activida" name="id_activida">
@@ -273,11 +283,64 @@
                                             <h5 class="modal-title" id="nombre"></h5>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="text-center"><img src="../../../../assets/images/interrogacion.png" 
-                                                style="width: 30%; height: 20%; background-repeat: no-repeat;" alt="" height="22">
-                                                <h3>¿ESTA SEGURO DE CONFIRMAR EFENTO EN LA FECHA Y HORA INDICADA?</h3>
+                                            <div class="text-center">
+                                                <!-- <img src="../../../../assets/images/interrogacion.png" 
+                                                style="width: 10%; height: 10%; background-repeat: no-repeat;" alt="" height="5"> -->
+                                                <!-- <h4>¿ESTA SEGURO DE CONFIRMAR EFENTO EN LA FECHA Y HORA INDICADA?</h4> -->
                                             </div>
-                                            
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <label class="col-form-label" style="color: black;">Actividad a
+                                                            realizar </label>
+                                                        <input class="form-control" type="text"
+                                                           
+                                                            placeholder="Palabra Clave" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <label class="col-form-label"
+                                                            style="color: black;">Responsable</label>
+                                                        <select class="form-control selectize">
+                                                  
+                                                            <option value="" selected>Seleccionar...</option>
+                                                            <option th:each="u:${unidadFuncionales}"
+                                                                th:if="${u.estado=='A'}"
+                                                                th:value="${u.id_unidad_funcional}"
+                                                                th:text="${u.nom_unidad}">-</option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <div>
+                                                        <label class="col-form-label" style="color: black;">Tipo de
+                                                            Reserva</label>
+                                                        <select class="form-control selectize" 
+                                                            required>
+                                                            <option value="" selected>Seleccionar...</option>
+                                                            <option th:if="${ta.estado_tipo_actividad !='X'}"
+                                                                th:each="ta:${tipoActividades}"
+                                                                th:value="${ta.id_tipo_actividad}"
+                                                                th:text="${ta.nombre_tipo_actividad}">-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <div>
+                                                        <label class="col-form-label"
+                                                            style="color: black;">Observaciones</label>
+                                                        <textarea class="form-control" rows="3"
+                                                           ></textarea>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
                                             <br>
                                             <div class="row">
                                                 <div class="col-12 text-center">

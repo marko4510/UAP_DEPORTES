@@ -13,10 +13,12 @@ import com.uap.planificacion.model.service.IDetalleActividadService;
 import com.uap.planificacion.model.service.IEventoService;
 import com.uap.planificacion.model.service.ILugarService;
 import com.uap.planificacion.model.service.ISubDetalleActividadService;
+import com.uap.planificacion.model.service.ITipoActividadService;
 import com.uap.planificacion.model.service.IUnidadFuncionalService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -47,6 +49,9 @@ public class CalendarioController {
     private final ILugarService lugarService;
     private IEventoDao eventoDao;
     private final IActividadService actividadService;
+
+    @Autowired
+    private ITipoActividadService tipoActividadService;
     
     @GetMapping("/eventos")
     public String vistaCalendario(Model model, HttpServletRequest request){
@@ -85,8 +90,11 @@ public class CalendarioController {
             // model.addAttribute("lugar6", lugar6);
             // model.addAttribute("lugar7", lugar7);
             model.addAttribute("unidad", unidadFuncional);
+            model.addAttribute("unidadFuncionales", unidadService.findAll());
+            model.addAttribute("tipoActividades", tipoActividadService.findAll());
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("nivel", u.getNivelFuncional());
+            model.addAttribute("actividades", actividadService.findAll());
             model.addAttribute("lugaresE", lugarService.sacarLugaresConTipoE("E"));
             model.addAttribute("eventosSolicitados", events);
 
@@ -101,9 +109,12 @@ public class CalendarioController {
     public String confirmarEvento(@RequestParam(value="id_activida")Long id_evento, RedirectAttributes redirectAttrs){
 
         Evento evento = eventoService.findOne(id_evento);
-        evento.setEstado_evento("C");
+        evento.setEstado_evento("P");
         eventoService.save(evento);
+       
         Actividad a = evento.getActividad();
+        List<DetalleActividad> detalles = a.getDetalleActividads();
+        
         a.setAvance_actividad("aceptado");
         actividadService.save(a);
         redirectAttrs
@@ -111,6 +122,10 @@ public class CalendarioController {
         .addFlashAttribute("clase", "success alert-dismissible fade show");
         return "redirect:/eventos";
     }
+
+
+
+
     @PostMapping("/cambiarFechaEventoLugar")
     public String cambiarFechaEventoLugar(@RequestParam(value = "fechaActividad") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fecha_detalle_actividad,
     @RequestParam(value="idDetalleActividad")Long id_detalle_actividad, @RequestParam(value = "ilugaresA")Long id_lugar, 

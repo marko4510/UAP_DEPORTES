@@ -19,4 +19,6 @@ public interface IUnidadFuncionalService {
 	public List<UnidadFuncional> listaUnidadesConActividad(Date fechainicio, Date fechafin);
 
 	public List<UnidadFuncional> listaTodasLasUnidades();
+
+	public UnidadFuncional buscarResponsable(String nombre);
 }

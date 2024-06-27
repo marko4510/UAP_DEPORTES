@@ -577,6 +577,7 @@ public class actividadController {
     @GetMapping("/lugares")
     @ResponseBody
     public List<Lugar> obtenerLugaresPorTipo(@RequestParam("tipo_lugar") String tipoLugar) {
+    
         List<Lugar> listaLugaresE = lugarService.sacarLugaresConTipoE(tipoLugar);
         return listaLugaresE;
     }

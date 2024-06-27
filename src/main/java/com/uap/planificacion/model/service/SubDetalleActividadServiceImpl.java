@@ -120,4 +120,10 @@ public class SubDetalleActividadServiceImpl implements ISubDetalleActividadServi
         return subDetalleActividadDao.validarHoraReservas(fecha_reserva, hora_inicio, hora_final, nombre_lugar);
     }
 
+    @Override
+    public Object validarHoraReservasPublicas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final,
+            String nombre_lugar) {
+                return subDetalleActividadDao.validarHoraReservasPublicas(fecha_reserva, hora_inicio, hora_final, nombre_lugar);
+    }
+
 }

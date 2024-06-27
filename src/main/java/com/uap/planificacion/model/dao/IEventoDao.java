@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IEventoDao extends JpaRepository <Evento, Long> {
 
-    @Query(value = "select * from evento where estado_evento = 'P'", nativeQuery = true)
+    @Query(value = "select * from evento where estado_evento = 'S'", nativeQuery = true)
     public List<Evento> listaEventosSolicitados();     
 
     @Query(value = "select * from evento where id_actividad = ?1", nativeQuery = true)
