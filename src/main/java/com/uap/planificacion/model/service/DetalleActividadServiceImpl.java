@@ -59,4 +59,9 @@ public class DetalleActividadServiceImpl implements IDetalleActividadService{
     public List<Object[]> reportePorInstalacion(Date fecha_inicio, Date fecha_final, Long id_lugar) {
         return (List<Object[]>) detalleActividadDao.reportePorInstalacion(fecha_inicio, fecha_final, id_lugar);
     }
+
+    @Override
+    public DetalleActividad detalleActividadPorIdActividad(Long id_actividad) {
+        return detalleActividadDao.detalleActividadPorIdActividad(id_actividad);
+    }
 }

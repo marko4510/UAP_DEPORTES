@@ -9,30 +9,48 @@
 <style>
     .color-indicators {
         display: flex;
-        flex-wrap: wrap; /* Permite que los elementos se envuelvan si el contenedor es demasiado estrecho */
-        gap: 10px; /* Espacio entre los indicadores de colores y el texto */
+        flex-wrap: wrap;
+        /* Permite que los elementos se envuelvan si el contenedor es demasiado estrecho */
+        gap: 10px;
+        /* Espacio entre los indicadores de colores y el texto */
     }
+
     .lugar-item {
         display: flex;
-        align-items: center; /* Centra verticalmente */
-        gap: 10px; /* Espacio entre el indicador de color y el texto */
+        align-items: center;
+        /* Centra verticalmente */
+        gap: 10px;
+        /* Espacio entre el indicador de color y el texto */
     }
+
     .color-indicator {
-        width: 20px; /* Ancho de los indicadores de colores */
-        height: 20px; /* Altura de los indicadores de colores */
-        border-radius: 50%; /* Forma redonda */
-        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Sombra ligera */
-        cursor: pointer; /* Cambia el cursor al pasar el ratón */
-        transition: transform 0.2s; /* Efecto de escala suave al pasar el ratón */
+        width: 20px;
+        /* Ancho de los indicadores de colores */
+        height: 20px;
+        /* Altura de los indicadores de colores */
+        border-radius: 50%;
+        /* Forma redonda */
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        /* Sombra ligera */
+        cursor: pointer;
+        /* Cambia el cursor al pasar el ratón */
+        transition: transform 0.2s;
+        /* Efecto de escala suave al pasar el ratón */
     }
+
     .text {
-        font-size: 14px; /* Tamaño de fuente del texto */
-        color: #333; /* Color del texto */
+        font-size: 14px;
+        /* Tamaño de fuente del texto */
+        color: #333;
+        /* Color del texto */
     }
+
     .color-indicator:hover {
-        transform: scale(1.1); /* Efecto de escala al pasar el ratón */
+        transform: scale(1.1);
+        /* Efecto de escala al pasar el ratón */
     }
 </style>
+
 <body data-topbar="colored">
     <div id="layout-wrapper">
 
@@ -54,26 +72,27 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
-                                                    role="alert" th:if="${mensaje != null}">
-                                                    <h4 class="alert-body" th:text="${mensaje}"></h4>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
+                                            role="alert" th:if="${mensaje != null}">
+                                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
                                         <div class="" th:if="${unidad.id_unidad_funcional==1 }">
                                             <div>
 
                                             </div>
                                             <div class="button-items">
-                                                
-                                                    <button style="width:auto;
-                                                    height:30px; text-align: left;" type="button" 
+
+                                                <button style="width:auto;
+                                                    height:30px; text-align: left;" type="button"
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
-                                                        data-toggle="modal" data-target="#modalSolicitud">PRE RESERVAS
-                                                        <span class="badge-pill badge-warning float-right" th:text="' '+${eventosSolicitados.size()}"> </span>
-                                                    </button>
-                                                
-                                                    <!--<button style="width:auto;
+                                                    data-toggle="modal" data-target="#modalSolicitud">PRE RESERVAS
+                                                    <span class="badge-pill badge-warning float-right"
+                                                        th:text="' '+${eventosSolicitados.size()}"> </span>
+                                                </button>
+
+                                                <!--<button style="width:auto;
                                                     height:30px; text-align: left;" type="button" 
                                                     class="btn btn-primary btn-sm waves-effect waves-light"
                                                         data-toggle="modal" data-target="#modalReporte">REPORTES                                                        
@@ -92,325 +111,492 @@
                                           <hr>
                                         <div class="row">
                                             col-xl-2 col-lg-3 col-md-4    col-xl-10 col-lg-9 col-md-8-->
-                                            <div id="calendar" class="mt-4 mt-md-0"></div>
+                                                <div id="calendar" class="mt-4 mt-md-0"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="modalEvento" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
-                            aria-labelledby="modalEvento" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <strong style="font-size: 24px;" class="text-white modal-title mt-0" id="myExtraLargeModalLabel"></strong>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form th:action="@{/cambiarFechaEventoLugar}" method="post">
-                                            <input type="hidden" id="idDetalleActividad" name="idDetalleActividad">
-                                            <input type="hidden" id="idLugar" name="idLugar">
-                                            <input type="hidden" id="idSubDetAct" name="idSubDetAct">
-                                            <div class="row mb-4">
-                                              
+                            <div id="modalEvento" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
+                                aria-labelledby="modalEvento" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-primary">
+                                            <strong style="font-size: 24px;" class="text-white modal-title mt-0"
+                                                id="myExtraLargeModalLabel"></strong>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form th:action="@{/cambiarFechaEventoLugar}" method="post">
+                                                <input type="hidden" id="idDetalleActividad" name="idDetalleActividad">
+                                                <input type="hidden" id="idLugar" name="idLugar">
+                                                <input type="hidden" id="idSubDetAct" name="idSubDetAct">
+                                                <div class="row mb-4">
 
-                                                <div class="col-lg-4 mb-2 col-md-4">
-                                                    <label for="fechaActividad" class="col-form-label">Nombre de la Instalación Deportiva:
-                                                    </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
-                                                        <select class="form-control select2" name="ilugaresA" id="ilugaresA" disabled>
-                                                            <option th:each=" l : ${lugaresE}" th:value="${l.id_lugar}" th:text="${l.nombre_lugar}"></option>
-                                                        </select>
-                                                    </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
-                                                        <input type="datetime" class="form-control" id="lugarActividad" disabled>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="col-lg-4 mb-2 col-md-2">
-                                                    <label for="fechaActividad" class="col-form-label">Fecha de Reserva:
-                                                    </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
-                                                        <input type="datetime" class="form-control" id="fechaActividad" name="fechaActividad" disabled>
-                                                    </div>
-                                                    
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
-                                                        <input type="datetime" class="form-control" id="fechaActividad" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2 mb-2 col-md-2">
-                                                    <label for="horaInicio" class="col-form-label">Hora inicio: </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
-                                                        <input type="time" class="form-control" id="horaInicio" name="horaInicio" disabled>
-                                                    </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
-                                                        <input type="time" class="form-control" id="horaInicio" disabled>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="col-lg-2 mb-2 col-md-2">
-                                                    <label for="horaFin" class="col-form-label">Hora fin: </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
-                                                        <input type="time" class="form-control" id="horaFin" name="horaFin" disabled>
-                                                    </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
-                                                        <input type="time" class="form-control" id="horaFin" disabled>
-                                                    </div>
-                                                    
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="row mb-4">
-                                                <div class="col-lg-4 mb-3 col-md-4">
-                                                    <label for="observacion" class="col-form-label">Observacion: </label>
-                                                    <div th:if="${unidad.id_unidad_funcional==1 }">
-                                                        <textarea  class="form-control" rows="3" id="observacion" name="observacion" disabled></textarea>
-                                                    </div>
-                                                    <div th:if="${unidad.id_unidad_funcional!=1 }">
-                                                        <textarea  class="form-control" rows="3" id="observacion" disabled></textarea>
-                                                    </div>
-                                                    
-                                                </div>
 
-                                            </div>
-                                            <!-- <div class="text-center" th:if="${unidad.id_unidad_funcional==1 }">
+                                                    <div class="col-lg-4 mb-2 col-md-4">
+                                                        <label for="fechaActividad" class="col-form-label">Nombre de la
+                                                            Instalación Deportiva:
+                                                        </label>
+                                                        <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                            <select class="form-control select2" name="ilugaresA"
+                                                                id="ilugaresA" disabled>
+                                                                <option th:each=" l : ${lugaresE}"
+                                                                    th:value="${l.id_lugar}"
+                                                                    th:text="${l.nombre_lugar}"></option>
+                                                            </select>
+                                                        </div>
+                                                        <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                            <input type="datetime" class="form-control"
+                                                                id="lugarActividad" disabled>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-lg-4 mb-2 col-md-2">
+                                                        <label for="fechaActividad" class="col-form-label">Fecha de
+                                                            Reserva:
+                                                        </label>
+                                                        <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                            <input type="datetime" class="form-control"
+                                                                id="fechaActividad" name="fechaActividad" disabled>
+                                                        </div>
+
+                                                        <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                            <input type="datetime" class="form-control"
+                                                                id="fechaActividad" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 mb-2 col-md-2">
+                                                        <label for="horaInicio" class="col-form-label">Hora inicio:
+                                                        </label>
+                                                        <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                            <input type="time" class="form-control" id="horaInicio"
+                                                                name="horaInicio" disabled>
+                                                        </div>
+                                                        <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                            <input type="time" class="form-control" id="horaInicio"
+                                                                disabled>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-lg-2 mb-2 col-md-2">
+                                                        <label for="horaFin" class="col-form-label">Hora fin: </label>
+                                                        <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                            <input type="time" class="form-control" id="horaFin"
+                                                                name="horaFin" disabled>
+                                                        </div>
+                                                        <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                            <input type="time" class="form-control" id="horaFin"
+                                                                disabled>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-4 mb-3 col-md-4">
+                                                        <label for="observacion" class="col-form-label">Observacion:
+                                                        </label>
+                                                        <div th:if="${unidad.id_unidad_funcional==1 }">
+                                                            <textarea class="form-control" rows="3" id="observacion"
+                                                                name="observacion" disabled></textarea>
+                                                        </div>
+                                                        <div th:if="${unidad.id_unidad_funcional!=1 }">
+                                                            <textarea class="form-control" rows="3" id="observacion"
+                                                                disabled></textarea>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <!-- <div class="text-center" th:if="${unidad.id_unidad_funcional==1 }">
                                                 <input class="btn btn-primary" type="submit" value="Actualizar">
                                             </div> -->
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="modalSolicitud" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
+                                aria-labelledby="modalSolicitud" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-primary">
+                                            <h5 class="text-white modal-title mt-0" id="myExtraLargeModalLabel"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row mb-4">
+                                                <table id="example1"
+                                                    class="table table-striped table-bordered dt-responsive"
+                                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead style="font-size:12px;">
+
+                                                        <th>Responsable Solicitante</th>
+                                                        <th>Num Celular</th>
+                                                        <th>Actividad</th>
+                                                        <th>Fechas</th>
+                                                        <th>Horas</th>
+                                                        <th>Lugares</th>
+                                                        <th>Opciones</th>
+                                                    </thead>
+                                                    <tbody style="font-size:12px;">
+                                                        <tr th:each="e:${eventosSolicitados}">
+
+                                                            <td th:text="${e.actividad.unidadFuncional.nom_unidad}">
+                                                            </td>
+                                                            <td th:text="${e.actividad.unidadFuncional.nom_telefono}">
+                                                            </td>
+                                                            <td th:text="${e.actividad.descripcion_actividad}"></td>
+                                                            <td>
+                                                                <div th:each="da,ind:${e.actividad.detalleActividads}"
+                                                                    th:if="${da.estado=='S'}">
+                                                                    <div th:each="sda:${da.subDetalleActividads}"
+                                                                        th:if="${sda.estado=='S'}">
+                                                                        <div th:each="ll : ${sda.lugares}"
+                                                                            th:if="${ll.tipo_lugar=='E'}"
+                                                                            th:text="${#dates.format(da.fecha_detalle_actividad, 'EEEE d MMMM yyyy')}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div th:each="da,ind:${e.actividad.detalleActividads}"
+                                                                    th:if="${da.estado=='S'}">
+                                                                    <div th:each="sda:${da.subDetalleActividads}"
+                                                                        th:if="${sda.estado=='S'}">
+                                                                        <div th:each="ll : ${sda.lugares}"
+                                                                            th:if="${ll.tipo_lugar=='E'}"
+                                                                            th:text="${sda.hora_inicio}+' - '+${sda.hora_final}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div th:each="da,ind:${e.actividad.detalleActividads}"
+                                                                    th:if="${da.estado=='S'}">
+                                                                    <div th:each="sda:${da.subDetalleActividads}"
+                                                                        th:if="${sda.estado=='S'}">
+                                                                        <div th:each="ll : ${sda.lugares}"
+                                                                            th:if="${ll.tipo_lugar=='E'}"
+                                                                            th:text="${e.lugar.nombre_lugar}"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <!-- <td th:text="${e.lugar.nombre_lugar}"></td> -->
+                                                            <td>
+                                                                <!--<a style="font-size: 14px;" th:onclick="modificarFechaHora([[${e.actividad.id_actividad}]])" href="#" data-toggle="tooltip" data-placement="top" title="Modificar"><i
+                                                                class="far fa-edit"></i></a> editar fecha hora-->
+                                                                <a style="font-size: 18px; 
+                                                                padding: 10px 20px; 
+                                                                color: white; 
+                                                                background-color: #007bff; 
+                                                                border: none; 
+                                                                border-radius: 5px; 
+                                                                text-decoration: none; 
+                                                                display: inline-block;" th:onclick="AgendarEvento([[${e.id_evento}]], 
+                                                                [[${e.actividad.descripcion_actividad}]], 
+                                                                [[${e.actividad.motivo}]], 
+                                                                [[${e.actividad.unidadFuncional.id_unidad_funcional}]],
+                                                                [[${#dates.format(e.actividad.detalleActividads[0].fecha_detalle_actividad, 'yyyy-MM-dd')}]],
+                                                                [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_inicio}]],
+                                                                [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_final}]],
+                                                                [[${e.lugar.id_lugar}]])" href="#"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="Confirmar">
+                                                                    Aceptar
+                                                                </a>
+
+                                                                <a style="font-size: 18px; 
+                                                                padding: 10px 20px; 
+                                                                color: white; 
+                                                                background-color: #c2352b; 
+                                                                border: none; 
+                                                                border-radius: 5px; 
+                                                                text-decoration: none; 
+                                                                display: inline-block;"
+                                                                    th:onclick="RechazarEvento([[${e.id_evento}]])"
+                                                                    href="#" data-toggle="tooltip" data-placement="top"
+                                                                    title="Rechazar">
+                                                                    Rechazar
+                                                                </a>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="modalReporte" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
+                                aria-labelledby="modalReporte" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-primary">
+                                            <h5 class="text-white modal-title mt-0" id="myExtraLargeModalLabel"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row mb-4">
+                                                <h1>EN PROCESO DE ELABORACION EN 4(dias)</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--confirmar-->
+                            <div class="modal fade bs-example-modal-xl" tabindex="-1" id="ModalPro" role="dialog"
+                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
+                                    <div class="modal-content" style="background-color: rgb(255, 255, 255);">
+
+                                        <form th:action="@{/confirmarReserva}" method="post">
+                                            <input type="hidden" id="id_activida" name="id_activida">
+                                            <div class="modal-header bg-warning">
+                                                <h5 class="modal-title" id="nombre"></h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <!-- <img src="../../../../assets/images/interrogacion.png" 
+                                                style="width: 10%; height: 10%; background-repeat: no-repeat;" alt="" height="5"> -->
+                                                    <!-- <h4>¿ESTA SEGURO DE CONFIRMAR EFENTO EN LA FECHA Y HORA INDICADA?</h4> -->
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div>
+                                                            <label class="col-form-label"
+                                                                style="color: black;">Actividad a
+                                                                realizar </label>
+                                                            <input class="form-control" type="text" name="nactividad"
+                                                                placeholder="Palabra Clave" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div>
+                                                            <label class="col-form-label"
+                                                                style="color: black;">Responsable</label>
+                                                            <select class="form-control selectize" id="responsable"
+                                                                name="responsable">
+                                                                <option value="" selected>Seleccionar...</option>
+                                                                <option th:each="u:${unidadFuncionales}"
+                                                                    th:if="${u.estado=='A'}"
+                                                                    th:value="${u.id_unidad_funcional}"
+                                                                    th:text="${u.nom_unidad}">-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            <label class="col-form-label" style="color: black;">Tipo de
+                                                                Reserva</label>
+                                                            <select class="form-control selectize" name="tipoReserva"
+                                                                required>
+                                                                <option value="" selected>Seleccionar...</option>
+                                                                <option th:if="${ta.estado_tipo_actividad !='X'}"
+                                                                    th:each="ta:${tipoActividades}"
+                                                                    th:value="${ta.id_tipo_actividad}"
+                                                                    th:text="${ta.nombre_tipo_actividad}">-</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div>
+                                                            <label class="col-form-label"
+                                                                style="color: black;">Observaciones</label>
+                                                            <textarea class="form-control" rows="3"
+                                                                name="observacion"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+                                                        <div>
+                                                            <label class="col-form-label" style="color: black;">Motivos
+                                                                de Reserva</label>
+                                                            <textarea class="form-control" rows="3" name="motivo"
+                                                                id="motivo" readonly></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="form-group row ">
+                                                    <!-- <div class="">
+                                                    <br>
+                                                    <button type="button" class="btn btn-primary btn-sm" onclick="agregarInput()">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div> -->
+
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            <label class="col-form-label"
+                                                                style="color: black;">Fecha</label>
+                                                            <input type="date" class="form-control" id="fechas"
+                                                                name="fechasA" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            <label class="col-form-label" style="color: black;">Hora
+                                                                inicio</label>
+                                                            <input id="horaInicio2" type="time" class="form-control"
+                                                                name="horasI2" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            <label class="col-form-label" style="color: black;">Hora
+                                                                fin</label>
+                                                            <input id="horaFin2" type="time" class="form-control"
+                                                                name="horasF2" required />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-2 ">
+                                                        <label class="col-form-label" style="color: black;">Instalación
+                                                            Deportiva</label>
+                                                        <select class=" form-control selectize" name="lugaresA"
+                                                            id="instalacion">
+                                                            <option value="" selected>Seleccionar...</option>
+                                                            <option th:if="${l.estado_lugar !='X'}"
+                                                                th:each="l:${lugares}" th:value="${l.id_lugar}"
+                                                                th:text="${l.nombre_lugar}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <div>
+                                                            <label class="col-form-label" style="color: black;">Costo
+                                                                Reserva </label>
+                                                            <input class="form-control" type="number" name="costos"
+                                                                id="costo" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-12 text-center">
+                                                        <button type="submit" class="btn btn-primary me-1"
+                                                            data-bs-dismiss="modal">Confirmar</button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                      
-                        <div id="modalSolicitud" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
-                            aria-labelledby="modalSolicitud" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <h5 class="text-white modal-title mt-0" id="myExtraLargeModalLabel"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row mb-4">
-                                           <table id="example1" class="table table-striped table-bordered dt-responsive"
-                                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead style="font-size:12px;">
-                                                    
-                                                    <th>Responsable Solicitante</th>
-                                                    <th>Num Celular</th>
-                                                    <th>Actividad</th>
-                                                    <th>Fechas</th>
-                                                    <th>Horas</th>
-                                                    <th>Lugares</th>
-                                                    <th>Opciones</th>
-                                                </thead>
-                                                <tbody style="font-size:12px;">
-                                                    <tr th:each="e:${eventosSolicitados}">
-                                                        
-                                                        <td th:text="${e.actividad.unidadFuncional.nom_unidad}"></td>
-                                                        <td th:text="${e.actividad.unidadFuncional.nom_telefono}"></td>
-                                                        <td th:text="${e.actividad.descripcion_actividad}"></td>
-                                                        <td>
-                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}" >
-                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
-                                                                    <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" 
-                                                                    th:text="${#dates.format(da.fecha_detalle_actividad, 'EEEE d MMMM yyyy')}"></div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}" >
-                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
-                                                                    <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" 
-                                                                    th:text="${sda.hora_inicio}+' - '+${sda.hora_final}"></div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}" >
-                                                                <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
-                                                                    <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" 
-                                                                    th:text="${e.lugar.nombre_lugar}"></div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <!-- <td th:text="${e.lugar.nombre_lugar}"></td> -->
-                                                        <td>
-                                                            <!--<a style="font-size: 14px;" th:onclick="modificarFechaHora([[${e.actividad.id_actividad}]])" href="#" data-toggle="tooltip" data-placement="top" title="Modificar"><i
-                                                                class="far fa-edit"></i></a> editar fecha hora-->
-                                                            <a style="font-size: 18px;" th:onclick="AgendarEvento([[${e.id_evento}]])" href="#" data-toggle="tooltip" data-placement="top" title="Confirmar">
-                                                               <!--<i class="mdi mdi-check-underline-circle-outline"></i>-->Aceptar</a><!-- confirmar evento-->
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                           </table>
-                                        </div>
+
+                        
+                            <!--RECHAZAR-->
+                            <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalProRechazar"
+                                role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content" style="background-color: rgb(255, 255, 255);">
+
+                                        <form th:action="@{/rechazarReserva}" method="post">
+                                            <input type="hidden" id="id_actividad2" name="id_actividad2">
+                                            <div class="modal-header bg-warning">
+                                                <h5 class="modal-title" id="nombre"></h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <img src="../../../../assets/images/interrogacion.png"
+                                                        style="width: 10%; height: 10%; background-repeat: no-repeat;"
+                                                        alt="" height="5">
+                                                    <h4>¿ESTA SEGURO DE RECHAZAR LA RESERVA?
+                                                    </h4>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12 text-center">
+                                                        <button type="submit" class="btn btn-primary me-1"
+                                                            data-bs-dismiss="modal">Confirmar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
                         </div>
-                        <div id="modalReporte" class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog"
-                            aria-labelledby="modalReporte" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <h5 class="text-white modal-title mt-0" id="myExtraLargeModalLabel"></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row mb-4">
-                                           <h1>EN PROCESO DE ELABORACION EN 4(dias)</h1>
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                2024 © USIC.
                             </div>
-                        </div>
-                        <!--confirmar-->
-                        <div class="modal fade bs-example-modal-xl" tabindex="-1" id="ModalPro" role="dialog"
-                            aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl" >
-                                <div class="modal-content" style="background-color: rgb(255, 255, 255);">
-
-                                    <form th:action="@{/confirmarEvento}" method="post">
-                                        <input type="hidden" id="id_activida" name="id_activida">
-                                        <div class="modal-header bg-warning">
-                                            <h5 class="modal-title" id="nombre"></h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="text-center">
-                                                <!-- <img src="../../../../assets/images/interrogacion.png" 
-                                                style="width: 10%; height: 10%; background-repeat: no-repeat;" alt="" height="5"> -->
-                                                <!-- <h4>¿ESTA SEGURO DE CONFIRMAR EFENTO EN LA FECHA Y HORA INDICADA?</h4> -->
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div>
-                                                        <label class="col-form-label" style="color: black;">Actividad a
-                                                            realizar </label>
-                                                        <input class="form-control" type="text"
-                                                           
-                                                            placeholder="Palabra Clave" required>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div>
-                                                        <label class="col-form-label"
-                                                            style="color: black;">Responsable</label>
-                                                        <select class="form-control selectize">
-                                                  
-                                                            <option value="" selected>Seleccionar...</option>
-                                                            <option th:each="u:${unidadFuncionales}"
-                                                                th:if="${u.estado=='A'}"
-                                                                th:value="${u.id_unidad_funcional}"
-                                                                th:text="${u.nom_unidad}">-</option>
-
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-2">
-                                                    <div>
-                                                        <label class="col-form-label" style="color: black;">Tipo de
-                                                            Reserva</label>
-                                                        <select class="form-control selectize" 
-                                                            required>
-                                                            <option value="" selected>Seleccionar...</option>
-                                                            <option th:if="${ta.estado_tipo_actividad !='X'}"
-                                                                th:each="ta:${tipoActividades}"
-                                                                th:value="${ta.id_tipo_actividad}"
-                                                                th:text="${ta.nombre_tipo_actividad}">-</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div>
-                                                        <label class="col-form-label"
-                                                            style="color: black;">Observaciones</label>
-                                                        <textarea class="form-control" rows="3"
-                                                           ></textarea>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12 text-center">
-                                                    <button type="submit" class="btn btn-primary me-1"
-                                                        data-bs-dismiss="modal">Confirmar</button>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                            <div class="col-sm-6">
+                                <div class="text-sm-right d-none d-sm-block">
+                                    UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </footer>
             </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            2024 © USIC.
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-sm-right d-none d-sm-block">
-                                UAP <i class="mdi mdi-heart text-danger"></i> DIGITAL
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
-    </div>
 
 
-    <div class="rightbar-overlay"></div>
-    <!-- JAVASCRIPT -->
-    <script th:src="@{assets/libs/datatables.net/js/jquery.dataTables.min.js}"></script>
-    <script th:src="@{assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
-    <script th:src="@{assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
-    <script th:src="@{assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+        <div class="rightbar-overlay"></div>
+        <!-- JAVASCRIPT -->
+        <script th:src="@{assets/libs/datatables.net/js/jquery.dataTables.min.js}"></script>
+        <script th:src="@{assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
+        <script th:src="@{assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
 
-    <script th:src="@{assets/libs/jquery/jquery.min.js}"></script>
-    <script th:src="@{assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{assets/libs/metismenu/metisMenu.min.js}"></script>
-    <script th:src="@{assets/libs/simplebar/simplebar.min.js}"></script>
-    <script th:src="@{assets/libs/node-waves/waves.min.js}"></script>
+        <script th:src="@{assets/libs/jquery/jquery.min.js}"></script>
+        <script th:src="@{assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{assets/libs/metismenu/metisMenu.min.js}"></script>
+        <script th:src="@{assets/libs/simplebar/simplebar.min.js}"></script>
+        <script th:src="@{assets/libs/node-waves/waves.min.js}"></script>
 
-    <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+        <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
 
-    <!-- plugin js -->
-    <script th:src="@{assets/libs/moment/min/moment.min.js}"></script>
-    <script th:src="@{/assets/libs/jquery-ui-dist/jquery-ui.min.js}"></script>
-    <script th:src="@{/assets/js/app.js}"></script>
+        <!-- plugin js -->
+        <script th:src="@{assets/libs/moment/min/moment.min.js}"></script>
+        <script th:src="@{/assets/libs/jquery-ui-dist/jquery-ui.min.js}"></script>
+        <script th:src="@{/assets/js/app.js}"></script>
 
-    <script th:src="@{assets/libs/fullcalendar/fullcalendar.min.js}"></script>
-    <script th:src="@{assets/libs/fullcalendar/locale/es.js}"></script>
+        <script th:src="@{assets/libs/fullcalendar/fullcalendar.min.js}"></script>
+        <script th:src="@{assets/libs/fullcalendar/locale/es.js}"></script>
 
-    <script th:src="@{assets/js/pages/calendar.init.js}"></script>
-    <script>
+        <script th:src="@{assets/js/pages/calendar.init.js}"></script>
+        <script>
 
-        $(function() {
-      
-          $('#calendar').fullCalendar({
-            locale: 'es'
-          });
-      
-        });
-      
-      </script>
-    <script type="">
+            $(function () {
+
+                $('#calendar').fullCalendar({
+                    locale: 'es'
+                });
+
+            });
+
+        </script>
+        <script type="">
             function modificarFechaHora(id_actividad) {
                 var id_ac = id_actividad;
                 //alert(id_pro);
@@ -430,15 +616,100 @@
                 });
             }
     </script>
-    <script>
-        function AgendarEvento(id_evento) {
-            var id_ev = id_evento;
-            
-            $('#id_activida').val(id_ev);
-            $("#nombre").text('Actividad # : '+id_ev);
-            $("#ModalPro").modal("show");
-        }
-    </script>
+
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Función para formatear la hora
+                function formatearHora(hora) {
+                    if (hora.match(/^\d{2}:\d{2}(:\d{2})?$/)) {
+                        return hora.substr(0, 5);  // Devuelve solo las primeras 5 caracteres (HH:MM)
+                    }
+                    var date = new Date(hora);
+                    return ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
+                }
+
+                // Función principal AgendarEvento
+                window.AgendarEvento = function (id_evento, actividad, motivo, responsable, fecha, horaInicio, horaFin, lugar) {
+                    console.log('Función AgendarEvento llamada');
+
+                    $('#id_activida').val(id_evento);
+                    $("#nombre").text('Actividad # : ' + id_evento);
+
+                    $('input[placeholder="Palabra Clave"]').val(actividad);
+                    $('#responsable').val(responsable);
+                    if ($('#responsable')[0].selectize) {
+                        $('#responsable')[0].selectize.setValue(responsable);
+                    }
+
+                    $('#fechas').val(fecha);
+                    $('#motivo').val(motivo);
+                    console.log('Hora Inicio antes de formatear:', horaInicio);
+                    console.log('Hora Fin antes de formatear:', horaFin);
+
+                    var horaInicioFormateada = formatearHora(horaInicio);
+                    var horaFinFormateada = formatearHora(horaFin);
+
+                    console.log('Hora Inicio formateada:', horaInicioFormateada);
+                    console.log('Hora Fin formateada:', horaFinFormateada);
+
+                    console.log('Elemento horaInicio:', document.getElementById('horaInicio'));
+                    console.log('Elemento horaFin:', document.getElementById('horaFin'));
+
+                    // Usa setTimeout para un pequeño retraso
+                    setTimeout(function () {
+                        $('#horaInicio2').val(horaInicioFormateada);
+                        $('#horaFin2').val(horaFinFormateada);
+
+                        document.getElementById('horaInicio2').value = horaInicioFormateada;
+                        document.getElementById('horaFin2').value = horaFinFormateada;
+
+                        // Alternativa: establecer el atributo value directamente
+                        document.getElementById('horaInicio2').setAttribute('value', horaInicioFormateada);
+                        document.getElementById('horaFin2').setAttribute('value', horaFinFormateada);
+
+                        // Dispara un evento de cambio
+                        var eventoInicio = new Event('change');
+                        var eventoFin = new Event('change');
+                        document.getElementById('horaInicio2').dispatchEvent(eventoInicio);
+                        document.getElementById('horaFin2').dispatchEvent(eventoFin);
+
+                        console.log('Valores establecidos después del retraso');
+                        console.log('Valor actual de horaInicio:', document.getElementById('horaInicio2').value);
+                        console.log('Valor actual de horaFin:', document.getElementById('horaFin2').value);
+                    }, 100);
+
+                    $('#instalacion').val(lugar);
+                    if ($('#instalacion')[0].selectize) {
+                        $('#instalacion')[0].selectize.setValue(lugar);
+                    }
+
+                    $("#ModalPro").modal("show");
+                }
+
+                // Inicialización de Selectize (si lo estás usando)
+                $('#responsable, #instalacion').selectize({
+                    // opciones de configuración aquí
+                });
+
+
+
+
+                // Cualquier otro código de inicialización que necesites
+            });
+        </script>
+
+
+        <script>
+            function RechazarEvento(id_evento) {
+                var id_ev = id_evento;
+             
+                $('#id_actividad2').val(id_ev);
+                $("#nombre").text('Actividad # : ' + id_ev);
+                $("#ModalProRechazar").modal("show");
+            }
+        </script>
 </body>
 
 </html>

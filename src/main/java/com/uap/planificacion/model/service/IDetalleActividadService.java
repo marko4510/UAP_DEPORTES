@@ -24,4 +24,6 @@ public interface IDetalleActividadService {
 	public List<Object[]> reporteGeneral(Date fecha_inicio, Date fecha_final);
 
 	public List<Object[]> reportePorInstalacion(Date fecha_inicio, Date fecha_final, Long id_lugar);
+
+	public DetalleActividad detalleActividadPorIdActividad(Long id_actividad);
 }

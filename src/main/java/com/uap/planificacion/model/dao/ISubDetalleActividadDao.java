@@ -15,6 +15,9 @@ public interface ISubDetalleActividadDao extends CrudRepository<SubDetalleActivi
     @Query(value = "select * from sub_detalle_actividad as sd where sd.id_detalle_actividad=?1", nativeQuery = true)
     List<SubDetalleActividad> subDetallePorIdDetalles(Long id_detalle);
 
+    @Query(value = "select * from sub_detalle_actividad as sd where sd.id_detalle_actividad=?1", nativeQuery = true)
+    public SubDetalleActividad subDetalleActividadPorIdDetalleActividad(Long id_detalle);
+
     @Query(value = "select sb.id_sub_detalle_actividad, a.descripcion_actividad, da.fecha_detalle_actividad, sb.hora_inicio, sb.hora_final,  a.observacion " +
             "from sub_detalle_actividad sb " +
             "left join lugar_subdetalleactividad ls on sb.id_sub_detalle_actividad = ls.id_sub_detalle_actividad " +

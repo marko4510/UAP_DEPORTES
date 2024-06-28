@@ -7,6 +7,7 @@ import com.uap.planificacion.model.entity.Evento;
 import com.uap.planificacion.model.entity.Lugar;
 import com.uap.planificacion.model.entity.PersonalAdministrativo;
 import com.uap.planificacion.model.entity.SubDetalleActividad;
+import com.uap.planificacion.model.entity.TipoActividad;
 import com.uap.planificacion.model.entity.UnidadFuncional;
 import com.uap.planificacion.model.service.IActividadService;
 import com.uap.planificacion.model.service.IDetalleActividadService;
@@ -95,7 +96,9 @@ public class CalendarioController {
             model.addAttribute("personalADM", personalAdministrativo);
             model.addAttribute("nivel", u.getNivelFuncional());
             model.addAttribute("actividades", actividadService.findAll());
+           
             model.addAttribute("lugaresE", lugarService.sacarLugaresConTipoE("E"));
+            model.addAttribute("lugares", lugarService.findAll());
             model.addAttribute("eventosSolicitados", events);
 
         return "eventos/calendario";
@@ -105,20 +108,91 @@ public class CalendarioController {
 
     }
 
-    @PostMapping("/confirmarEvento")
-    public String confirmarEvento(@RequestParam(value="id_activida")Long id_evento, RedirectAttributes redirectAttrs){
+    @PostMapping("/confirmarReserva")
+    public String confirmarReserva(@RequestParam(value="id_activida")Long id_evento,
+    @RequestParam(value="nactividad") String nombre_Actividad,
+    @RequestParam(value="responsable") Long id_responsable,
+    @RequestParam(value="tipoReserva")Long id_tipo_reserva,
+    @RequestParam(value="lugaresA")Long id_lugar,
+    @RequestParam(value="observacion") String observacion,
+    @RequestParam(value="fechasA") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fecha,
+    @RequestParam(value = "horasI2") @DateTimeFormat(pattern = "HH:mm") Date hora_inicio,
+    @RequestParam(value = "horasF2") @DateTimeFormat(pattern = "HH:mm") Date hora_fin,
+    @RequestParam(value="costos") int costo,
+    RedirectAttributes redirectAttrs){
+        UnidadFuncional unidadFuncional = unidadService.findOne(id_responsable);
+        TipoActividad tipoActividad = tipoActividadService.findOne(id_tipo_reserva);
 
         Evento evento = eventoService.findOne(id_evento);
         evento.setEstado_evento("P");
         eventoService.save(evento);
        
         Actividad a = evento.getActividad();
-        List<DetalleActividad> detalles = a.getDetalleActividads();
+        DetalleActividad da = detalleActividadService.detalleActividadPorIdActividad(a.getId_actividad());
+        SubDetalleActividad sd = subDetalleActividadService.subDetalleActividadPorIdDetalleActividad(da.getId_detalle_actividad());
+        Set<Lugar> lugares = new HashSet<>();
+        Lugar lugar = lugarService.findOne(id_lugar);
+        lugares.add(lugar);
+        //List<DetalleActividad> detalles = a.getDetalleActividads();
         
-        a.setAvance_actividad("aceptado");
+        a.setEstado("A");
+        // a.setCosto(costo);
+        a.setDescripcion_actividad(nombre_Actividad);
+        a.setUnidadFuncional(unidadFuncional);
+        a.setTipoActividad(tipoActividad);
+        a.setObservacion(observacion);
         actividadService.save(a);
+
+        da.setCosto(costo);
+        da.setFecha_detalle_actividad(fecha);
+        da.setEstado("A");
+        da.setActividad(a);
+        detalleActividadService.save(da);
+
+        sd.setEstado("A");
+        sd.setLugares(lugares);
+        sd.setHora_final(hora_fin);
+        sd.setHora_inicio(hora_inicio);
+        sd.setDetalleActividad(da);
+        subDetalleActividadService.save(sd);
+
+        evento.setEstado_evento("A");
+        eventoService.save(evento);
+
         redirectAttrs
-        .addFlashAttribute("mensaje", "EVENTO CONFIRMADO CORRECTAMENTE!")
+        .addFlashAttribute("mensaje", "RESERVA CONFIRMADO CORRECTAMENTE!")
+        .addFlashAttribute("clase", "success alert-dismissible fade show");
+        return "redirect:/eventos";
+    }
+
+    @PostMapping("/rechazarReserva")
+    public String rechazarReserva(@RequestParam(value="id_actividad2")Long id_evento, RedirectAttributes redirectAttrs){
+
+        Evento evento = eventoService.findOne(id_evento);
+        evento.setEstado_evento("X");
+        eventoService.save(evento);
+       
+        Actividad a = evento.getActividad();
+        DetalleActividad da = detalleActividadService.detalleActividadPorIdActividad(a.getId_actividad());
+        SubDetalleActividad sd = subDetalleActividadService.subDetalleActividadPorIdDetalleActividad(da.getId_detalle_actividad());
+        
+        
+        a.setEstado("X");
+        actividadService.save(a);
+
+   
+        da.setEstado("X");
+        detalleActividadService.save(da);
+
+        sd.setEstado("X");
+      
+        subDetalleActividadService.save(sd);
+
+        evento.setEstado_evento("X");
+        eventoService.save(evento);
+
+        redirectAttrs
+        .addFlashAttribute("mensaje", "RESERVA RECHAZADA CORRECTAMENTE!")
         .addFlashAttribute("clase", "success alert-dismissible fade show");
         return "redirect:/eventos";
     }

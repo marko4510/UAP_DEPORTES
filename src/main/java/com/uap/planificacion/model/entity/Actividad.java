@@ -51,6 +51,8 @@ public class Actividad implements Serializable{
 
     private String observacion;
 
+    private String motivo;
+
     private Integer costo;
 
 

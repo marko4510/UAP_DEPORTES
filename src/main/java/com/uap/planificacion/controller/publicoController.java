@@ -137,6 +137,7 @@ public class publicoController {
             @RequestParam(value = "lugaresA") List<Long> id_lugares,
             @RequestParam(value = "responsable") String responsable,
             @RequestParam(value = "celular") String celular,
+            @RequestParam(value = "motivo") String motivo,
             RedirectAttributes redirectAttrs,
             HttpServletRequest request) throws ParseException {
 
@@ -183,6 +184,7 @@ public class publicoController {
         actividad.setProgramdo(true);
         actividad.setEstadoActividad(ea);
         actividad.setFecha_registro(new Date());
+        actividad.setMotivo(motivo);
         actividad.setUsuarioRegistro(usuarioRegistro);
         actividadService.save(actividad);
         List<Lugar> lugares = new ArrayList<>();

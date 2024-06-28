@@ -23,4 +23,7 @@ public interface ISubDetalleActividadService {
 	public Object validarHoraReservas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar );
 
 	public Object validarHoraReservasPublicas(LocalDate fecha_reserva, LocalTime hora_inicio, LocalTime hora_final, String nombre_lugar );
+
+	public SubDetalleActividad subDetalleActividadPorIdDetalleActividad(Long id_detalle);
+
 }
