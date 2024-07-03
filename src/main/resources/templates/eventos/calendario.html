@@ -274,10 +274,10 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <a style="font-size: 18px; padding: 10px 20px; color: white; background-color: #007bff; border: none; border-radius: 5px; text-decoration: none; display: inline-block;" th:onclick="AgendarEvento([[${e.id_evento}]], [[${e.actividad.descripcion_actividad}]], [[${e.actividad.motivo}]], [[${e.actividad.unidadFuncional.id_unidad_funcional}]], [[${#dates.format(e.actividad.detalleActividads[0].fecha_detalle_actividad, 'yyyy-MM-dd')}]], [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_inicio}]], [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_final}]], [[${e.lugar.id_lugar}]])" href="#" data-toggle="tooltip" data-placement="top" title="Confirmar">
+                                                                        <a type="button" class="btn btn-primary btn-sm waves-effect waves-light" th:onclick="AgendarEvento([[${e.id_evento}]], [[${e.actividad.descripcion_actividad}]], [[${e.actividad.motivo}]], [[${e.actividad.unidadFuncional.id_unidad_funcional}]], [[${#dates.format(e.actividad.detalleActividads[0].fecha_detalle_actividad, 'yyyy-MM-dd')}]], [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_inicio}]], [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_final}]], [[${e.lugar.id_lugar}]])" href="#" data-toggle="tooltip" data-placement="top" title="Confirmar">
                                                                             Aceptar
                                                                         </a>
-                                                                        <a style="font-size: 18px; padding: 10px 20px; color: white; background-color: #c2352b; border: none; border-radius: 5px; text-decoration: none; display: inline-block;" th:onclick="RechazarEvento([[${e.id_evento}]])" href="#" data-toggle="tooltip" data-placement="top" title="Rechazar">
+                                                                        <a type="button" class="btn btn-danger btn-sm waves-effect waves-light" th:onclick="RechazarEvento([[${e.id_evento}]])" href="#" data-toggle="tooltip" data-placement="top" title="Rechazar">
                                                                             Rechazar
                                                                         </a>
                                                                     </td>
@@ -318,8 +318,8 @@
 
                                         <form th:action="@{/confirmarReserva}" method="post">
                                             <input type="hidden" id="id_activida" name="id_activida">
-                                            <div class="modal-header bg-warning">
-                                                <h5 class="modal-title" id="nombre"></h5>
+                                            <div class="modal-header bg-primary">
+                                                <h5 style="color: rgb(255, 255, 255);" id="nombre"></h5>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="text-center">
@@ -327,7 +327,7 @@
                                                 style="width: 10%; height: 10%; background-repeat: no-repeat;" alt="" height="5"> -->
                                                     <!-- <h4>¿ESTA SEGURO DE CONFIRMAR EFENTO EN LA FECHA Y HORA INDICADA?</h4> -->
                                                 </div>
-                                                <div class="row">
+                                                <div class="form-group row justify-content-center">
                                                     <div class="col-md-3">
                                                         <div>
                                                             <label class="col-form-label"
@@ -372,7 +372,7 @@
 
                                                 </div>
 
-                                                <div class="row">
+                                                <div class="form-group row justify-content-center">
                                                     <div class="col-md-3">
                                                         <div>
                                                             <label class="col-form-label"
@@ -392,7 +392,7 @@
                                                     </div>
                                                 </div>
                                                 <hr>
-                                                <div class="form-group row ">
+                                                <div class="form-group row justify-content-center ">
                                                     <!-- <div class="">
                                                     <br>
                                                     <button type="button" class="btn btn-primary btn-sm" onclick="agregarInput()">
@@ -442,8 +442,7 @@
                                                         <div>
                                                             <label class="col-form-label" style="color: black;">Costo
                                                                 Reserva </label>
-                                                            <input class="form-control" type="number" name="costos"
-                                                                id="costo" required>
+                                                                <input class="form-control" type="number" name="costos" id="costo" required value="0">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -470,8 +469,8 @@
 
                                         <form th:action="@{/rechazarReserva}" method="post">
                                             <input type="hidden" id="id_actividad2" name="id_actividad2">
-                                            <div class="modal-header bg-warning">
-                                                <h5 class="modal-title" id="nombre"></h5>
+                                            <div class="modal-header bg-primary">
+                                                <h5 style="color: white;"  id="nombre"></h5>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="text-center">
@@ -592,7 +591,7 @@
                     console.log('Función AgendarEvento llamada');
 
                     $('#id_activida').val(id_evento);
-                    $("#nombre").text('Actividad # : ' + id_evento);
+                    $("#nombre").text('Reserva : ' + actividad);
 
                     $('input[placeholder="Palabra Clave"]').val(actividad);
                     $('#responsable').val(responsable);
