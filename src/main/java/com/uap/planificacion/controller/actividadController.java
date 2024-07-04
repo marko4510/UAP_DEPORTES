@@ -410,7 +410,7 @@ public class actividadController {
                     Evento evento = new Evento();
                     evento.setLugar(ll);
                     evento.setActividad(actividad);
-                    evento.setEstado_evento("P");
+                    evento.setEstado_evento("A");
                     eventoServive.save(evento);
                 }
             redirectAttrs
