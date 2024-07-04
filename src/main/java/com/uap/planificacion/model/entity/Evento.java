@@ -1,6 +1,7 @@
 package com.uap.planificacion.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -29,6 +32,10 @@ public class Evento implements Serializable{
     private Long id_evento;
     @Column
     private String estado_evento;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    private Date fecha_evento;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)

@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -107,9 +109,17 @@ public class CalendarioController {
         }
 
     }
+    private LocalDate convertToLocalDate(Date date) {
+        return new java.sql.Date(date.getTime()).toLocalDate();
+    }
 
+    private LocalTime convertToLocalTime(Date date) {
+        return new java.sql.Time(date.getTime()).toLocalTime();
+    }
     @PostMapping("/confirmarReserva")
-    public String confirmarReserva(@RequestParam(value="id_activida")Long id_evento,
+    public String confirmarReserva(@RequestParam(value="id_evento")Long id_evento,
+    @RequestParam(value="id_sub_detalle_actividad")Long id_sda,
+    @RequestParam(value="id_detalle_actividad")Long id_da,
     @RequestParam(value="nactividad") String nombre_Actividad,
     @RequestParam(value="responsable") Long id_responsable,
     @RequestParam(value="tipoReserva")Long id_tipo_reserva,
@@ -122,17 +132,35 @@ public class CalendarioController {
     RedirectAttributes redirectAttrs){
         UnidadFuncional unidadFuncional = unidadService.findOne(id_responsable);
         TipoActividad tipoActividad = tipoActividadService.findOne(id_tipo_reserva);
+         // Validación de reservas existentes
 
+        LocalDate fechaReserva = convertToLocalDate(fecha);
+        LocalTime horaInicio = convertToLocalTime(hora_inicio);
+        LocalTime horaFin = convertToLocalTime(hora_fin);
+        LocalTime horaFinMenosUnSegundo = horaFin.minusSeconds(1);
+        Lugar lugar = lugarService.findOne(id_lugar);
+
+        Object resultado = subDetalleActividadService.validarHoraReservasPublicas(fechaReserva, horaInicio,
+                horaFinMenosUnSegundo, lugar.getNombre_lugar());
+        if (resultado != null) {
+            redirectAttrs
+                    .addFlashAttribute("mensaje",
+                            "La fecha y hora que intenta registrar ya se encuentra reservada en "
+                                    + lugar.getNombre_lugar())
+                    .addFlashAttribute("clase", "danger alert-dismissible fade show");
+            return "redirect:/eventos";
+        }
+   
         Evento evento = eventoService.findOne(id_evento);
         evento.setEstado_evento("P");
         eventoService.save(evento);
        
         Actividad a = evento.getActividad();
-        DetalleActividad da = detalleActividadService.detalleActividadPorIdActividad(a.getId_actividad());
-        SubDetalleActividad sd = subDetalleActividadService.subDetalleActividadPorIdDetalleActividad(da.getId_detalle_actividad());
+        DetalleActividad da = detalleActividadService.findOne(id_da);
+        SubDetalleActividad sd = subDetalleActividadService.findOne(id_sda);
         Set<Lugar> lugares = new HashSet<>();
-        Lugar lugar = lugarService.findOne(id_lugar);
-        lugares.add(lugar);
+        Lugar lugarV = lugarService.findOne(id_lugar);
+        lugares.add(lugarV);
         //List<DetalleActividad> detalles = a.getDetalleActividads();
         
         a.setEstado("A");
@@ -166,19 +194,31 @@ public class CalendarioController {
     }
 
     @PostMapping("/rechazarReserva")
-    public String rechazarReserva(@RequestParam(value="id_actividad2")Long id_evento, RedirectAttributes redirectAttrs){
+    public String rechazarReserva(@RequestParam(value="id_evento2")Long id_evento,
+    @RequestParam(value="id_sub_detalle_actividad2")Long id_sda,
+    @RequestParam(value="id_detalle_actividad2")Long id_da,
+     RedirectAttributes redirectAttrs){
 
         Evento evento = eventoService.findOne(id_evento);
-        evento.setEstado_evento("X");
-        eventoService.save(evento);
+    
        
         Actividad a = evento.getActividad();
-        DetalleActividad da = detalleActividadService.detalleActividadPorIdActividad(a.getId_actividad());
-        SubDetalleActividad sd = subDetalleActividadService.subDetalleActividadPorIdDetalleActividad(da.getId_detalle_actividad());
-        
-        
-        a.setEstado("X");
-        actividadService.save(a);
+        DetalleActividad da = detalleActividadService.findOne(id_da);
+        SubDetalleActividad sd = subDetalleActividadService.findOne(id_sda);
+        List<Evento> listaEventos = new ArrayList<>();
+        System.out.println("Fecha: "+ da.getFecha_detalle_actividad() + " y horas: "+ sd.getHora_inicio() + " "+ sd.getHora_final());
+        for (Evento e : a.getEventos()) {
+            if (e.getEstado_evento().equals("S")) {
+                listaEventos.add(e);
+            }
+        }
+      
+            if (listaEventos.size() == 1) {
+                a.setEstado("X");
+                actividadService.save(a); 
+            }
+       
+      
 
    
         da.setEstado("X");
@@ -196,6 +236,7 @@ public class CalendarioController {
         .addFlashAttribute("clase", "success alert-dismissible fade show");
         return "redirect:/eventos";
     }
+    
 
 
 

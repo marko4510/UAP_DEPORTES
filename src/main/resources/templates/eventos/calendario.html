@@ -6,6 +6,9 @@
 <link th:href="@{assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
 <link th:href="@{assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
 <link th:href="@{assets/css/app.min.css}" rel="stylesheet" type="text/css" />
+<link href="https://nightly.datatables.net/css/dataTables.dataTables.css" rel="stylesheet" type="text/css" />
+
+
 <style>
     .color-indicators {
         display: flex;
@@ -226,7 +229,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header bg-primary">
                                             <h2 style="color: rgb(255, 255, 255);">Lista de Pre-Reservas</h2>
-                                            
+
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -235,8 +238,8 @@
                                             <div class="container">
                                                 <div class="row mb-4">
                                                     <div class="table-responsive">
-                                                        <table id="example1" class="table table-striped table-bordered dt-responsive nowrap" style="width: 100%;">
-                                                            <thead style="font-size:12px;">
+                                                        <table id="example" class="display nowrap" width="100%">
+                                                            <thead>
                                                                 <tr>
                                                                     <th>Responsable Solicitante</th>
                                                                     <th>Num Celular</th>
@@ -247,39 +250,76 @@
                                                                     <th>Opciones</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody style="font-size:12px;">
+                                                            <tbody>
                                                                 <tr th:each="e:${eventosSolicitados}">
-                                                                    <td th:text="${e.actividad.unidadFuncional.nom_unidad}"></td>
-                                                                    <td th:text="${e.actividad.unidadFuncional.nom_telefono}"></td>
-                                                                    <td th:text="${e.actividad.descripcion_actividad}"></td>
+                                                                    <td
+                                                                        th:text="${e.actividad.unidadFuncional.nom_unidad}">
+                                                                    </td>
+                                                                    <td
+                                                                        th:text="${e.actividad.unidadFuncional.nom_telefono}">
+                                                                    </td>
+                                                                    <td th:text="${e.actividad.descripcion_actividad}">
+                                                                    </td>
                                                                     <td>
-                                                                        <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}">
-                                                                            <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
-                                                                                <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" th:text="${#dates.format(da.fecha_detalle_actividad, 'EEEE d MMMM yyyy')}"></div>
+                                                                        <div th:each="da,ind:${e.actividad.detalleActividads}"
+                                                                            th:if="${da.estado=='S'} and ${e.fecha_evento  == da.fecha_detalle_actividad}">
+                                                                            <div th:each="sda:${da.subDetalleActividads}"
+                                                                                th:if="${sda.estado=='S'}">
+                                                                                <div th:each="ll : ${sda.lugares}"
+                                                                                    th:if=" ${ll.id_lugar== e.lugar.id_lugar}"
+                                                                                    th:text="${da.fecha_detalle_actividad}">
+                                                                                </div>
+                                                                        
+                                                                            </div>
+                                                                    
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div th:each="da,ind:${e.actividad.detalleActividads}"
+                                                                            th:if="${da.estado=='S'} and ${e.fecha_evento  == da.fecha_detalle_actividad}">
+                                                                            <div th:each="sda:${da.subDetalleActividads}"
+                                                                                th:if="${sda.estado=='S'}">
+                                                                                <div th:each="ll : ${sda.lugares}"
+                                                                                    th:if="${ll.id_lugar== e.lugar.id_lugar}"
+                                                                                    th:text="${sda.hora_inicio}+' - '+${sda.hora_final}">
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}">
-                                                                            <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
-                                                                                <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" th:text="${sda.hora_inicio}+' - '+${sda.hora_final}"></div>
-                                                                            </div>
-                                                                        </div>
+                                                                        <div th:text="${e.lugar.nombre_lugar}"></div>
                                                                     </td>
                                                                     <td>
-                                                                        <div th:each="da,ind:${e.actividad.detalleActividads}" th:if="${da.estado=='S'}">
-                                                                            <div th:each="sda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
-                                                                                <div th:each="ll : ${sda.lugares}" th:if="${ll.tipo_lugar=='E'}" th:text="${e.lugar.nombre_lugar}"></div>
+                                                                        <div th:each="da,indDa:${e.actividad.detalleActividads}" th:if="${da.estado=='S'} and ${e.fecha_evento  == da.fecha_detalle_actividad}">
+                                                                            <div th:each="sda,indSda:${da.subDetalleActividads}" th:if="${sda.estado=='S'}">
+                                                                                <div th:each="ll : ${sda.lugares}" th:if="${ll.id_lugar== e.lugar.id_lugar}">
+                                                                                    <a type="button"
+                                                                                       class="btn btn-primary btn-sm waves-effect waves-light"
+                                                                                       th:onclick="AgendarEvento(
+                                                                                           [[${e.id_evento}]], 
+                                                                                           [[${sda.id_sub_detalle_actividad}]], 
+                                                                                           [[${da.id_detalle_actividad}]], 
+                                                                                           [[${e.actividad.descripcion_actividad}]], 
+                                                                                           [[${e.actividad.motivo}]], 
+                                                                                           [[${e.actividad.unidadFuncional.id_unidad_funcional}]], 
+                                                                                           [[${#dates.format(da.fecha_detalle_actividad, 'yyyy-MM-dd')}]], 
+                                                                                           [[${sda.hora_inicio}]], 
+                                                                                           [[${sda.hora_final}]], 
+                                                                                           [[${ll.id_lugar}]]
+                                                                                       )"
+                                                                                       href="#" data-toggle="tooltip" data-placement="top" title="Confirmar">
+                                                                                        Aceptar
+                                                                                    </a>
+                                                                                    <a type="button"
+                                                                                       class="btn btn-danger btn-sm waves-effect waves-light"
+                                                                                       th:onclick="RechazarEvento([[${e.id_evento}]], [[${sda.id_sub_detalle_actividad}]], [[${da.id_detalle_actividad}]])"
+                                                                                       href="#" data-toggle="tooltip" data-placement="top" title="Rechazar">
+                                                                                        Rechazar
+                                                                                    </a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <a type="button" class="btn btn-primary btn-sm waves-effect waves-light" th:onclick="AgendarEvento([[${e.id_evento}]], [[${e.actividad.descripcion_actividad}]], [[${e.actividad.motivo}]], [[${e.actividad.unidadFuncional.id_unidad_funcional}]], [[${#dates.format(e.actividad.detalleActividads[0].fecha_detalle_actividad, 'yyyy-MM-dd')}]], [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_inicio}]], [[${e.actividad.detalleActividads[0].subDetalleActividads[0].hora_final}]], [[${e.lugar.id_lugar}]])" href="#" data-toggle="tooltip" data-placement="top" title="Confirmar">
-                                                                            Aceptar
-                                                                        </a>
-                                                                        <a type="button" class="btn btn-danger btn-sm waves-effect waves-light" th:onclick="RechazarEvento([[${e.id_evento}]])" href="#" data-toggle="tooltip" data-placement="top" title="Rechazar">
-                                                                            Rechazar
-                                                                        </a>
+                                                                        
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -287,8 +327,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +357,11 @@
                                     <div class="modal-content" style="background-color: rgb(255, 255, 255);">
 
                                         <form th:action="@{/confirmarReserva}" method="post">
-                                            <input type="hidden" id="id_activida" name="id_activida">
+                                            <input type="hidden" id="id_evento" name="id_evento">
+                                            <input type="hidden" id="id_sub_detalle_actividad"
+                                                name="id_sub_detalle_actividad">
+                                            <input type="hidden" id="id_detalle_actividad" name="id_detalle_actividad">
+
                                             <div class="modal-header bg-primary">
                                                 <h5 style="color: rgb(255, 255, 255);" id="nombre"></h5>
                                             </div>
@@ -442,7 +486,8 @@
                                                         <div>
                                                             <label class="col-form-label" style="color: black;">Costo
                                                                 Reserva </label>
-                                                                <input class="form-control" type="number" name="costos" id="costo" required value="0">
+                                                            <input class="form-control" type="number" name="costos"
+                                                                id="costo" required value="0">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -460,7 +505,7 @@
                                 </div>
                             </div>
 
-                        
+
                             <!--RECHAZAR-->
                             <div class="modal fade bs-example-modal-lg" tabindex="-1" id="ModalProRechazar"
                                 role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -468,9 +513,12 @@
                                     <div class="modal-content" style="background-color: rgb(255, 255, 255);">
 
                                         <form th:action="@{/rechazarReserva}" method="post">
-                                            <input type="hidden" id="id_actividad2" name="id_actividad2">
+                                            <input type="hidden" id="id_evento2" name="id_evento2">
+                                            <input type="hidden" id="id_sub_detalle_actividad2"
+                                                name="id_sub_detalle_actividad2">
+                                            <input type="hidden" id="id_detalle_actividad2" name="id_detalle_actividad2">
                                             <div class="modal-header bg-primary">
-                                                <h5 style="color: white;"  id="nombre"></h5>
+                                                <h5 style="color: white;" id="nombre"></h5>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="text-center">
@@ -519,10 +567,11 @@
 
         <div class="rightbar-overlay"></div>
         <!-- JAVASCRIPT -->
-        <script th:src="@{assets/libs/datatables.net/js/jquery.dataTables.min.js}"></script>
-        <script th:src="@{assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js}"></script>
-        <script th:src="@{assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js}"></script>
-        <script th:src="@{assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+        <script src="https://nightly.datatables.net/js/dataTables.js"></script>
+
 
         <script th:src="@{assets/libs/jquery/jquery.min.js}"></script>
         <script th:src="@{assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -541,6 +590,11 @@
         <script th:src="@{assets/libs/fullcalendar/locale/es.js}"></script>
 
         <script th:src="@{assets/js/pages/calendar.init.js}"></script>
+
+
+        <script>
+            var table = new DataTable('#example');
+        </script>
         <script>
 
             $(function () {
@@ -587,10 +641,17 @@
                 }
 
                 // Función principal AgendarEvento
-                window.AgendarEvento = function (id_evento, actividad, motivo, responsable, fecha, horaInicio, horaFin, lugar) {
+                window.AgendarEvento = function (id_evento, id_sub_detalle_actividad, id_detalle_actividad, actividad, motivo, responsable, fecha, horaInicio, horaFin, lugar) {
                     console.log('Función AgendarEvento llamada');
 
-                    $('#id_activida').val(id_evento);
+                    var id_ev = id_evento;
+                    var id_sda = id_sub_detalle_actividad;
+                    var id_da = id_detalle_actividad;
+                    $('#id_evento').val(id_ev);
+                    $('#id_sub_detalle_actividad').val(id_sda);
+                    $('#id_detalle_actividad').val(id_da);
+
+
                     $("#nombre").text('Reserva : ' + actividad);
 
                     $('input[placeholder="Palabra Clave"]').val(actividad);
@@ -658,13 +719,43 @@
 
 
         <script>
-            function RechazarEvento(id_evento) {
+            function RechazarEvento(id_evento, id_sub_detalle_actividad, id_detalle_actividad) {
                 var id_ev = id_evento;
-             
-                $('#id_actividad2').val(id_ev);
+                var id_sda = id_sub_detalle_actividad;
+                var id_da = id_detalle_actividad;
+                $('#id_evento2').val(id_ev);
+                $('#id_sub_detalle_actividad2').val(id_sda);
+                $('#id_detalle_actividad2').val(id_da);
                 $("#nombre").text('Actividad # : ' + id_ev);
                 $("#ModalProRechazar").modal("show");
             }
+        </script>
+
+        <script>
+            $(function () {
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                    //, "colvis"
+                }).buttons().container().appendTo(
+                    '#example1_wrapper .col-md-6:eq(0)');
+                $('#example2').DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                }).buttons().container().appendTo(
+                    '#example2_wrapper .col-md-6:eq(0)');
+                $('#example3').DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                }).buttons().container().appendTo(
+                    '#example3_wrapper .col-md-6:eq(0)');
+            });
         </script>
 </body>
 

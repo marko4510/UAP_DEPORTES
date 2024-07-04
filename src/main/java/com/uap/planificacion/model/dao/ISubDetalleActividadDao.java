@@ -30,6 +30,7 @@ public interface ISubDetalleActividadDao extends CrudRepository<SubDetalleActivi
             "  and DATE_PART('year', da.fecha_detalle_actividad) = DATE_PART('year', CURRENT_DATE)" +
             "  and da.estado = 'A' " +
             "  and sb.estado = 'A' " +
+            "  and ev.estado_evento = 'A' " +
             "order by da.id_detalle_actividad", nativeQuery = true)
     List<Object[]> findAllEspecialesAndMesDeAnioActual(Integer mes);
 
@@ -50,7 +51,7 @@ public interface ISubDetalleActividadDao extends CrudRepository<SubDetalleActivi
     "LEFT JOIN detalle_actividad da ON da.id_detalle_actividad = sda.id_detalle_actividad\n" + //
     "LEFT JOIN lugar_subdetalleactividad ls ON ls.id_sub_detalle_actividad = sda.id_sub_detalle_actividad\n" + //
     "LEFT JOIN lugar l ON l.id_lugar = ls.id_lugar\n" + //
-    "WHERE da.estado != 'X' AND da.fecha_detalle_actividad = ?1\n" + //
+    "WHERE (da.estado != 'X' AND da.estado != 'S') AND da.fecha_detalle_actividad = ?1\n" + //
     "AND sda.hora_inicio <= ?3\n" + //
     "AND sda.hora_final > ?2\n" + //
     "AND l.nombre_lugar = ?4", nativeQuery = true)
